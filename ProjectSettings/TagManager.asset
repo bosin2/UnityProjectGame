@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: New Layer 7
+    uniqueID: 130169407
+    locked: 0
+  - name: background
+    uniqueID: 1608241765
+    locked: 0
+  - name: Tile
+    uniqueID: 3123674437
+    locked: 0
+  - name: wall
+    uniqueID: 1632266039
+    locked: 0
+  - name: Table
+    uniqueID: 1685191313
+    locked: 0
+  - name: Door
+    uniqueID: 1747727573
+    locked: 0
+  - name: Decoration
+    uniqueID: 2368483063
+    locked: 0
+  - name: WallLine
+    uniqueID: 1613958625
+    locked: 0
+  - name: Character
+    uniqueID: 4245067027
+    locked: 0
+  m_RenderingLayers:
+  - Default
