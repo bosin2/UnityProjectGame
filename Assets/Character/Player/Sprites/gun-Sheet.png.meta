@@ -178,10 +178,10 @@ TextureImporter:
       name: gun-Sheet_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 208
-        width: 32
-        height: 33
+        x: 0
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,10 +200,10 @@ TextureImporter:
       name: gun-Sheet_1
       rect:
         serializedVersion: 2
-        x: 74
-        y: 208
-        width: 32
-        height: 33
+        x: 64
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,10 +222,10 @@ TextureImporter:
       name: gun-Sheet_2
       rect:
         serializedVersion: 2
-        x: 139
-        y: 208
-        width: 31
-        height: 32
+        x: 128
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: gun-Sheet_3
       rect:
         serializedVersion: 2
-        x: 206
-        y: 216
-        width: 6
-        height: 6
+        x: 192
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,10 +266,10 @@ TextureImporter:
       name: gun-Sheet_4
       rect:
         serializedVersion: 2
-        x: 211
-        y: 208
-        width: 23
-        height: 34
+        x: 256
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,10 +288,10 @@ TextureImporter:
       name: gun-Sheet_5
       rect:
         serializedVersion: 2
-        x: 270
-        y: 208
-        width: 28
-        height: 33
+        x: 320
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,10 +310,10 @@ TextureImporter:
       name: gun-Sheet_6
       rect:
         serializedVersion: 2
-        x: 333
-        y: 208
-        width: 29
-        height: 32
+        x: 0
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -332,10 +332,10 @@ TextureImporter:
       name: gun-Sheet_7
       rect:
         serializedVersion: 2
-        x: 22
-        y: 144
-        width: 20
-        height: 33
+        x: 64
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,10 +354,10 @@ TextureImporter:
       name: gun-Sheet_8
       rect:
         serializedVersion: 2
-        x: 86
-        y: 144
-        width: 20
-        height: 33
+        x: 128
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,10 +376,10 @@ TextureImporter:
       name: gun-Sheet_9
       rect:
         serializedVersion: 2
-        x: 150
-        y: 144
-        width: 20
-        height: 32
+        x: 192
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,10 +398,10 @@ TextureImporter:
       name: gun-Sheet_10
       rect:
         serializedVersion: 2
-        x: 214
-        y: 144
-        width: 20
-        height: 34
+        x: 256
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -420,10 +420,10 @@ TextureImporter:
       name: gun-Sheet_11
       rect:
         serializedVersion: 2
-        x: 278
-        y: 144
-        width: 20
-        height: 32
+        x: 320
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -442,10 +442,10 @@ TextureImporter:
       name: gun-Sheet_12
       rect:
         serializedVersion: 2
-        x: 342
-        y: 144
-        width: 20
-        height: 32
+        x: 0
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -464,10 +464,10 @@ TextureImporter:
       name: gun-Sheet_13
       rect:
         serializedVersion: 2
-        x: 22
-        y: 80
-        width: 32
-        height: 33
+        x: 64
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,10 +486,10 @@ TextureImporter:
       name: gun-Sheet_14
       rect:
         serializedVersion: 2
-        x: 86
-        y: 80
-        width: 32
-        height: 33
+        x: 128
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,10 +508,10 @@ TextureImporter:
       name: gun-Sheet_15
       rect:
         serializedVersion: 2
-        x: 150
-        y: 80
-        width: 31
-        height: 32
+        x: 192
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -530,10 +530,10 @@ TextureImporter:
       name: gun-Sheet_16
       rect:
         serializedVersion: 2
-        x: 214
-        y: 80
-        width: 23
-        height: 34
+        x: 256
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -552,10 +552,10 @@ TextureImporter:
       name: gun-Sheet_17
       rect:
         serializedVersion: 2
-        x: 233
-        y: 88
-        width: 6
-        height: 6
+        x: 320
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -574,10 +574,10 @@ TextureImporter:
       name: gun-Sheet_18
       rect:
         serializedVersion: 2
-        x: 278
-        y: 80
-        width: 28
-        height: 33
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,10 +596,10 @@ TextureImporter:
       name: gun-Sheet_19
       rect:
         serializedVersion: 2
-        x: 342
-        y: 80
-        width: 29
-        height: 32
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,10 +618,10 @@ TextureImporter:
       name: gun-Sheet_20
       rect:
         serializedVersion: 2
-        x: 22
-        y: 16
-        width: 20
-        height: 33
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -640,10 +640,10 @@ TextureImporter:
       name: gun-Sheet_21
       rect:
         serializedVersion: 2
-        x: 86
-        y: 16
-        width: 20
-        height: 33
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -662,10 +662,10 @@ TextureImporter:
       name: gun-Sheet_22
       rect:
         serializedVersion: 2
-        x: 150
-        y: 16
-        width: 20
-        height: 32
+        x: 256
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -684,10 +684,10 @@ TextureImporter:
       name: gun-Sheet_23
       rect:
         serializedVersion: 2
-        x: 214
-        y: 16
-        width: 20
-        height: 33
+        x: 320
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -702,55 +702,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: gun-Sheet_24
-      rect:
-        serializedVersion: 2
-        x: 278
-        y: 16
-        width: 20
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1379997e31a4f0fa0800000000000000
-      internalID: -5832361543071066319
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gun-Sheet_25
-      rect:
-        serializedVersion: 2
-        x: 342
-        y: 16
-        width: 20
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d8468ec6811c28ff0800000000000000
-      internalID: -35253536414997363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 98609ea60cd3a2a448c19849113394ca
     internalID: 0
     vertices: []
     indices: 
@@ -777,8 +733,6 @@ TextureImporter:
       gun-Sheet_21: -7630976059205974728
       gun-Sheet_22: 7176373599578660918
       gun-Sheet_23: -7773359816841937207
-      gun-Sheet_24: -5832361543071066319
-      gun-Sheet_25: -35253536414997363
       gun-Sheet_3: 2038464017253811316
       gun-Sheet_4: 4753037279105976521
       gun-Sheet_5: -2522965946374868741
