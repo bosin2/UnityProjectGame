@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Wall
+  - OutLine
+  - Table
   layers:
   - Default
   - TransparentFX
@@ -50,7 +53,7 @@ TagManager:
   - name: Tile
     uniqueID: 3123674437
     locked: 0
-  - name: wall
+  - name: Wall
     uniqueID: 1632266039
     locked: 0
   - name: Table
