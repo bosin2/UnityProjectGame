@@ -128,8 +128,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8093475}
-  - component: {fileID: 8093476}
   - component: {fileID: 8093477}
+  - component: {fileID: 8093476}
   m_Layer: 0
   m_Name: NavMashFloor
   m_TagString: Untagged
@@ -145,7 +145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8093474}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 19.18887, y: -7.4189954, z: 1.093831}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -177,50 +177,27 @@ MonoBehaviour:
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.33333334
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
   m_MinRegionArea: 2
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 23800000, guid: 98e8897bfbf2a694fa25aabe4e192464, type: 2}
---- !u!1839735485 &8093477
-Tilemap:
+--- !u!114 &8093477
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8093474}
   m_Enabled: 1
-  m_Tiles: {}
-  m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
-  m_TileObjectToInstantiateArray: []
-  m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 0
-  m_TileOrientationMatrix:
-    e00: 1
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 1
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 1
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db9c2c5aca397f41a57740bd678fd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tilemap: {fileID: 1888345937}
+  _modifier: {fileID: 0}
+  _modifierTilemap: {fileID: 0}
 --- !u!1 &108838264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1259,6 @@ GameObject:
   - component: {fileID: 869844757}
   - component: {fileID: 869844756}
   - component: {fileID: 869844758}
-  - component: {fileID: 869844759}
   m_Layer: 0
   m_Name: wall
   m_TagString: Wall
@@ -4605,22 +4581,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!208 &869844759
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869844754}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 45.562, y: 26.062002, z: 0.00001}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -6.0000005, y: 25.500002, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &982752243
 GameObject:
   m_ObjectHideFlags: 0
@@ -4720,7 +4680,6 @@ GameObject:
   - component: {fileID: 1067607424}
   - component: {fileID: 1067607423}
   - component: {fileID: 1067607425}
-  - component: {fileID: 1067607426}
   m_Layer: 0
   m_Name: outline
   m_TagString: OutLine
@@ -8327,22 +8286,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!208 &1067607426
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067607421}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 46.500004, y: 34.5, z: 0.00001}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -6.5000005, y: 15.500001, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1205451946
 GameObject:
   m_ObjectHideFlags: 0
@@ -9020,7 +8963,6 @@ GameObject:
   - component: {fileID: 1888345939}
   - component: {fileID: 1888345941}
   - component: {fileID: 1888345940}
-  - component: {fileID: 1888345942}
   m_Layer: 0
   m_Name: tile
   m_TagString: Untagged
@@ -35604,7 +35546,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888345934}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -35623,38 +35565,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1888345942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888345934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedVersion: 0
-  m_AgentTypeID: -1372625422
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: fc2f00078c5b6264894dcd3ab9116815, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &2035714380
 GameObject:
   m_ObjectHideFlags: 0
@@ -35754,7 +35664,6 @@ GameObject:
   - component: {fileID: 2039482360}
   - component: {fileID: 2039482359}
   - component: {fileID: 2039482361}
-  - component: {fileID: 2039482362}
   m_Layer: 0
   m_Name: box
   m_TagString: Table
@@ -36283,22 +36192,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!208 &2039482362
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039482357}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 42.187, y: 29.600002, z: 0.00001}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -10, y: 7.5000005, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &2054268032
 GameObject:
   m_ObjectHideFlags: 0
