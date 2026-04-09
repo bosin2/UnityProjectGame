@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2806624604571850803}
   - component: {fileID: 7076201778218768858}
   - component: {fileID: 8372296163338787416}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf761a488ec1c148862433e7734b66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   melee_damage: 20
   shoot_damage: 30
   shootBulletSpeed: 10
@@ -139,6 +139,9 @@ MonoBehaviour:
   attack_Back: {fileID: 4530664530594150168}
   bulletSprite: {fileID: 2208703988740019828, guid: aea181343b94e4849bab977f1f6cf589, type: 3}
   hitEffectSprite: {fileID: 7034660610512690298, guid: fa09f2c4ea8e49d4e938f56fb09019d7, type: 3}
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  hurtDuration: 0.4
 --- !u!50 &7076201778218768858
 Rigidbody2D:
   serializedVersion: 5
@@ -222,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2101717245422498159}
   - component: {fileID: 189020814371587784}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +303,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4130996461204224561}
   - component: {fileID: 6833284605566321867}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: F_hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6779424087137181222}
   - component: {fileID: 4530664530594150168}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: B_hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1581626190833317812}
   - component: {fileID: 5090293506769769196}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

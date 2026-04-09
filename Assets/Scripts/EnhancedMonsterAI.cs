@@ -17,11 +17,9 @@ public class EnhancedMonsterAI : MonoBehaviour
     [Header("Targets")]
     public Transform target;
 
-    // ↓↓↓ 새로 추가된 넉백 설정 ↓↓↓
     [Header("넉백 설정")]
     public float knockbackForce = 4f;
     public float knockbackDuration = 0.15f;
-    // ↑↑↑ 새로 추가된 넉백 설정 ↑↑↑
 
     private NavMeshAgent agent;
     private Animator anim;
@@ -39,6 +37,7 @@ public class EnhancedMonsterAI : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
