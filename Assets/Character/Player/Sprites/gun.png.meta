@@ -1,85 +1,97 @@
 fileFormatVersion: 2
-guid: 04f273e869be697478a410177ab5dd11
+guid: 8b3203ab8a7542f47a4f47c37faa0a51
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3811890865202270119
-    second: gun-Sheet_0
+      213: 7678881159546133043
+    second: gun-Sheet 1_0
   - first:
-      213: -9114904428334575655
-    second: gun-Sheet_1
+      213: -501185389475600059
+    second: gun-Sheet 1_1
   - first:
-      213: 8363741195703755498
-    second: gun-Sheet_2
+      213: 3878535108149243853
+    second: gun-Sheet 1_2
   - first:
-      213: 2038464017253811316
-    second: gun-Sheet_3
+      213: -850584658628938724
+    second: gun-Sheet 1_3
   - first:
-      213: 4753037279105976521
-    second: gun-Sheet_4
+      213: 2731547695007847001
+    second: gun-Sheet 1_4
   - first:
-      213: -2522965946374868741
-    second: gun-Sheet_5
+      213: -4513726354817964767
+    second: gun-Sheet 1_5
   - first:
-      213: 6094133366593085457
-    second: gun-Sheet_6
+      213: 1123384863287829344
+    second: gun-Sheet 1_6
   - first:
-      213: -5423896503248016292
-    second: gun-Sheet_7
+      213: 5418853701890792920
+    second: gun-Sheet 1_7
   - first:
-      213: 8956379190933765700
-    second: gun-Sheet_8
+      213: 4872029982055280516
+    second: gun-Sheet 1_8
   - first:
-      213: -4661596623035651407
-    second: gun-Sheet_9
+      213: -5145451245085062089
+    second: gun-Sheet 1_9
   - first:
-      213: -6675105615271205073
-    second: gun-Sheet_10
+      213: -8347850521719543617
+    second: gun-Sheet 1_10
   - first:
-      213: 4928556587275148441
-    second: gun-Sheet_11
+      213: -4519556982825977369
+    second: gun-Sheet 1_11
   - first:
-      213: -1153269177842386060
-    second: gun-Sheet_12
+      213: 1337176503410217257
+    second: gun-Sheet 1_12
   - first:
-      213: -2629617058986282976
-    second: gun-Sheet_13
+      213: 1480700046405815311
+    second: gun-Sheet 1_13
   - first:
-      213: -902037442575275669
-    second: gun-Sheet_14
+      213: -4190959904357982696
+    second: gun-Sheet 1_14
   - first:
-      213: -7942701771647949537
-    second: gun-Sheet_15
+      213: 134585457102008359
+    second: gun-Sheet 1_15
   - first:
-      213: -6605010168027508253
-    second: gun-Sheet_16
+      213: 3088187988804603019
+    second: gun-Sheet 1_16
   - first:
-      213: -2594787734467040525
-    second: gun-Sheet_17
+      213: -6030458305309315271
+    second: gun-Sheet 1_17
   - first:
-      213: -1567227244337725758
-    second: gun-Sheet_18
+      213: -2099808886372784254
+    second: gun-Sheet 1_18
   - first:
-      213: 6596799129784730437
-    second: gun-Sheet_19
+      213: 3546066952593003567
+    second: gun-Sheet 1_19
   - first:
-      213: 118921805467551416
-    second: gun-Sheet_20
+      213: 5866572422852987188
+    second: gun-Sheet 1_20
   - first:
-      213: -7630976059205974728
-    second: gun-Sheet_21
+      213: 5450945267085534938
+    second: gun-Sheet 1_21
   - first:
-      213: 7176373599578660918
-    second: gun-Sheet_22
+      213: -6034278827760054575
+    second: gun-Sheet 1_22
   - first:
-      213: -7773359816841937207
-    second: gun-Sheet_23
+      213: -598578373126250245
+    second: gun-Sheet 1_23
   - first:
-      213: -5832361543071066319
-    second: gun-Sheet_24
+      213: -6154208829008527791
+    second: gun-Sheet 1_24
   - first:
-      213: -35253536414997363
-    second: gun-Sheet_25
+      213: -5592877267402009793
+    second: gun-Sheet 1_25
+  - first:
+      213: 3191928953906076201
+    second: gun-Sheet 1_26
+  - first:
+      213: -1018053658234400951
+    second: gun-Sheet 1_27
+  - first:
+      213: -5278028825333497090
+    second: gun-Sheet 1_28
+  - first:
+      213: 6115577403187288181
+    second: gun-Sheet 1_29
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -175,7 +187,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gun-Sheet_0
+      name: gun-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -190,14 +202,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 950ff015471791bc0800000000000000
-      internalID: -3811890865202270119
+      spriteID: 33adf2beabdd09a60800000000000000
+      internalID: 7678881159546133043
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_1
+      name: gun-Sheet 1_1
       rect:
         serializedVersion: 2
         x: 64
@@ -212,14 +224,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9df8b7b17ba518180800000000000000
-      internalID: -9114904428334575655
+      spriteID: 549e0bd2b8e6b09f0800000000000000
+      internalID: -501185389475600059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_2
+      name: gun-Sheet 1_2
       rect:
         serializedVersion: 2
         x: 128
@@ -234,14 +246,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ae22933fd4af11470800000000000000
-      internalID: 8363741195703755498
+      spriteID: dcfed1aa12353d530800000000000000
+      internalID: 3878535108149243853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_3
+      name: gun-Sheet 1_3
       rect:
         serializedVersion: 2
         x: 192
@@ -256,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 47444d339341a4c10800000000000000
-      internalID: 2038464017253811316
+      spriteID: c14760372cd1234f0800000000000000
+      internalID: -850584658628938724
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_4
+      name: gun-Sheet 1_4
       rect:
         serializedVersion: 2
         x: 256
@@ -278,14 +290,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9c80d41093e26f140800000000000000
-      internalID: 4753037279105976521
+      spriteID: 952dafff72868e520800000000000000
+      internalID: 2731547695007847001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_5
+      name: gun-Sheet 1_5
       rect:
         serializedVersion: 2
         x: 320
@@ -300,14 +312,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bf03be9c6df9cfcd0800000000000000
-      internalID: -2522965946374868741
+      spriteID: 125a1c78bc50c51c0800000000000000
+      internalID: -4513726354817964767
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_6
+      name: gun-Sheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 063625ac490179f00800000000000000
+      internalID: 1123384863287829344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gun-Sheet 1_7
       rect:
         serializedVersion: 2
         x: 0
@@ -322,14 +356,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 110e2a14206b29450800000000000000
-      internalID: 6094133366593085457
+      spriteID: 8ddd2074bb2a33b40800000000000000
+      internalID: 5418853701890792920
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_7
+      name: gun-Sheet 1_8
       rect:
         serializedVersion: 2
         x: 64
@@ -344,14 +378,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5c2b690ed27ab4b0800000000000000
-      internalID: -5423896503248016292
+      spriteID: 48f257f947dec9340800000000000000
+      internalID: 4872029982055280516
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_8
+      name: gun-Sheet 1_9
       rect:
         serializedVersion: 2
         x: 128
@@ -366,14 +400,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 44ebe45db637b4c70800000000000000
-      internalID: 8956379190933765700
+      spriteID: 73c0d97ba5fa798b0800000000000000
+      internalID: -5145451245085062089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_9
+      name: gun-Sheet 1_10
       rect:
         serializedVersion: 2
         x: 192
@@ -388,14 +422,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1baaccdc19eae4fb0800000000000000
-      internalID: -4661596623035651407
+      spriteID: fb8e8d6ed2a762c80800000000000000
+      internalID: -8347850521719543617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_10
+      name: gun-Sheet 1_11
       rect:
         serializedVersion: 2
         x: 256
@@ -410,14 +444,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f276b832fc24d53a0800000000000000
-      internalID: -6675105615271205073
+      spriteID: 7e97588aede4741c0800000000000000
+      internalID: -4519556982825977369
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_11
+      name: gun-Sheet 1_12
       rect:
         serializedVersion: 2
         x: 320
@@ -432,14 +466,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 99c52ff7a10c56440800000000000000
-      internalID: 4928556587275148441
+      spriteID: 921d3c7f1fa9e8210800000000000000
+      internalID: 1337176503410217257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_12
+      name: gun-Sheet 1_13
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0c4cecd8d08c8410800000000000000
+      internalID: 1480700046405815311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gun-Sheet 1_14
       rect:
         serializedVersion: 2
         x: 0
@@ -454,14 +510,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 47b3c440bc3ceffe0800000000000000
-      internalID: -1153269177842386060
+      spriteID: 81e56d0fb28b6d5c0800000000000000
+      internalID: -4190959904357982696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_13
+      name: gun-Sheet 1_15
       rect:
         serializedVersion: 2
         x: 64
@@ -476,14 +532,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 020b0d79739b18bd0800000000000000
-      internalID: -2629617058986282976
+      spriteID: 720bf7a92c42ed100800000000000000
+      internalID: 134585457102008359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_14
+      name: gun-Sheet 1_16
       rect:
         serializedVersion: 2
         x: 128
@@ -498,14 +554,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b69e235a9b15b73f0800000000000000
-      internalID: -902037442575275669
+      spriteID: b8c83582d927bda20800000000000000
+      internalID: 3088187988804603019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_15
+      name: gun-Sheet 1_17
       rect:
         serializedVersion: 2
         x: 192
@@ -520,14 +576,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f15ee0822dad5c190800000000000000
-      internalID: -7942701771647949537
+      spriteID: 93feb3f3f128f4ca0800000000000000
+      internalID: -6030458305309315271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_16
+      name: gun-Sheet 1_18
       rect:
         serializedVersion: 2
         x: 256
@@ -542,14 +598,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3e190ec3f3a4654a0800000000000000
-      internalID: -6605010168027508253
+      spriteID: 287aa8f61fafbd2e0800000000000000
+      internalID: -2099808886372784254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_17
+      name: gun-Sheet 1_19
       rect:
         serializedVersion: 2
         x: 320
@@ -564,14 +620,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3fa2d83ad467dfbd0800000000000000
-      internalID: -2594787734467040525
+      spriteID: f24de030b19263130800000000000000
+      internalID: 3546066952593003567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_18
+      name: gun-Sheet 1_20
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 439414149804a6150800000000000000
+      internalID: 5866572422852987188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gun-Sheet 1_21
       rect:
         serializedVersion: 2
         x: 0
@@ -586,14 +664,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ce7fe2ff17104ae0800000000000000
-      internalID: -1567227244337725758
+      spriteID: ad6eabe07d5a5ab40800000000000000
+      internalID: 5450945267085534938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_19
+      name: gun-Sheet 1_22
       rect:
         serializedVersion: 2
         x: 64
@@ -608,14 +686,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 543cc617bd98c8b50800000000000000
-      internalID: 6596799129784730437
+      spriteID: 1de83bb806fe14ca0800000000000000
+      internalID: -6034278827760054575
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_20
+      name: gun-Sheet 1_23
       rect:
         serializedVersion: 2
         x: 128
@@ -630,14 +708,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8b601f280ce76a100800000000000000
-      internalID: 118921805467551416
+      spriteID: bf0249b142c61b7f0800000000000000
+      internalID: -598578373126250245
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_21
+      name: gun-Sheet 1_24
       rect:
         serializedVersion: 2
         x: 192
@@ -652,14 +730,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 835848d64b3591690800000000000000
-      internalID: -7630976059205974728
+      spriteID: 15ebf592dabd79aa0800000000000000
+      internalID: -6154208829008527791
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_22
+      name: gun-Sheet 1_25
       rect:
         serializedVersion: 2
         x: 256
@@ -674,14 +752,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 630a06a44c9979360800000000000000
-      internalID: 7176373599578660918
+      spriteID: f335524f1cb1262b0800000000000000
+      internalID: -5592877267402009793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_23
+      name: gun-Sheet 1_26
       rect:
         serializedVersion: 2
         x: 320
@@ -696,8 +774,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9ce37dd7e6a7f1490800000000000000
-      internalID: -7773359816841937207
+      spriteID: 92a1bd5d8720c4c20800000000000000
+      internalID: 3191928953906076201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gun-Sheet 1_27
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94fc6aa77952fd1f0800000000000000
+      internalID: -1018053658234400951
       vertices: []
       indices: 
       edges: []
@@ -706,7 +806,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 98609ea60cd3a2a448c19849113394ca
+    spriteID: 9413293613b98af44b521770451d5d29
     internalID: 0
     vertices: []
     indices: 
@@ -716,30 +816,34 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gun-Sheet_0: -3811890865202270119
-      gun-Sheet_1: -9114904428334575655
-      gun-Sheet_10: -6675105615271205073
-      gun-Sheet_11: 4928556587275148441
-      gun-Sheet_12: -1153269177842386060
-      gun-Sheet_13: -2629617058986282976
-      gun-Sheet_14: -902037442575275669
-      gun-Sheet_15: -7942701771647949537
-      gun-Sheet_16: -6605010168027508253
-      gun-Sheet_17: -2594787734467040525
-      gun-Sheet_18: -1567227244337725758
-      gun-Sheet_19: 6596799129784730437
-      gun-Sheet_2: 8363741195703755498
-      gun-Sheet_20: 118921805467551416
-      gun-Sheet_21: -7630976059205974728
-      gun-Sheet_22: 7176373599578660918
-      gun-Sheet_23: -7773359816841937207
-      gun-Sheet_3: 2038464017253811316
-      gun-Sheet_4: 4753037279105976521
-      gun-Sheet_5: -2522965946374868741
-      gun-Sheet_6: 6094133366593085457
-      gun-Sheet_7: -5423896503248016292
-      gun-Sheet_8: 8956379190933765700
-      gun-Sheet_9: -4661596623035651407
+      gun-Sheet 1_0: 7678881159546133043
+      gun-Sheet 1_1: -501185389475600059
+      gun-Sheet 1_10: -8347850521719543617
+      gun-Sheet 1_11: -4519556982825977369
+      gun-Sheet 1_12: 1337176503410217257
+      gun-Sheet 1_13: 1480700046405815311
+      gun-Sheet 1_14: -4190959904357982696
+      gun-Sheet 1_15: 134585457102008359
+      gun-Sheet 1_16: 3088187988804603019
+      gun-Sheet 1_17: -6030458305309315271
+      gun-Sheet 1_18: -2099808886372784254
+      gun-Sheet 1_19: 3546066952593003567
+      gun-Sheet 1_2: 3878535108149243853
+      gun-Sheet 1_20: 5866572422852987188
+      gun-Sheet 1_21: 5450945267085534938
+      gun-Sheet 1_22: -6034278827760054575
+      gun-Sheet 1_23: -598578373126250245
+      gun-Sheet 1_24: -6154208829008527791
+      gun-Sheet 1_25: -5592877267402009793
+      gun-Sheet 1_26: 3191928953906076201
+      gun-Sheet 1_27: -1018053658234400951
+      gun-Sheet 1_3: -850584658628938724
+      gun-Sheet 1_4: 2731547695007847001
+      gun-Sheet 1_5: -4513726354817964767
+      gun-Sheet 1_6: 1123384863287829344
+      gun-Sheet 1_7: 5418853701890792920
+      gun-Sheet 1_8: 4872029982055280516
+      gun-Sheet 1_9: -5145451245085062089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: LeftCorridor
-  spawnPosition: {x: -48, y: -124}
+  spawnPosition: {x: -50, y: -101}
 --- !u!61 &405319007
 BoxCollider2D:
   m_ObjectHideFlags: 0
