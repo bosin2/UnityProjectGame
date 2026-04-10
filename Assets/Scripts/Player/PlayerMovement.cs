@@ -20,14 +20,14 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D attack_Front;
     public Collider2D attack_Back;
 
-    [Header("권총 이펙트")]
-    public Sprite bulletSprite;
-    public Sprite hitEffectSprite;
-
     [Header("피격 설정")]
     public float knockbackForce = 5f;
     public float knockbackDuration = 0.2f;
     public float hurtDuration = 0.4f;
+
+    // Resources 폴더에서 로드
+    private Sprite bulletSprite;
+    private Sprite hitEffectSprite;
 
     private bool isHurt = false;
 
@@ -55,6 +55,15 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+
+        // Resources 폴더에서 Sprite 로드
+        bulletSprite = Resources.Load<Sprite>("Bullet");
+        hitEffectSprite = Resources.Load<Sprite>("Boom");
+
+        if (bulletSprite == null)
+            Debug.LogError("Bullet 스프라이트 못 찾았! Resources 폴더에 Bullet.png 있는지 확인!");
+        if (hitEffectSprite == null)
+            Debug.LogError("Boom 스프라이트 못 찾았! Resources 폴더에 Boom.png 있는지 확인!");
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -116,7 +125,6 @@ public class PlayerMovement : MonoBehaviour
         isHurt = true;
         anim.SetBool("IsHurt", true);
 
-        // 공격 중이었다면 캔슬
         if (isAttacking)
         {
             isAttacking = false;
@@ -142,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsHurt", false);
         isHurt = false;
     }
+
     void Attack()
     {
         if (isAttacking) return;
@@ -180,15 +189,15 @@ public class PlayerMovement : MonoBehaviour
     void AttackShoot()
     {
         anim.SetBool("IsAttacking", true);
-        ShootBullet(lastDir);
+        StartCoroutine(ShootBulletCoroutine(lastDir)); // 총알이 도착했을때 피격처리
         float shootDuration = GetCurrentAnimationLength();
         CancelInvoke("EndAttack");
         Invoke("EndAttack", shootDuration);
     }
 
-    void ShootBullet(Vector2 direction)
+    // 총알 날아가고 → 도착하면 피격 처리하는 코루틴
+    IEnumerator ShootBulletCoroutine(Vector2 direction)
     {
-        // Player 레이어 무시냥
         int layerMask = ~LayerMask.GetMask("Player");
 
         RaycastHit2D hit = Physics2D.Raycast(
@@ -198,34 +207,25 @@ public class PlayerMovement : MonoBehaviour
             layerMask
         );
 
-        Vector2 endPoint = hit.collider != null ? hit.point : (Vector2)transform.position + direction * 100f;
-        StartCoroutine(ShowBulletTrail(transform.position, endPoint));
+        Vector2 startPos = transform.position;
+        Vector2 endPos = hit.collider != null ? hit.point : startPos + direction * 100f;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(
-            transform.position,
-            direction,
-            100f,
-            layerMask
-        );
-
-        foreach (RaycastHit2D h in hits)
-        {
-            if (h.collider.CompareTag("Monster") || h.collider.CompareTag("OutLine") || h.collider.CompareTag("Wall"))
-            {
-                ShowHitEffect(h.point);
-                Debug.Log($"권총 발사! 몬스터 피격 위치: {h.point}");
-            }
-        }
-    }
-
-    IEnumerator ShowBulletTrail(Vector2 startPos, Vector2 endPos)
-    {
+        // 총알 오브젝트 생성
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = startPos;
         SpriteRenderer bulletSR = bullet.AddComponent<SpriteRenderer>();
         bulletSR.sprite = bulletSprite;
-        bulletSR.sortingOrder = 5;
+        bulletSR.sortingLayerName = "Default";
+        bulletSR.sortingOrder = 10;
 
+        // 총알 크기 설정
+        bullet.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+
+        // 총알 방향 회전
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // 총알 날아가기
         float distance = Vector2.Distance(startPos, endPos);
         float duration = distance / shootBulletSpeed;
         float elapsed = 0f;
@@ -233,20 +233,42 @@ public class PlayerMovement : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
+            if (bullet == null) yield break;
             bullet.transform.position = Vector2.Lerp(startPos, endPos, elapsed / duration);
             yield return null;
         }
 
         Destroy(bullet);
+
+        // 총알 도착한 다음에 피격 처리
+        if (hit.collider != null)
+        {
+            ShowHitEffect(hit.point);
+
+            if (hit.collider.CompareTag("Monster"))
+            {
+                Debug.Log($"권총 발사! 몬스터 피격 위치: {hit.point}");
+                EnhancedMonsterAI monster = hit.collider.GetComponent<EnhancedMonsterAI>();
+                if (monster != null)
+                {
+                    Vector2 knockDir = direction.normalized;
+                    monster.TakeDamage(shoot_damage, knockDir);
+                }
+            }
+        }
     }
 
     void ShowHitEffect(Vector2 position)
     {
+        if (hitEffectSprite == null) return;
+
         GameObject effect = new GameObject("HitEffect");
         effect.transform.position = position;
         SpriteRenderer effectSR = effect.AddComponent<SpriteRenderer>();
         effectSR.sprite = hitEffectSprite;
-        effectSR.sortingOrder = 4;
+        effectSR.sortingLayerName = "Default";
+        effectSR.sortingOrder = 10;
+        effect.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
         Destroy(effect, 0.3f);
     }
 
@@ -262,7 +284,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // 공격 중일 때만 데미지 처리냥!
         if (isAttacking && !hasHitThisAttack && collision.CompareTag("Monster"))
         {
             hasHitThisAttack = true;
