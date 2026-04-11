@@ -137,11 +137,11 @@ MonoBehaviour:
   attack_Right: {fileID: 189020814371587784}
   attack_Front: {fileID: 6833284605566321867}
   attack_Back: {fileID: 4530664530594150168}
-  bulletSprite: {fileID: 2208703988740019828, guid: aea181343b94e4849bab977f1f6cf589, type: 3}
-  hitEffectSprite: {fileID: 7034660610512690298, guid: fa09f2c4ea8e49d4e938f56fb09019d7, type: 3}
   knockbackForce: 5
   knockbackDuration: 0.2
   hurtDuration: 0.4
+  bulletPrefab: {fileID: 9102856248879863631, guid: b7e2fa88eab4c994ea9a06a97715c620, type: 3}
+  hitEffectPrefab: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
 --- !u!50 &7076201778218768858
 Rigidbody2D:
   serializedVersion: 5

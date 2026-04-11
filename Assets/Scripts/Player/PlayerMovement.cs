@@ -25,9 +25,9 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackDuration = 0.2f;
     public float hurtDuration = 0.4f;
 
-    // Resources 폴더에서 로드
-    private Sprite bulletSprite;
-    private Sprite hitEffectSprite;
+    [Header("프리팹 설정")]         // ✅ 여기에 에디터에서 드래그해서 꽂으면 되냥~
+    public GameObject bulletPrefab;
+    public GameObject hitEffectPrefab;
 
     private bool isHurt = false;
 
@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lastDir = new Vector2(0, -1);
     private bool isAttacking = false;
     private int currentWeapon = 0;
-    private bool hasHitThisAttack = false;
 
     void Awake()
     {
@@ -55,15 +54,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-
-        // Resources 폴더에서 Sprite 로드
-        bulletSprite = Resources.Load<Sprite>("Bullet");
-        hitEffectSprite = Resources.Load<Sprite>("Boom");
-
-        if (bulletSprite == null)
-            Debug.LogError("Bullet 스프라이트 못 찾았! Resources 폴더에 Bullet.png 있는지 확인!");
-        if (hitEffectSprite == null)
-            Debug.LogError("Boom 스프라이트 못 찾았! Resources 폴더에 Boom.png 있는지 확인!");
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -95,9 +85,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", movement != Vector2.zero && !isAttacking && !isHurt);
 
         if (Input.GetMouseButtonDown(0) && !isAttacking && !isHurt)
-        {
             Attack();
-        }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SwitchWeapon(0);
@@ -108,9 +96,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (!isAttacking && !isHurt)
-        {
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        }
     }
 
     public void TakeHit(Vector2 knockbackDirection)
@@ -154,9 +140,7 @@ public class PlayerMovement : MonoBehaviour
     void Attack()
     {
         if (isAttacking) return;
-
         isAttacking = true;
-        hasHitThisAttack = false;
 
         if (currentWeapon == 0)
             AttackMelee();
@@ -189,15 +173,16 @@ public class PlayerMovement : MonoBehaviour
     void AttackShoot()
     {
         anim.SetBool("IsAttacking", true);
-        StartCoroutine(ShootBulletCoroutine(lastDir)); // 총알이 도착했을때 피격처리
+        StartCoroutine(ShootBulletCoroutine(lastDir));
         float shootDuration = GetCurrentAnimationLength();
         CancelInvoke("EndAttack");
         Invoke("EndAttack", shootDuration);
     }
 
-    // 총알 날아가고 → 도착하면 피격 처리하는 코루틴
     IEnumerator ShootBulletCoroutine(Vector2 direction)
     {
+        
+
         int layerMask = ~LayerMask.GetMask("Player");
 
         RaycastHit2D hit = Physics2D.Raycast(
@@ -210,22 +195,12 @@ public class PlayerMovement : MonoBehaviour
         Vector2 startPos = transform.position;
         Vector2 endPos = hit.collider != null ? hit.point : startPos + direction * 100f;
 
-        // 총알 오브젝트 생성
-        GameObject bullet = new GameObject("Bullet");
-        bullet.transform.position = startPos;
-        SpriteRenderer bulletSR = bullet.AddComponent<SpriteRenderer>();
-        bulletSR.sprite = bulletSprite;
-        bulletSR.sortingLayerName = "Default";
-        bulletSR.sortingOrder = 10;
+        GameObject bullet = Instantiate(bulletPrefab, startPos, Quaternion.identity);
+        SceneManager.MoveGameObjectToScene(bullet, SceneManager.GetActiveScene());
 
-        // 총알 크기 설정
-        bullet.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-
-        // 총알 방향 회전
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // 총알 날아가기
         float distance = Vector2.Distance(startPos, endPos);
         float duration = distance / shootBulletSpeed;
         float elapsed = 0f;
@@ -240,35 +215,20 @@ public class PlayerMovement : MonoBehaviour
 
         Destroy(bullet);
 
-        // 총알 도착한 다음에 피격 처리
         if (hit.collider != null)
         {
             ShowHitEffect(hit.point);
-
             if (hit.collider.CompareTag("Monster"))
-            {
                 Debug.Log($"권총 발사! 몬스터 피격 위치: {hit.point}");
-                EnhancedMonsterAI monster = hit.collider.GetComponent<EnhancedMonsterAI>();
-                if (monster != null)
-                {
-                    Vector2 knockDir = direction.normalized;
-                    monster.TakeDamage(shoot_damage, knockDir);
-                }
-            }
         }
     }
 
     void ShowHitEffect(Vector2 position)
     {
-        if (hitEffectSprite == null) return;
+        
 
-        GameObject effect = new GameObject("HitEffect");
-        effect.transform.position = position;
-        SpriteRenderer effectSR = effect.AddComponent<SpriteRenderer>();
-        effectSR.sprite = hitEffectSprite;
-        effectSR.sortingLayerName = "Default";
-        effectSR.sortingOrder = 10;
-        effect.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
+        SceneManager.MoveGameObjectToScene(effect, SceneManager.GetActiveScene());
         Destroy(effect, 0.3f);
     }
 
@@ -280,22 +240,6 @@ public class PlayerMovement : MonoBehaviour
         attack_Right.enabled = false;
         attack_Front.enabled = false;
         attack_Back.enabled = false;
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (isAttacking && !hasHitThisAttack && collision.CompareTag("Monster"))
-        {
-            hasHitThisAttack = true;
-            Debug.Log($"근접공격! 몬스터 맞음: {collision.gameObject.name}");
-
-            EnhancedMonsterAI monster = collision.GetComponent<EnhancedMonsterAI>();
-            if (monster != null)
-            {
-                Vector2 knockDir = (collision.transform.position - transform.position).normalized;
-                monster.TakeDamage(melee_damage, knockDir);
-            }
-        }
     }
 
     void SwitchWeapon(int weaponType)

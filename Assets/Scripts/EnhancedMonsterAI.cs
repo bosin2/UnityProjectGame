@@ -2,40 +2,33 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-public class EnhancedMonsterAI : MonoBehaviour
+public class MonsterAI : MonoBehaviour
 {
-    [Header("Stats")]
+    [Header("스탯")]
     public int hp = 60;
     public int damage = 15;
     public float speed = 2f;
 
-    [Header("Ranges")]
+    [Header("범위")]
     public float detectionRange = 18f;
     public float attackRange = 1.2f;
-    public float attackTime = 1.0f;
+    public float attackCooldown = 1.0f;
 
-    [Header("Targets")]
+    [Header("타겟")]
     public Transform target;
-
-    [Header("넉백 설정")]
-    public float knockbackForce = 4f;
-    public float knockbackDuration = 0.15f;
 
     private NavMeshAgent agent;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rb;
 
-    private enum State { Idle, Walk, Attack, Hurt }
+    private enum State { Idle, Walk, Attack }
     private State currentState = State.Idle;
     private bool isAttacking = false;
-    private bool isHurt = false;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
 
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
@@ -54,40 +47,43 @@ public class EnhancedMonsterAI : MonoBehaviour
 
     void Update()
     {
-        // 피격 중이거나 공격 중이면 AI 정지
-        if (target == null || isAttacking || isHurt) return;
+        if (target == null || isAttacking) return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+        float dist = Vector2.Distance(transform.position, target.position);
 
-        if (distanceToPlayer <= attackRange)
+        if (dist <= attackRange)
             ChangeState(State.Attack);
-        else if (distanceToPlayer <= detectionRange)
+        else if (dist <= detectionRange)
             ChangeState(State.Walk);
         else
             ChangeState(State.Idle);
 
         if (currentState == State.Walk)
         {
-            agent.SetDestination(target.position);
+            if (IsAgentReady()) agent.SetDestination(target.position);
             UpdateAnimatorByVelocity();
         }
+    }
+
+    private bool IsAgentReady()
+    {
+        return agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh;
     }
 
     void ChangeState(State newState)
     {
         if (currentState == newState && newState != State.Attack) return;
-
         currentState = newState;
 
         switch (currentState)
         {
             case State.Idle:
-                agent.isStopped = true;
+                if (IsAgentReady()) agent.isStopped = true;
                 anim.SetBool("IsWalking", false);
                 break;
 
             case State.Walk:
-                agent.isStopped = false;
+                if (IsAgentReady()) agent.isStopped = false;
                 anim.SetBool("IsWalking", true);
                 anim.SetBool("IsAttacking", false);
                 break;
@@ -98,19 +94,16 @@ public class EnhancedMonsterAI : MonoBehaviour
         }
     }
 
-    // NavMesh velocity를 4방향으로 스냅해서 애니메이터에 전달
     void UpdateAnimatorByVelocity()
     {
-        if (agent.velocity.sqrMagnitude < 0.1f) return;
+        if (!IsAgentReady() || agent.velocity.sqrMagnitude < 0.1f) return;
 
         Vector2 vel = agent.velocity;
-
-        // 수평/수직 중 더 큰 축만 살림 → 4방향 스냅
         Vector2 snapped;
         if (Mathf.Abs(vel.x) >= Mathf.Abs(vel.y))
-            snapped = new Vector2(vel.x > 0 ? 1 : -1, 0); // 좌 or 우
+            snapped = new Vector2(vel.x > 0 ? 1 : -1, 0);
         else
-            snapped = new Vector2(0, vel.y > 0 ? 1 : -1); // 상 or 하
+            snapped = new Vector2(0, vel.y > 0 ? 1 : -1);
 
         anim.SetFloat("DirX", snapped.x);
         anim.SetFloat("DirY", snapped.y);
@@ -119,10 +112,12 @@ public class EnhancedMonsterAI : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
-        agent.isStopped = true;
-        agent.velocity = Vector3.zero;
+        if (IsAgentReady())
+        {
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+        }
 
-        // 공격 방향도 4방향으로 스냅
         Vector2 rawDir = (target.position - transform.position).normalized;
         Vector2 attackDir;
         if (Mathf.Abs(rawDir.x) >= Mathf.Abs(rawDir.y))
@@ -135,19 +130,20 @@ public class EnhancedMonsterAI : MonoBehaviour
         anim.SetBool("IsWalking", false);
         anim.SetBool("IsAttacking", true);
 
-        yield return new WaitForSeconds(attackTime);
+        yield return new WaitForSeconds(attackCooldown);
 
-        // 데미지 + 플레이어 넉백 처리
-        if (target != null && Vector2.Distance(transform.position, target.position) <= attackRange + 0.3f)
+        if (target != null)
         {
-            PlayerMovement player = target.GetComponent<PlayerMovement>();
-            if (player != null)
+            Vector2 toPlayer = target.position - transform.position;
+            bool inRange = toPlayer.magnitude <= attackRange + 0.3f;
+            bool inFront = Vector2.Dot(attackDir, toPlayer.normalized) > 0.5f;
+
+            if (inRange && inFront)
             {
-                // 몬스터 → 플레이어 방향으로 넉백
-                Vector2 knockDir = (target.position - transform.position).normalized;
-                player.TakeHit(knockDir);
+                PlayerMovement player = target.GetComponent<PlayerMovement>();
+                if (player != null) player.TakeHit(toPlayer.normalized);
+                Debug.Log($"몬스터가 플레이어에게 {damage} 데미지!");
             }
-            Debug.Log($"몬스터가 플레이어에게 {damage} 데미지!");
         }
 
         anim.SetBool("IsAttacking", false);
@@ -155,51 +151,10 @@ public class EnhancedMonsterAI : MonoBehaviour
         ChangeState(State.Idle);
     }
 
-    // ===== 새로 추가: 몬스터 피격 처리 =====
-    public void TakeDamage(int amount, Vector2 knockbackDirection)
-    {
-        hp -= amount;
-        if (hp <= 0)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // 아직 피격 중이 아닐 때만 넉백
-        if (!isHurt)
-            StartCoroutine(HurtRoutine(knockbackDirection));
-    }
-
-    // 기존 TakeDamage 호환용 오버로드 (넉백 없이 데미지만)
     public void TakeDamage(int amount)
     {
-        TakeDamage(amount, Vector2.zero);
-    }
-
-    IEnumerator HurtRoutine(Vector2 knockbackDirection)
-    {
-        isHurt = true;
-        agent.isStopped = true;
-        agent.velocity = Vector3.zero;
-
-        // 넉백
-        if (knockbackDirection != Vector2.zero && rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode2D.Impulse);
-        }
-
-        yield return new WaitForSeconds(knockbackDuration);
-
-        if (rb != null) rb.linearVelocity = Vector2.zero;
-
-        isHurt = false;
-
-        // 피격 후 다시 추적 재개
-        if (currentState != State.Attack)
-            ChangeState(State.Walk);
-        else
-            agent.isStopped = false;
+        hp -= amount;
+        if (hp <= 0) Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
