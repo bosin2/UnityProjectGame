@@ -207,10 +207,24 @@ public class PlayerMovement : MonoBehaviour
     void AttackMelee()
     {
         anim.SetBool("IsAttacking", true);
+        //ActivateAttackCollider(lastDir);
+        //float attackDuration = GetCurrentAnimationLength();
+        //CancelInvoke("EndAttack");
+        //Invoke("EndAttack", attackDuration);
+    }
+
+    // 2. 애니메이션 이벤트에서 호출할 '판정 시작' 함수 추가
+    public void OnMeleeHitStart()
+    {
+        if (isHurt || isDead) return;
         ActivateAttackCollider(lastDir);
-        float attackDuration = GetCurrentAnimationLength();
-        CancelInvoke("EndAttack");
-        Invoke("EndAttack", attackDuration);
+    }
+
+    // 3. 애니메이션 이벤트에서 호출할 '판정 종료' 함수 추가
+    public void OnMeleeHitEnd()
+    {
+        DisableAllAttackColliders();
+        EndAttack();
     }
 
     void ActivateAttackCollider(Vector2 direction)
@@ -224,6 +238,15 @@ public class PlayerMovement : MonoBehaviour
         else if (direction.x < 0) attack_Left.enabled = true;
         else if (direction.y > 0) attack_Front.enabled = true;
         else if (direction.y < 0) attack_Back.enabled = true;
+    }
+
+    // 공통 사용을 위한 콜라이더 비활성화 함수
+    private void DisableAllAttackColliders()
+    {
+        attack_Left.enabled = false;
+        attack_Right.enabled = false;
+        attack_Front.enabled = false;
+        attack_Back.enabled = false;
     }
 
     void AttackShoot()
@@ -297,10 +320,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isAttacking = false;
         anim.SetBool("IsAttacking", false);
-        attack_Left.enabled = false;
-        attack_Right.enabled = false;
-        attack_Front.enabled = false;
-        attack_Back.enabled = false;
+        DisableAllAttackColliders();
     }
 
     void SwitchWeapon(int weaponType)
