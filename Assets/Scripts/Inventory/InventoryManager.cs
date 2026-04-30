@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         // q 키를 누르면 상태 반전
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ToggleInventory();
 

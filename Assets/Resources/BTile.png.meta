@@ -1,0 +1,652 @@
+fileFormatVersion: 2
+guid: aff10f5bad6506e48b1e52acca649210
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7831971237117848853
+    second: BTile_0
+  - first:
+      213: -5513755689905208302
+    second: BTile_1
+  - first:
+      213: 3267249981977028567
+    second: BTile_2
+  - first:
+      213: -4917717194052540487
+    second: BTile_3
+  - first:
+      213: -8424017973309740725
+    second: BTile_4
+  - first:
+      213: 4016624637761421457
+    second: BTile_5
+  - first:
+      213: 960126704664836174
+    second: BTile_6
+  - first:
+      213: 2602394261109521970
+    second: BTile_7
+  - first:
+      213: -8792375955049258579
+    second: BTile_8
+  - first:
+      213: -340873927122004039
+    second: BTile_9
+  - first:
+      213: -2553617838675309052
+    second: BTile_10
+  - first:
+      213: -5564841549899008814
+    second: BTile_11
+  - first:
+      213: 4731015596886163452
+    second: BTile_12
+  - first:
+      213: -5216762652583082183
+    second: BTile_13
+  - first:
+      213: 9178738530322719739
+    second: BTile_14
+  - first:
+      213: -986925757955808584
+    second: BTile_15
+  - first:
+      213: 2844486299918266372
+    second: BTile_16
+  - first:
+      213: -6761078914096436537
+    second: BTile_17
+  - first:
+      213: -2907195213677177253
+    second: BTile_18
+  - first:
+      213: 7394111799320130416
+    second: BTile_19
+  - first:
+      213: -7425973781216626239
+    second: BTile_20
+  - first:
+      213: -535846263069481331
+    second: BTile_21
+  - first:
+      213: -5070164940693937327
+    second: BTile_22
+  - first:
+      213: -250265516250962177
+    second: BTile_23
+  - first:
+      213: -5195771761312167480
+    second: BTile_24
+  - first:
+      213: -3102460532963965015
+    second: BTile_25
+  - first:
+      213: -9129244096292507884
+    second: BTile_26
+  - first:
+      213: 6848461994211874336
+    second: BTile_27
+  - first:
+      213: -9209370970428860793
+    second: BTile_28
+  - first:
+      213: 2740083475598065687
+    second: BTile_29
+  - first:
+      213: 8912138021128313038
+    second: BTile_30
+  - first:
+      213: -2639438901834959674
+    second: BTile_31
+  - first:
+      213: 4665688907968182682
+    second: BTile_32
+  - first:
+      213: 7480475402031247700
+    second: BTile_33
+  - first:
+      213: 6068426206065667896
+    second: BTile_34
+  - first:
+      213: 8271758179874220221
+    second: BTile_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BTile_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 340
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be29388c7af3f4390800000000000000
+      internalID: -7831971237117848853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21449e4c9643b73b0800000000000000
+      internalID: -5513755689905208302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 300
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d764284c8a975d20800000000000000
+      internalID: 3267249981977028567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 280
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b7eaa66442c0cbb0800000000000000
+      internalID: -4917717194052540487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b49ed5f1940e71b80800000000000000
+      internalID: -8424017973309740725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1900ad9b3daedb730800000000000000
+      internalID: 4016624637761421457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 220
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e48f9e2a62e035d00800000000000000
+      internalID: 960126704664836174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23eb2fadacf8d1420800000000000000
+      internalID: 2602394261109521970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da16a9327a43bf580800000000000000
+      internalID: -8792375955049258579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b753b428f8f44bf0800000000000000
+      internalID: -340873927122004039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40e48a9fa1abf8cd0800000000000000
+      internalID: -2553617838675309052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d47fea1816b5c2b0800000000000000
+      internalID: -5564841549899008814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff7b3f8e91f7a140800000000000000
+      internalID: 4731015596886163452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 937c24fc1065a97b0800000000000000
+      internalID: -5216762652583082183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf3a312ff0e616f70800000000000000
+      internalID: 9178738530322719739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b26c59804cbd42f0800000000000000
+      internalID: -986925757955808584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 400f7131835a97720800000000000000
+      internalID: 2844486299918266372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BTile_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 78
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cae5e2ac82db22a0800000000000000
+      internalID: -6761078914096436537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 03e8a92e7fc3ca740a912523cb8fe53f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BTile_0: -7831971237117848853
+      BTile_1: -5513755689905208302
+      BTile_10: -2553617838675309052
+      BTile_11: -5564841549899008814
+      BTile_12: 4731015596886163452
+      BTile_13: -5216762652583082183
+      BTile_14: 9178738530322719739
+      BTile_15: -986925757955808584
+      BTile_16: 2844486299918266372
+      BTile_17: -6761078914096436537
+      BTile_2: 3267249981977028567
+      BTile_3: -4917717194052540487
+      BTile_4: -8424017973309740725
+      BTile_5: 4016624637761421457
+      BTile_6: 960126704664836174
+      BTile_7: 2602394261109521970
+      BTile_8: -8792375955049258579
+      BTile_9: -340873927122004039
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

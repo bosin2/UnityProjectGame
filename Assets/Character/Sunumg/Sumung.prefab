@@ -156,9 +156,9 @@ MonoBehaviour:
   hp: 60
   damage: 15
   speed: 5
-  detectionRange: 12
+  detectionRange: 20
   attackRange: 4
-  attackCooldown: 0.2
+  attackCooldown: 0.3
   contactDamageInterval: 1.5
   target: {fileID: 0}
 --- !u!61 &5429415106804261727
@@ -195,17 +195,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.042823315, y: -0.585263}
+  m_Offset: {x: -0.106863976, y: 0.0551517}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.1666667, y: 5.1666665}
+    oldSize: {x: 4.75, y: 7.75}
     newSize: {x: 3.1666667, y: 5.1666665}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.7955275, y: 3.5964465}
+  m_Size: {x: 3.4870167, y: 7.2681584}
   m_EdgeRadius: 0
 --- !u!114 &2464660038248292042
 MonoBehaviour:

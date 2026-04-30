@@ -41,11 +41,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
     private Vector2 lastDir = new Vector2(0, -1);
     private bool isAttacking = false;
-    private int currentWeapon = 0;
+    public int currentWeapon = 0; // ← public으로 변경
 
     void Awake()
     {
-        // 싱글톤
         if (instance != null)
         {
             Destroy(gameObject);
@@ -64,13 +63,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // HP 초기화
         currentHp = maxHp;
     }
 
     void Update()
     {
-        // 사망 시 입력 차단
         if (isDead) return;
 
         if (isAttacking || isHurt)
@@ -99,11 +96,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !isAttacking && !isHurt)
             Attack();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            SwitchWeapon(0);
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            SwitchWeapon(1);
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // 권총 소유했을 때만 변경 가능
+            if (GameManager.instance != null && GameManager.instance.hasGun)
+            {
+                if (currentWeapon == 0)
+                    SwitchWeapon(1);
+                else
+                    SwitchWeapon(0);
+            }
+        }
     }
 
     void FixedUpdate()
@@ -112,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    // 넉백 처리
     public void TakeHit(Vector2 knockbackDirection)
     {
         if (isHurt || isDead) return;
@@ -120,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(HurtRoutine(knockbackDirection));
     }
 
-    // 데미지 처리
     public void TakeDamage(int amount)
     {
         if (isDead) return;
@@ -140,7 +141,6 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         movement = Vector2.zero;
 
-        // 동쪽 방향이면 W_Death 반전해서 사용
         float dirX = anim.GetFloat("DirX");
         float dirY = anim.GetFloat("DirY");
 
@@ -150,8 +150,6 @@ public class PlayerMovement : MonoBehaviour
             sr.flipX = false;
 
         anim.SetBool("IsDie", true);
-
-        // 사망 애니메이션 후 오브젝트 비활성화
         StartCoroutine(DieRoutine());
     }
 
@@ -166,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
         isHurt = true;
         anim.SetBool("IsHurt", true);
 
-        // 공격 중 피격 시 공격 캔슬
         if (isAttacking)
         {
             isAttacking = false;
@@ -207,20 +204,14 @@ public class PlayerMovement : MonoBehaviour
     void AttackMelee()
     {
         anim.SetBool("IsAttacking", true);
-        //ActivateAttackCollider(lastDir);
-        //float attackDuration = GetCurrentAnimationLength();
-        //CancelInvoke("EndAttack");
-        //Invoke("EndAttack", attackDuration);
     }
 
-    // 2. 애니메이션 이벤트에서 호출할 '판정 시작' 함수 추가
     public void OnMeleeHitStart()
     {
         if (isHurt || isDead) return;
         ActivateAttackCollider(lastDir);
     }
 
-    // 3. 애니메이션 이벤트에서 호출할 '판정 종료' 함수 추가
     public void OnMeleeHitEnd()
     {
         DisableAllAttackColliders();
@@ -240,7 +231,6 @@ public class PlayerMovement : MonoBehaviour
         else if (direction.y < 0) attack_Back.enabled = true;
     }
 
-    // 공통 사용을 위한 콜라이더 비활성화 함수
     private void DisableAllAttackColliders()
     {
         attack_Left.enabled = false;
@@ -260,7 +250,6 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ShootBulletCoroutine(Vector2 direction)
     {
-        // Player 레이어 제외하고 레이캐스트
         int layerMask = ~LayerMask.GetMask("Player");
 
         RaycastHit2D hit = Physics2D.Raycast(
@@ -273,7 +262,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 startPos = transform.position;
         Vector2 endPos = hit.collider != null ? hit.point : startPos + direction * 100f;
 
-        // 총알 생성 및 현재 씬으로 이동
         GameObject bullet = Instantiate(bulletPrefab, startPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(bullet, SceneManager.GetActiveScene());
 
@@ -284,7 +272,6 @@ public class PlayerMovement : MonoBehaviour
         float duration = distance / shootBulletSpeed;
         float elapsed = 0f;
 
-        // 총알 이동
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -295,7 +282,6 @@ public class PlayerMovement : MonoBehaviour
 
         Destroy(bullet);
 
-        // 명중 시 이펙트 및 데미지
         if (hit.collider != null)
         {
             ShowHitEffect(hit.point);
@@ -310,7 +296,6 @@ public class PlayerMovement : MonoBehaviour
 
     void ShowHitEffect(Vector2 position)
     {
-        // 이펙트 생성 및 현재 씬으로 이동
         GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(effect, SceneManager.GetActiveScene());
         Destroy(effect, 0.3f);
@@ -338,7 +323,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 씬 전환 후 스폰 위치 복원
         if (PlayerPrefs.HasKey("SpawnX"))
         {
             float x = PlayerPrefs.GetFloat("SpawnX");
