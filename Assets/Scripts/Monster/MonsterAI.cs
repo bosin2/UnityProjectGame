@@ -50,7 +50,6 @@ public class MonsterAI : MonoBehaviour
 
         maxHp = hp;
 
-        // HP바 프리팹으로 생성
         if (hpBarPrefab != null)
         {
             hpBarInstance = Instantiate(hpBarPrefab);
@@ -60,8 +59,12 @@ public class MonsterAI : MonoBehaviour
                 hpCanvas.worldCamera = Camera.main;
 
             Image[] images = hpBarInstance.GetComponentsInChildren<Image>();
+            Debug.Log("이미지 개수: " + images.Length);
             if (images.Length >= 2)
+            {
                 hpFillImage = images[1];
+                Debug.Log("Fill 연결됨: " + hpFillImage.name);
+            }
         }
 
         FindPlayer();
@@ -243,6 +246,7 @@ public class MonsterAI : MonoBehaviour
     // 데미지 수치만큼 HP 감소, 피격 애니메이션 재생. HP 0 이하면 사망 처리
     public void TakeDamage(int amount)
     {
+        Debug.Log("몬스터 데미지 받음: " + amount);
         if (isDead) return;
 
         hp -= amount;
