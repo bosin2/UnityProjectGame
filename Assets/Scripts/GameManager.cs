@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,30 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
+    }
+
+    // 씬 로드될 때 UI 켜기
+    void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 메인메뉴, 인트로, 튜토리얼에서는 UI 숨기기
+        if (scene.name == "MainMenu" || scene.name == "Intro" || scene.name == "Tutorial")
+        {
+            UICanvas.Instance.HideUI();
+        }
+        else
+        {
+            UICanvas.Instance.ShowUI();
+        }
     }
 
     // 어떤 씬에서든 없으면 자동 생성

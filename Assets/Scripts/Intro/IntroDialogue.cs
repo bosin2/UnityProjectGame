@@ -35,7 +35,7 @@ public class IntroDialogue : MonoBehaviour
 
     void Update()
     {
-        if (canClick && Input.GetMouseButtonDown(0))
+        if (canClick && Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
             {

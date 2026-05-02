@@ -9,6 +9,7 @@ public class PlayerInteract : MonoBehaviour
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
     public GameObject clickHint;
+    public GameObject hotbar;
 
     private Interactable currentTarget;
     private bool isDialogueActive = false;
@@ -25,7 +26,7 @@ public class PlayerInteract : MonoBehaviour
         {
             Debug.Log("Q 눌림 / currentTarget: " + currentTarget);
         }
-
+       
         // 상호작용
         if (!isDialogueActive && currentTarget != null
        && Input.GetKeyDown(KeyCode.Q))
@@ -90,6 +91,7 @@ public class PlayerInteract : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
         Time.timeScale = 0f;
+        if (hotbar != null) hotbar.SetActive(false); // 핫바 끄기
         StartCoroutine(TypeLine(lines[0]));
     }
 
@@ -117,6 +119,7 @@ public class PlayerInteract : MonoBehaviour
             dialogueBox.SetActive(false);
             isDialogueActive = false;
             Time.timeScale = 1f;
+            if (hotbar != null) hotbar.SetActive(true); // 핫바 켜기
             onComplete?.Invoke();
             return;
         }
