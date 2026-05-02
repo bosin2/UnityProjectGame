@@ -1,8 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using UnityEngine.Events;
 
+// 플레이어가 Interactable 오브젝트에 접근했을 때 대화 시스템을 처리하는 컴포넌트
 public class PlayerInteract : MonoBehaviour
 {
     [Header("UI 연결")]
@@ -18,22 +18,23 @@ public class PlayerInteract : MonoBehaviour
     private int currentIndex = 0;
     private System.Action onComplete;
 
-
+    void Start()
+    {
+        dialogueBox.SetActive(false);
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        // Q키: 상호작용 대상이 있고 대화 중이 아닐 때 대화 시작
+        if (!isDialogueActive && currentTarget != null && Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Q 눌림 / currentTarget: " + currentTarget);
-        }
-       
-        // 상호작용
-        if (!isDialogueActive && currentTarget != null
-       && Input.GetKeyDown(KeyCode.Q))
-        {
-            // 조건 안 맞으면 힌트 대사 띄우기
-            if (currentTarget.requiredFlag != "" &&
-                !GameManager.instance.HasFlag(currentTarget.requiredFlag))
+            // 선행 플래그 조건 미충족 시 힌트 메시지 출력
+            // GameManager가 없거나 플래그 미보유 시 힌트 표시
+            bool flagMissing = currentTarget.requiredFlag != "" &&
+                               (GameManager.Instance == null ||
+                                !GameManager.Instance.HasFlag(currentTarget.requiredFlag));
+
+            if (flagMissing)
             {
                 StartDialogue(new string[] { currentTarget.hintMessage });
                 return;
@@ -42,12 +43,12 @@ public class PlayerInteract : MonoBehaviour
             StartDialogue(currentTarget.dialogueLines, () =>
             {
                 if (currentTarget.setFlag != "")
-                    GameManager.instance.SetFlag(currentTarget.setFlag);
+                    GameManager.Instance?.SetFlag(currentTarget.setFlag);
                 currentTarget.onComplete?.Invoke();
             });
         }
 
-        // 대사 넘기기
+        // Space키: 대화 중 타이핑 즉시 완성 또는 다음 줄로 넘기기
         if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
@@ -64,18 +65,15 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-
+    // 플레이어가 Interactable 콜라이더에 진입하면 타겟으로 등록
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("트리거 감지: " + other.gameObject.name);
         Interactable target = other.GetComponent<Interactable>();
         if (target != null)
-        {
-            Debug.Log("Interactable 찾음!");
             currentTarget = target;
-        }
     }
 
+    // 플레이어가 Interactable 콜라이더에서 벗어나면 타겟 해제
     void OnTriggerExit2D(Collider2D other)
     {
         Interactable target = other.GetComponent<Interactable>();
@@ -83,18 +81,22 @@ public class PlayerInteract : MonoBehaviour
             currentTarget = null;
     }
 
+    // 대화 시작: 대화창 표시, 시간 정지, 핫바 숨김
     public void StartDialogue(string[] lines, System.Action onDone = null)
     {
+        if (lines == null || lines.Length == 0) return;
+
         currentLines = lines;
         currentIndex = 0;
         onComplete = onDone;
         isDialogueActive = true;
         dialogueBox.SetActive(true);
         Time.timeScale = 0f;
-        if (hotbar != null) hotbar.SetActive(false); // 핫바 끄기
+        if (hotbar != null) hotbar.SetActive(false);
         StartCoroutine(TypeLine(lines[0]));
     }
 
+    // 한 글자씩 타이핑하는 연출 코루틴
     IEnumerator TypeLine(string line)
     {
         isTyping = true;
@@ -111,6 +113,7 @@ public class PlayerInteract : MonoBehaviour
         clickHint.SetActive(true);
     }
 
+    // 다음 줄로 넘기기. 마지막 줄이면 대화 종료
     void NextLine()
     {
         currentIndex++;
@@ -119,16 +122,10 @@ public class PlayerInteract : MonoBehaviour
             dialogueBox.SetActive(false);
             isDialogueActive = false;
             Time.timeScale = 1f;
-            if (hotbar != null) hotbar.SetActive(true); // 핫바 켜기
+            if (hotbar != null) hotbar.SetActive(true);
             onComplete?.Invoke();
             return;
         }
         StartCoroutine(TypeLine(currentLines[currentIndex]));
     }
-
-    void Start()
-    {
-        dialogueBox.SetActive(false);
-    }
-
 }

@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
+// 몬스터의 AI 상태 머신, 이동, 공격, 피격, HP바 표시를 통합 관리하는 컴포넌트
 public class MonsterAI : MonoBehaviour
 {
     [Header("스탯")]
@@ -9,7 +10,7 @@ public class MonsterAI : MonoBehaviour
     public int damage = 15;
     public float speed = 2f;
 
-    [Header("범위")]
+    [Header("감지 및 공격 범위")]
     public float detectionRange = 18f;
     public float attackRange = 1.2f;
     public float attackCooldown = 1.0f;
@@ -21,6 +22,13 @@ public class MonsterAI : MonoBehaviour
     [Header("타겟")]
     public Transform target;
 
+    [Header("HP바")]
+    public GameObject hpBarPrefab;
+    public Vector3 hpBarOffset = new Vector3(0, 1f, 0);
+    private GameObject hpBarInstance;
+    private Image hpFillImage;
+
+    private int maxHp;
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -30,24 +38,48 @@ public class MonsterAI : MonoBehaviour
     private State currentState = State.Idle;
     private bool isAttacking = false;
 
+    // 컴포넌트 초기화, HP바 생성, 플레이어 탐색 후 Idle 상태로 진입
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
 
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
+
+        maxHp = hp;
+
+        // HP바 프리팹으로 생성
+        if (hpBarPrefab != null)
+        {
+            hpBarInstance = Instantiate(hpBarPrefab);
+
+            Canvas hpCanvas = hpBarInstance.GetComponent<Canvas>();
+            if (hpCanvas != null)
+                hpCanvas.worldCamera = Camera.main;
+
+            Image[] images = hpBarInstance.GetComponentsInChildren<Image>();
+            if (images.Length >= 2)
+                hpFillImage = images[1];
+        }
 
         FindPlayer();
         ChangeState(State.Idle);
     }
 
+    // 매 프레임 HP바 월드 위치를 몬스터 머리 위로 갱신
+    void LateUpdate()
+    {
+        if (hpBarInstance != null)
+            hpBarInstance.transform.position = transform.position + hpBarOffset;
+    }
+
+    // 씬에서 활성화된 PlayerMovement를 찾아 target으로 설정
     void FindPlayer()
     {
         if (target != null) return;
 
-        // DontDestroyOnLoad 제외하고 같은 씬 플레이어 탐색
         PlayerMovement[] players = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
         foreach (var player in players)
         {
@@ -59,11 +91,11 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    // 플레이어와의 거리에 따라 Idle/Walk/Attack 상태 전환. 다른 씬의 플레이어는 무시
     void Update()
     {
         if (isDead) return;
 
-        // 접촉 데미지 쿨다운 감소
         if (contactDamageCooldown > 0)
             contactDamageCooldown -= Time.deltaTime;
 
@@ -73,7 +105,6 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        // 플레이어가 다른 씬에 있으면 타겟 초기화
         if (target.gameObject.scene.name != gameObject.scene.name &&
             target.gameObject.scene.name != "DontDestroyOnLoad")
         {
@@ -95,6 +126,7 @@ public class MonsterAI : MonoBehaviour
             ChangeState(State.Idle);
     }
 
+    // Walk 상태일 때만 4방향 이동 적용. 그 외에는 정지
     void FixedUpdate()
     {
         if (isDead) return;
@@ -105,11 +137,11 @@ public class MonsterAI : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
     }
 
+    // x/y 차이 중 큰 축 방향으로만 이동해 4방향 이동을 구현
     void MoveInFourDirections()
     {
         Vector2 diff = (Vector2)(target.position - transform.position);
 
-        // x, y 중 큰 축으로만 이동
         Vector2 moveDir;
         if (Mathf.Abs(diff.x) >= Mathf.Abs(diff.y))
             moveDir = new Vector2(diff.x > 0 ? 1 : -1, 0);
@@ -117,11 +149,11 @@ public class MonsterAI : MonoBehaviour
             moveDir = new Vector2(0, diff.y > 0 ? 1 : -1);
 
         rb.linearVelocity = moveDir * speed;
-
         anim.SetFloat("DirX", moveDir.x);
         anim.SetFloat("DirY", moveDir.y);
     }
 
+    // 상태를 전환하고 각 상태에 맞는 속도/애니메이션 파라미터 적용
     void ChangeState(State newState)
     {
         if (currentState == newState && newState != State.Attack) return;
@@ -145,6 +177,7 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    // 공격 애니메이션 재생 후 쿨다운 대기, 범위 내 플레이어에게 데미지와 넉백 적용
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
@@ -157,7 +190,6 @@ public class MonsterAI : MonoBehaviour
             yield break;
         }
 
-        // 플레이어 방향 4방향 스냅
         Vector2 rawDir = (target.position - transform.position).normalized;
         Vector2 attackDir;
         if (Mathf.Abs(rawDir.x) >= Mathf.Abs(rawDir.y))
@@ -172,7 +204,6 @@ public class MonsterAI : MonoBehaviour
 
         yield return new WaitForSeconds(attackCooldown);
 
-        // 쿨다운 후 범위 안에 있으면 데미지
         if (target != null)
         {
             Vector2 toPlayer = target.position - transform.position;
@@ -192,7 +223,7 @@ public class MonsterAI : MonoBehaviour
         ChangeState(State.Idle);
     }
 
-    // 몸에 닿으면 데미지
+    // 플레이어와 충돌 중일 때 일정 간격으로 접촉 데미지와 넉백 적용
     void OnCollisionStay2D(Collision2D collision)
     {
         if (isDead) return;
@@ -209,30 +240,41 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    // 데미지 수치만큼 HP 감소, 피격 애니메이션 재생. HP 0 이하면 사망 처리
     public void TakeDamage(int amount)
     {
         if (isDead) return;
 
         hp -= amount;
-
-        // 피격 애니메이션 트리거
         anim.SetTrigger("IsHurt");
+        UpdateHPBar();
 
         if (hp <= 0)
             StartCoroutine(DieRoutine());
     }
 
+    // HP 비율에 맞게 HP바 fillAmount 갱신
+    void UpdateHPBar()
+    {
+        if (hpFillImage != null)
+            hpFillImage.fillAmount = (float)hp / maxHp;
+    }
+
+    // 사망 애니메이션 재생, HP바 제거 후 오브젝트 삭제
     IEnumerator DieRoutine()
     {
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         anim.SetBool("IsDie", true);
 
-        // 사망 애니메이션 후 삭제
+        if (hpBarInstance != null)
+            Destroy(hpBarInstance);
+
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
 
+    // 에디터에서 감지 범위(노란색)와 공격 범위(빨간색)를 기즈모로 시각화
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

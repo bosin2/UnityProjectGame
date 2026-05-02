@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
+// 플레이어 HP를 슬라이더와 색상으로 표시하는 순수 UI 컴포넌트.
+// HP 데이터는 PlayerMovement가 소유하며, 이 클래스는 표시만 담당한다.
 public class PlayerHPbar : MonoBehaviour
 {
     public static PlayerHPbar Instance;
 
-    [Header("스탯")]
-    public float maxHP = 100f;
-    private float currentHP;
-
-    [Header("UI")]
+    [Header("UI 연결")]
     public Slider hpSlider;
-    public Image fillImage; // Slider의 Fill 이미지
-    public GameObject damageFlash; // 화면 가장자리 빨간 플래시 오브젝트
+    public Image fillImage;
+    public GameObject damageFlash; // 피격 시 화면 가장자리 빨간 플래시 오브젝트
 
     void Awake()
     {
@@ -22,37 +21,28 @@ public class PlayerHPbar : MonoBehaviour
 
     void Start()
     {
-        currentHP = maxHP;
-        UpdateUI();
+        // 씬 로드 시 현재 PlayerMovement의 HP 값을 읽어 UI 초기화
+        PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
+        if (player != null)
+            Refresh(player.CurrentHp, player.maxHp, false);
     }
 
-    public void TakeDamage(float amount)
+    // HP 슬라이더와 색상 갱신. showFlash=true이면 피격 플래시 효과도 재생
+    public void Refresh(int current, int max, bool showFlash = true)
     {
-        currentHP = Mathf.Max(0f, currentHP - amount);
-        UpdateUI();
-        StartCoroutine(FlashEffect());
+        float ratio = (float)current / max;
 
-        if (currentHP <= 0f) Die();
-    }
-
-    public void Heal(float amount)
-    {
-        currentHP = Mathf.Min(maxHP, currentHP + amount);
-        UpdateUI();
-    }
-
-    void UpdateUI()
-    {
-        hpSlider.value = currentHP / maxHP;
-
-        // HP 비율에 따라 색상 변화
-        float ratio = currentHP / maxHP;
+        hpSlider.value = ratio;
         fillImage.color = ratio > 0.5f ? Color.green
                         : ratio > 0.25f ? Color.yellow
                         : Color.red;
+
+        if (showFlash)
+            StartCoroutine(FlashEffect());
     }
 
-    System.Collections.IEnumerator FlashEffect()
+    // 피격 시 화면 가장자리에 0.2초간 빨간 플래시 표시
+    IEnumerator FlashEffect()
     {
         if (damageFlash != null)
         {
@@ -60,11 +50,5 @@ public class PlayerHPbar : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             damageFlash.SetActive(false);
         }
-    }
-
-    void Die()
-    {
-        // 게임오버 처리
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 }

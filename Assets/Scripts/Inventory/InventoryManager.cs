@@ -1,15 +1,16 @@
 using UnityEngine;
 
+// E키로 인벤토리를 열고 닫으며, 열려 있을 때 핫바를 숨기는 컴포넌트
 public class InventoryManager : MonoBehaviour
 {
-    public GameObject inventoryUI; //Inventory_UI를 넣을 칸
+    public GameObject inventoryUI;
     public GameObject hotbarUI;
 
     private bool isInventoryOpen = false;
 
     void Start()
     {
-        // 게임 시작할 때는 인벤토리를 꺼둠
+        // 게임 시작 시 인벤토리 닫힘 상태로 초기화
         isInventoryOpen = false;
         inventoryUI.SetActive(false);
         hotbarUI.SetActive(true);
@@ -17,20 +18,16 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        // q 키를 누르면 상태 반전
+        // E키로 인벤토리 열기/닫기 전환
         if (Input.GetKeyDown(KeyCode.E))
-        {
             ToggleInventory();
-
-        }
     }
 
+    // 인벤토리와 핫바 표시 상태를 반전
     public void ToggleInventory()
     {
         isInventoryOpen = !isInventoryOpen;
         inventoryUI.SetActive(isInventoryOpen);
         hotbarUI.SetActive(!isInventoryOpen);
-
-        // 인벤토리가 열려 있을 때는 시간이 멈추게
     }
 }

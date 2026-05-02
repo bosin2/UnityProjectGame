@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+// 플레이어 이동, 공격, 피격, HP 관리를 담당하는 영구 싱글톤
 public class PlayerMovement : MonoBehaviour
 {
     private static PlayerMovement instance;
 
-    [Header("속도")]
+    [Header("이동 속도")]
     public float moveSpeed = 5f;
 
     [Header("공격 설정")]
@@ -14,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public int shoot_damage = 30;
     public float shootBulletSpeed = 10f;
 
-    [Header("공격 범위")]
+    [Header("공격 콜라이더 (방향별)")]
     public Collider2D attack_Left;
     public Collider2D attack_Right;
     public Collider2D attack_Front;
@@ -41,7 +42,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
     private Vector2 lastDir = new Vector2(0, -1);
     private bool isAttacking = false;
-    public int currentWeapon = 0; // ← public으로 변경
+    public int currentWeapon = 0;
+
+    // 외부에서 현재/최대 HP를 읽기 위한 프로퍼티
+    public int CurrentHp => currentHp;
 
     void Awake()
     {
@@ -79,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
 
+            // 대각선 이동 방지: x 축 우선
             if (x != 0)
                 movement = new Vector2(x, 0);
             else if (y != 0)
@@ -96,16 +101,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !isAttacking && !isHurt)
             Attack();
+
+        // Tab 키로 무기 전환 (권총 소지 시에만 가능)
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            // 권총 소유했을 때만 변경 가능
-            if (GameManager.instance != null && GameManager.instance.hasGun)
-            {
-                if (currentWeapon == 0)
-                    SwitchWeapon(1);
-                else
-                    SwitchWeapon(0);
-            }
+            if (GameManager.Instance != null && GameManager.Instance.hasGun)
+                SwitchWeapon(currentWeapon == 0 ? 1 : 0);
         }
     }
 
@@ -115,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
+    // 넉백 방향을 받아 피격 코루틴 시작
     public void TakeHit(Vector2 knockbackDirection)
     {
         if (isHurt || isDead) return;
@@ -122,17 +124,16 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(HurtRoutine(knockbackDirection));
     }
 
+    // HP 감소 후 HP바 UI 갱신, 0 이하면 사망 처리
     public void TakeDamage(int amount)
     {
         if (isDead) return;
 
-        currentHp -= amount;
+        currentHp = Mathf.Max(0, currentHp - amount);
+        PlayerHPbar.Instance?.Refresh(currentHp, maxHp);
 
         if (currentHp <= 0)
-        {
-            currentHp = 0;
             Die();
-        }
     }
 
     void Die()
@@ -141,9 +142,9 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         movement = Vector2.zero;
 
+        // 마지막 이동 방향에 따라 스프라이트 플립 결정
         float dirX = anim.GetFloat("DirX");
         float dirY = anim.GetFloat("DirY");
-
         if (Mathf.Abs(dirX) >= Mathf.Abs(dirY))
             sr.flipX = dirX > 0;
         else
@@ -153,12 +154,15 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(DieRoutine());
     }
 
+    // 사망 애니메이션 후 오브젝트 비활성화 및 게임오버 씬 전환
     IEnumerator DieRoutine()
     {
         yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
+        SceneManager.LoadScene("GameOver");
     }
 
+    // 피격 시 현재 공격 중단, 넉백 적용 후 무적 시간 처리
     IEnumerator HurtRoutine(Vector2 knockbackDirection)
     {
         isHurt = true;
@@ -169,17 +173,13 @@ public class PlayerMovement : MonoBehaviour
             isAttacking = false;
             anim.SetBool("IsAttacking", false);
             CancelInvoke("EndAttack");
-            attack_Left.enabled = false;
-            attack_Right.enabled = false;
-            attack_Front.enabled = false;
-            attack_Back.enabled = false;
+            DisableAllAttackColliders();
         }
 
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(knockbackDuration);
-
         rb.linearVelocity = Vector2.zero;
 
         float remaining = hurtDuration - knockbackDuration;
@@ -190,55 +190,63 @@ public class PlayerMovement : MonoBehaviour
         isHurt = false;
     }
 
+    // 현재 무기에 따라 근접 또는 원거리 공격 시작
     void Attack()
     {
         if (isAttacking) return;
+
+        // 무기 없으면 공격 불가
+        if (GameManager.Instance != null && !GameManager.Instance.hasPipe && !GameManager.Instance.hasGun) return;
+
         isAttacking = true;
 
         if (currentWeapon == 0)
             AttackMelee();
-        else if (currentWeapon == 1)
+        else
             AttackShoot();
     }
 
+    // 근접 공격: 애니메이션 이벤트에서 콜라이더 활성화
     void AttackMelee()
     {
         anim.SetBool("IsAttacking", true);
     }
 
+    // 애니메이션 이벤트: 근접 공격 히트박스 활성화
     public void OnMeleeHitStart()
     {
         if (isHurt || isDead) return;
         ActivateAttackCollider(lastDir);
     }
 
+    // 애니메이션 이벤트: 근접 공격 히트박스 비활성화 및 공격 종료
     public void OnMeleeHitEnd()
     {
         DisableAllAttackColliders();
         EndAttack();
     }
 
+    // 마지막 이동 방향에 해당하는 공격 콜라이더만 활성화
     void ActivateAttackCollider(Vector2 direction)
     {
-        attack_Left.enabled = false;
-        attack_Right.enabled = false;
-        attack_Front.enabled = false;
-        attack_Back.enabled = false;
+        DisableAllAttackColliders();
 
-        if (direction.x > 0) attack_Right.enabled = true;
-        else if (direction.x < 0) attack_Left.enabled = true;
-        else if (direction.y > 0) attack_Front.enabled = true;
-        else if (direction.y < 0) attack_Back.enabled = true;
+        if (direction.x > 0)       attack_Right.enabled = true;
+        else if (direction.x < 0)  attack_Left.enabled  = true;
+        else if (direction.y > 0)  attack_Front.enabled = true;
+        else if (direction.y < 0)  attack_Back.enabled  = true;
     }
 
-    private void DisableAllAttackColliders()
+    // 모든 방향 공격 콜라이더 비활성화
+    void DisableAllAttackColliders()
     {
-        attack_Left.enabled = false;
+        attack_Left.enabled  = false;
         attack_Right.enabled = false;
         attack_Front.enabled = false;
-        attack_Back.enabled = false;
+        attack_Back.enabled  = false;
     }
 
+    // 원거리 공격: 애니메이션 재생 후 레이캐스트로 탄환 발사
     void AttackShoot()
     {
         anim.SetBool("IsAttacking", true);
@@ -248,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
         Invoke("EndAttack", shootDuration);
     }
 
+    // 레이캐스트로 탄착점 계산 후 탄환 오브젝트를 직선 이동시키고 피격 처리
     IEnumerator ShootBulletCoroutine(Vector2 direction)
     {
         int layerMask = ~LayerMask.GetMask("Player");
@@ -294,6 +303,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // 탄착점에 피격 이펙트 생성 후 자동 제거
     void ShowHitEffect(Vector2 position)
     {
         GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
@@ -301,6 +311,7 @@ public class PlayerMovement : MonoBehaviour
         Destroy(effect, 0.3f);
     }
 
+    // 공격 상태 초기화 및 모든 공격 콜라이더 비활성화
     void EndAttack()
     {
         isAttacking = false;
@@ -308,6 +319,7 @@ public class PlayerMovement : MonoBehaviour
         DisableAllAttackColliders();
     }
 
+    // 무기 변경 후 애니메이터 파라미터 동기화
     void SwitchWeapon(int weaponType)
     {
         if (currentWeapon == weaponType) return;
@@ -315,12 +327,14 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("Weapon", weaponType);
     }
 
+    // 현재 재생 중인 애니메이션 클립의 길이 반환 (원거리 공격 타이밍용)
     float GetCurrentAnimationLength()
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length / anim.speed;
     }
 
+    // 씬 전환 후 저장된 스폰 위치가 있으면 해당 위치로 이동
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (PlayerPrefs.HasKey("SpawnX"))

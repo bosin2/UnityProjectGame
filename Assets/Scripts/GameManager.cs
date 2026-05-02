@@ -2,63 +2,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// 게임 전반의 상태(스테이지, 무기, 이벤트 플래그)를 관리하는 영구 싱글톤
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    public int stage = 0;
+    public static GameManager Instance { get; private set; }
     public bool hasGun = false;
-    public string currentWeapon = "pipe"; 
+    public bool hasPipe = false;
+    public int stage = 0;
+    public string currentWeapon = "pipe";
 
+    // 이벤트 진행 여부를 문자열 키로 추적하는 플래그 집합
     private HashSet<string> flags = new HashSet<string>();
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
     }
 
-    // 씬 로드될 때 UI 켜기
     void OnEnable()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnDisable()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    // 씬 전환 시 메뉴/인트로/튜토리얼에서는 HUD 숨기고, 게임 씬에서는 표시
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 메인메뉴, 인트로, 튜토리얼에서는 UI 숨기기
         if (scene.name == "MainMenu" || scene.name == "Intro" || scene.name == "Tutorial")
-        {
-            UICanvas.Instance.HideUI();
-        }
+            UICanvas.Instance?.HideUI();
         else
-        {
-            UICanvas.Instance.ShowUI();
-        }
+            UICanvas.Instance?.ShowUI();
     }
 
-    // 어떤 씬에서든 없으면 자동 생성
-    public static GameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject obj = new GameObject("GameManager");
-                obj.AddComponent<GameManager>();
-            }
-            return instance;
-        }
-    }
-
+    // 플래그 등록
     public void SetFlag(string flag) => flags.Add(flag);
+
+    // 플래그 보유 여부 반환
     public bool HasFlag(string flag) => flags.Contains(flag);
 }

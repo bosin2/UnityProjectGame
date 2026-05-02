@@ -1269,8 +1269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcaf0ca763647d47928acd9d2c4cd27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 0
   hasGun: 0
+  hasPipe: 0
+  stage: 0
   currentWeapon: pipe
 --- !u!4 &1082564782
 Transform:
@@ -1768,7 +1769,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 865894049021134993, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
       propertyPath: m_Name
-      value: Canvas (1)
+      value: UICanvas
       objectReference: {fileID: 0}
     - target: {fileID: 1965581421301318826, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
       propertyPath: m_Pivot.x

@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// 메인 메뉴 버튼 이벤트 핸들러
 public class MainMenuController : MonoBehaviour
 {
+    // 게임 시작 버튼: 인트로 씬으로 전환
     public void OnStartGame()
     {
         SceneManager.LoadScene("Intro");
     }
 
+    // 설정 버튼 (미구현)
     public void OnSettings()
     {
-        Debug.Log("클릭");
     }
 
+    // 종료 버튼: 애플리케이션 종료
     public void OnQuit()
     {
         Application.Quit();
