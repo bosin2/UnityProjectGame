@@ -405,7 +405,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1494831114}
   - component: {fileID: 1494831115}
-  - component: {fileID: 1494831116}
   m_Layer: 0
   m_Name: Colider
   m_TagString: Untagged
@@ -474,45 +473,21 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 3.1195602, y: 6.8830004}
-      - {x: -3.5313215, y: 6.8899436}
-      - {x: -4.468219, y: -3.0279536}
-      - {x: -4.6783257, y: -9.438655}
-      - {x: -0.75176775, y: -9.466057}
-      - {x: -0.68303484, y: -8.562628}
-      - {x: 4.0355663, y: -8.2937355}
-      - {x: 4.1168303, y: -3.398832}
-      - {x: 4.129343, y: -2.9309778}
-      - {x: 4.097862, y: -2.8971057}
-      - {x: 3.2902567, y: -2.9171667}
+    - - {x: 6.3098307, y: 9.144001}
+      - {x: -6.1823916, y: 9.281385}
+      - {x: -6.3972397, y: -3.183508}
+      - {x: -6.393011, y: -9.438655}
+      - {x: -4.449058, y: -9.414206}
+      - {x: -4.487494, y: -2.8589492}
+      - {x: -3.7341008, y: 7.002493}
+      - {x: 3.2594876, y: 6.815938}
+      - {x: 3.4327521, y: -2.9828296}
+      - {x: 4.6391945, y: -2.9653492}
+      - {x: 4.4257655, y: -8.520281}
+      - {x: -1.0997787, y: -8.497079}
+      - {x: -1.0829008, y: -9.283314}
+      - {x: 6.4517074, y: -9.346768}
   m_UseDelaunayMesh: 0
---- !u!50 &1494831116
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494831113}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1725775471
 GameObject:
   m_ObjectHideFlags: 0
