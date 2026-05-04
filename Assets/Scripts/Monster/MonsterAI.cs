@@ -38,6 +38,11 @@ public class MonsterAI : MonoBehaviour
     private State currentState = State.Idle;
     private bool isAttacking = false;
 
+    private enum MoveAxis { None, Horizontal, Vertical }
+    private MoveAxis currentMoveAxis = MoveAxis.None;
+
+    [SerializeField] private float axisSwitchMargin = 0.7f;
+
     // 컴포넌트 초기화, HP바 생성, 플레이어 탐색 후 Idle 상태로 진입
     void Start()
     {
@@ -145,8 +150,29 @@ public class MonsterAI : MonoBehaviour
     {
         Vector2 diff = (Vector2)(target.position - transform.position);
 
+        float absX = Mathf.Abs(diff.x);
+        float absY = Mathf.Abs(diff.y);
+
+        if (currentMoveAxis == MoveAxis.None)
+        {
+            currentMoveAxis = absX >= absY
+                ? MoveAxis.Horizontal
+                : MoveAxis.Vertical;
+        }
+        else if (currentMoveAxis == MoveAxis.Horizontal)
+        {
+            if (absY > absX + axisSwitchMargin)
+                currentMoveAxis = MoveAxis.Vertical;
+        }
+        else if (currentMoveAxis == MoveAxis.Vertical)
+        {
+            if (absX > absY + axisSwitchMargin)
+                currentMoveAxis = MoveAxis.Horizontal;
+        }
+
         Vector2 moveDir;
-        if (Mathf.Abs(diff.x) >= Mathf.Abs(diff.y))
+
+        if (currentMoveAxis == MoveAxis.Horizontal)
             moveDir = new Vector2(diff.x > 0 ? 1 : -1, 0);
         else
             moveDir = new Vector2(0, diff.y > 0 ? 1 : -1);
