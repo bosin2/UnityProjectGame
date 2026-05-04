@@ -775,6 +775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiBox
       objectReference: {fileID: 0}
+    - target: {fileID: 3431492132730783929, guid: a2daea8aabbeb524a83501c852f63d9c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

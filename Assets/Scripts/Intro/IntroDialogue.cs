@@ -36,8 +36,6 @@ public class IntroDialogue : MonoBehaviour
 
     void Update()
     {
-        if (!canClick) return;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
@@ -49,7 +47,7 @@ public class IntroDialogue : MonoBehaviour
                 canClick = true;
                 clickHint.SetActive(true);
             }
-            else
+            else if (canClick)
             {
                 NextLine();
             }

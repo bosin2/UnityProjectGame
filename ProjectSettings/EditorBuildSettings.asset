@@ -18,14 +18,20 @@ EditorBuildSettings:
     path: Assets/Scenes/GameLap.unity
     guid: 537846365bcb17945b211b129bf6fb43
   - enabled: 1
-    path: Assets/Scenes/LeftCorridor.unity
-    guid: 0341c844775b84240913ad61cf7bd996
-  - enabled: 1
     path: Assets/Scenes/MainCorridor.unity
     guid: dd3d39671d2b22847b7ffa7157016cc1
   - enabled: 1
+    path: Assets/Scenes/LeftCorridor.unity
+    guid: 0341c844775b84240913ad61cf7bd996
+  - enabled: 1
     path: Assets/Scenes/RightCorrider.unity
     guid: 2466b95a5ecbffc45ab8565e6894254e
+  - enabled: 1
+    path: Assets/Scenes/Stair.unity
+    guid: cd17b5212416fb84b9d88c2e44506960
+  - enabled: 1
+    path: Assets/Scenes/Rooftop.unity
+    guid: 2d9b263a9f935aa49b9e173f8daf18d3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

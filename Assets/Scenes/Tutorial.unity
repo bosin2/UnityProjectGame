@@ -1085,6 +1085,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5216848662296856238, guid: 52b7996c41a2d244383cd9cd498c5368, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -798549652, guid: 3544b02bc116f654780e328550f10591, type: 3}
     - target: {fileID: 5376354948166571842, guid: 52b7996c41a2d244383cd9cd498c5368, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
