@@ -20,7 +20,6 @@ public class MonsterHitbox : MonoBehaviour
             PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
             if (player != null && monster != null)
                 monster.TakeDamage(player.melee_damage);
-                Debug.Log("몬스터가 플레이어의 공격에 맞았습니다! 데미지: " + player.melee_damage);
         }
     }
 }
