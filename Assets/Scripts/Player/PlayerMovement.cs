@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lastDir = new Vector2(0, -1);
     private bool isAttacking = false;
     public int currentWeapon = 0;
+    public bool IsMoving => movement != Vector2.zero && !isAttacking && !isHurt && !isDead;
 
     // 외부에서 현재/최대 HP를 읽기 위한 프로퍼티
     public int CurrentHp => currentHp;
