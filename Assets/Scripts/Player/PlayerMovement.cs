@@ -346,6 +346,16 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.DeleteKey("SpawnX");
             PlayerPrefs.DeleteKey("SpawnY");
         }
+
+        if (PlayerPrefs.HasKey("SpawnDirX"))
+        {
+            float dirX = PlayerPrefs.GetFloat("SpawnDirX");
+            float dirY = PlayerPrefs.GetFloat("SpawnDirY");
+            anim.SetFloat("DirX", dirX);
+            anim.SetFloat("DirY", dirY);
+            PlayerPrefs.DeleteKey("SpawnDirX");
+            PlayerPrefs.DeleteKey("SpawnDirY");
+        }
     }
 
     void OnDestroy()

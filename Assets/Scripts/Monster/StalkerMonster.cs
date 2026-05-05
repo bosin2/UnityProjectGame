@@ -6,7 +6,7 @@ public class StalkerMonster : MonoBehaviour
     [Header("Follow")]
     public float speed = 5.5f;
     public float recordDistance = 0.3f;
-    public float arriveDistance = 0.05f;
+    public float arriveDistance = 0.2f;
 
     private PlayerMovement player;
     private Rigidbody2D rb;
