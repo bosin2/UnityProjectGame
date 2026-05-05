@@ -422,6 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSceneName: MainCorridor
   spawnPosition: {x: 33, y: 34}
+  spawnDirection: {x: 0, y: -1}
 --- !u!61 &124573375
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1017,8 +1018,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueLines:
-  - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4"
+  - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4."
   - "\uC598\uB294 \uC5B4\uB51C\uAC04\uAC70\uC57C?"
+  - "...\uC751? \uC774\uAC8C \uBB50\uC9C0?"
+  - "\uC0B4\uB824\uC918...?"
+  - ...
   requiredFlag: 
   hintMessage: ...
   onComplete:
@@ -1059,7 +1063,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.14216304, y: 0.49757004}
+  m_Offset: {x: 0.14216304, y: 0.24310875}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1069,7 +1073,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.5028653, y: 1.9951401}
+  m_Size: {x: 2.5028653, y: 2.5040627}
   m_EdgeRadius: 0
 --- !u!1 &889006191
 GameObject:
@@ -3695,7 +3699,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueLines:
-  - "\uB098\uC758 \uB178\uD2B8\uBD81\uC774\uB2E4"
   - "\uAEBC\uC838\uC788\uB2E4"
   requiredFlag: 
   hintMessage: ...

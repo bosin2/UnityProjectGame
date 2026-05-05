@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-// 플레이어가 Interactable 오브젝트에 접근했을 때 대화 시스템을 처리하는 컴포넌트
 public class PlayerInteract : MonoBehaviour
 {
     [Header("UI 연결")]
@@ -10,6 +9,12 @@ public class PlayerInteract : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject clickHint;
     public GameObject hotbar;
+
+    [Header("선택지 UI")]
+    public GameObject choiceBox;
+    public UnityEngine.UI.Button yesButton;
+    public UnityEngine.UI.Button noButton;
+    public TextMeshProUGUI choiceText;
 
     private Interactable currentTarget;
     private bool isDialogueActive = false;
@@ -21,15 +26,17 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         dialogueBox.SetActive(false);
+        yesButton.onClick.AddListener(() => Debug.Log("YES 눌림!"));
+        noButton.onClick.AddListener(() => Debug.Log("NO 눌림!"));
+        yesButton.onClick.AddListener(OnChoiceYes);
+        noButton.onClick.AddListener(OnChoiceNo);
+        choiceBox.SetActive(false);
     }
 
     void Update()
     {
-        // Q키: 상호작용 대상이 있고 대화 중이 아닐 때 대화 시작
         if (!isDialogueActive && currentTarget != null && Input.GetKeyDown(KeyCode.Q))
         {
-            // 선행 플래그 조건 미충족 시 힌트 메시지 출력
-            // GameManager가 없거나 플래그 미보유 시 힌트 표시
             bool flagMissing = currentTarget.requiredFlag != "" &&
                                (GameManager.Instance == null ||
                                 !GameManager.Instance.HasFlag(currentTarget.requiredFlag));
@@ -48,7 +55,6 @@ public class PlayerInteract : MonoBehaviour
             });
         }
 
-        // Space키: 대화 중 타이핑 즉시 완성 또는 다음 줄로 넘기기
         if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
@@ -65,7 +71,6 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    // 플레이어가 Interactable 콜라이더에 진입하면 타겟으로 등록
     void OnTriggerEnter2D(Collider2D other)
     {
         Interactable target = other.GetComponent<Interactable>();
@@ -73,7 +78,6 @@ public class PlayerInteract : MonoBehaviour
             currentTarget = target;
     }
 
-    // 플레이어가 Interactable 콜라이더에서 벗어나면 타겟 해제
     void OnTriggerExit2D(Collider2D other)
     {
         Interactable target = other.GetComponent<Interactable>();
@@ -81,7 +85,6 @@ public class PlayerInteract : MonoBehaviour
             currentTarget = null;
     }
 
-    // 대화 시작: 대화창 표시, 시간 정지, 핫바 숨김
     public void StartDialogue(string[] lines, System.Action onDone = null)
     {
         if (lines == null || lines.Length == 0) return;
@@ -96,7 +99,6 @@ public class PlayerInteract : MonoBehaviour
         StartCoroutine(TypeLine(lines[0]));
     }
 
-    // 한 글자씩 타이핑하는 연출 코루틴
     IEnumerator TypeLine(string line)
     {
         isTyping = true;
@@ -113,7 +115,6 @@ public class PlayerInteract : MonoBehaviour
         clickHint.SetActive(true);
     }
 
-    // 다음 줄로 넘기기. 마지막 줄이면 대화 종료
     void NextLine()
     {
         currentIndex++;
@@ -121,11 +122,57 @@ public class PlayerInteract : MonoBehaviour
         {
             dialogueBox.SetActive(false);
             isDialogueActive = false;
-            Time.timeScale = 1f;
             if (hotbar != null) hotbar.SetActive(true);
-            onComplete?.Invoke();
+
+            if (currentTarget != null && currentTarget.hasChoice)
+            {
+                choiceText.text = currentTarget.choiceQuestion;
+                choiceBox.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                onComplete?.Invoke();
+            }
             return;
         }
         StartCoroutine(TypeLine(currentLines[currentIndex]));
+    }
+
+    void OnChoiceYes()
+    {
+        choiceBox.SetActive(false);
+        if (currentTarget == null) return;
+        currentTarget.hasChoice = false;
+
+        Interactable target = currentTarget;
+        if (target.yesLines != null && target.yesLines.Length > 0)
+        {
+            StartDialogue(target.yesLines, () =>
+            {
+                target?.onChoiceYes?.Invoke();
+            });
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            target?.onChoiceYes?.Invoke();
+        }
+    }
+
+    void OnChoiceNo()
+    {
+        choiceBox.SetActive(false);
+        if (currentTarget == null) return;
+        currentTarget.hasChoice = false;
+
+        if (currentTarget.noLines != null && currentTarget.noLines.Length > 0)
+        {
+            StartDialogue(currentTarget.noLines);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 }

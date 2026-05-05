@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
+  m_Name: "\uBA39\uB2E4\uB0A8\uC740 \uCD08\uCF54\uBC14"
+  m_EditorClassIdentifier: 
+  itemName: "\uBA39\uB2E4\uB0A8\uC740 \uCD08\uCF54\uBC14"
+  description: "\uC4F0\uB808\uAE30\uD1B5\uC5D0\uC11C \uCC3E\uC558\uB2E4"
+  icon: {fileID: -6705071755938257397, guid: 877829d14250cfb478ae0bffd97eae89, type: 3}
+  type: 0
+  healAmount: 15
+  defenseAmount: 0
+  speedAmount: 0
+  speedDuration: 0
+  keyId: 

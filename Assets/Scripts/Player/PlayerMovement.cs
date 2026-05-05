@@ -48,6 +48,13 @@ public class PlayerMovement : MonoBehaviour
     // 외부에서 현재/최대 HP를 읽기 위한 프로퍼티
     public int CurrentHp => currentHp;
 
+    public IEnumerator SpeedBoostCoroutine(float amount, float duration)
+    {
+        moveSpeed += amount;
+        yield return new WaitForSeconds(duration);
+        moveSpeed -= amount;
+    }
+
     void Awake()
     {
         if (instance != null)
@@ -74,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (isDead) return;
-
+        if (InventoryManager.Instance != null && InventoryManager.Instance.isOpen) return;
         if (isAttacking || isHurt)
         {
             movement = Vector2.zero;
@@ -135,6 +142,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHp <= 0)
             Die();
+    }
+
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+        currentHp = Mathf.Min(maxHp, currentHp + amount);
+        PlayerHPbar.Instance?.Refresh(currentHp, maxHp, false);
     }
 
     void Die()

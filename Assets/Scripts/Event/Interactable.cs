@@ -15,4 +15,11 @@ public class Interactable : MonoBehaviour
     [Header("완료 후 동작")]
     public UnityEvent onComplete;       // 대화 완료 후 실행할 이벤트
     public string setFlag = "";         // 완료 시 등록할 플래그
+
+    [Header("선택지")]
+    public bool hasChoice = false;
+    public string choiceQuestion = "";
+    public string[] yesLines;         // 예 눌렀을 때 후속 대사
+    public string[] noLines;          // 아니오 눌렀을 때 후속 대사
+    public UnityEvent onChoiceYes;    // 예 눌렀을 때 이벤트
 }
