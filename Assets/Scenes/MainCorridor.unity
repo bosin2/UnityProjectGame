@@ -610,7 +610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7652336032633332105, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8991,7 +8991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: detectionRange
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: axisSwitchMargin
