@@ -26,14 +26,15 @@ public class HotbarManager : MonoBehaviour
 
     void Update()
     {
+        if (InventoryManager.Instance != null && InventoryManager.Instance.isOpen) return;
+
         for (int i = 0; i < 5; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
                 SelectSlot(i);
         }
 
-        // 슬롯 선택된 상태에서 좌클릭시 사용
-        if (currentIdx != -1 && Input.GetMouseButtonDown(0))
+        if (currentIdx != -1 && Input.GetMouseButtonDown(1))
             UseItem(currentIdx);
     }
 
@@ -64,21 +65,27 @@ public class HotbarManager : MonoBehaviour
     // 특정 슬롯에 아이템 넣기
     public bool AddItemToSlot(ItemData item, int index)
     {
-        Debug.Log($"슬롯 {index}에 {item.itemName} 시도냥");
+        Debug.Log($"슬롯 {index}에 {item.itemName} 시도");
         if (index < 0 || index >= items.Length)
         {
-            Debug.Log("인덱스 범위 초과냥!");
+            Debug.Log("인덱스 범위 초과!");
             return false;
         }
         if (items[index] != null)
         {
-            Debug.Log("슬롯 차있냥!");
+            Debug.Log("슬롯 참!");
             return false;
         }
         items[index] = item;
         slotIcons[index].sprite = item.icon;
         slotIcons[index].enabled = true;
-        Debug.Log($"슬롯아이콘: {slotIcons[index].name} / 스프라이트: {item.icon}냥");
+        slotIcons[index].color = new Color(1f, 1f, 1f, 1f);
+        if (index + 5 < slotIcons.Length)
+        {
+            slotIcons[index + 5].sprite = item.icon;
+            slotIcons[index + 5].enabled = true;
+            slotIcons[index + 5].color = new Color(1f, 1f, 1f, 1f);
+        }
         return true;
     }
     void UseItem(int index)
@@ -92,23 +99,19 @@ public class HotbarManager : MonoBehaviour
                 FindFirstObjectByType<PlayerMovement>()?.Heal(item.healAmount);
                 ConsumeItem(index);
                 break;
-
             case ItemType.Key:
-                //DoorManager.Instance?.TryOpenDoor(item.keyId);
                 ConsumeItem(index);
                 break;
-
             case ItemType.SpeedBoost:
                 PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
                 pm?.StartCoroutine(pm.SpeedBoostCoroutine(item.speedAmount, item.speedDuration));
                 ConsumeItem(index);
                 break;
-
             case ItemType.Armor:
             case ItemType.Shoes:
-                // 장착은 인벤토리에서 처리
                 break;
         }
+        InventoryManager.Instance?.RefreshStats();
     }
 
     void ConsumeItem(int index)
@@ -116,6 +119,7 @@ public class HotbarManager : MonoBehaviour
         items[index] = null;
         slotIcons[index].sprite = null;
         slotIcons[index].enabled = false;
+        slotIcons[index].color = new Color(1f, 1f, 1f, 0f);
         if (index + 5 < slotIcons.Length)
         {
             slotIcons[index + 5].sprite = null;

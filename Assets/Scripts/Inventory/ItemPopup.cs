@@ -59,7 +59,7 @@ public class ItemPopup : MonoBehaviour
     {
         for (int i = 0; i < options.Length; i++)
         {
-            optionTexts[i].color = i == currentOptionIdx ? Color.yellow : Color.white;
+            optionTexts[i].color = i == currentOptionIdx ? Color.black : Color.gray;
         }
     }
 

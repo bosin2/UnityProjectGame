@@ -22,14 +22,13 @@ public class UICanvas : MonoBehaviour
     // 게임 플레이 씬에서 HUD 전체 표시
     public void ShowUI()
     {
-        timerUI.SetActive(true);
-        hpUI.SetActive(true);
+        if (timerUI != null) timerUI.SetActive(true);
+        if (hpUI != null) hpUI.SetActive(true);
     }
 
-    // 메뉴/인트로/튜토리얼에서 HUD 전체 숨김
     public void HideUI()
     {
-        timerUI.SetActive(false);
-        hpUI.SetActive(false);
+        if (timerUI != null) timerUI.SetActive(false);
+        if (hpUI != null) hpUI.SetActive(false);
     }
 }

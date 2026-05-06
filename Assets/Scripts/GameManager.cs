@@ -37,6 +37,15 @@ public class GameManager : MonoBehaviour
     // 씬 전환 시 메뉴/인트로/튜토리얼에서는 HUD 숨기고, 게임 씬에서는 표시
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // 인트로나 튜토리얼 첫 진입시 SpawnPos 초기화
+        if (scene.name == "Intro" || scene.name == "Tutorial")
+        {
+            PlayerPrefs.DeleteKey("SpawnX");
+            PlayerPrefs.DeleteKey("SpawnY");
+            PlayerPrefs.DeleteKey("SpawnDirX");
+            PlayerPrefs.DeleteKey("SpawnDirY");
+        }
+
         if (scene.name == "MainMenu" || scene.name == "Intro" || scene.name == "Tutorial")
             UICanvas.Instance?.HideUI();
         else

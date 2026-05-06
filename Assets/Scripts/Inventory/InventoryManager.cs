@@ -212,7 +212,7 @@ public class InventoryManager : MonoBehaviour
         descriptionTxt.text = desc;
     }
 
-    void RefreshStats()
+    public void RefreshStats()
     {
         PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
         if (pm == null) return;

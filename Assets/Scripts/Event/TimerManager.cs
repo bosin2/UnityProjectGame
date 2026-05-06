@@ -45,6 +45,7 @@ public class TimerManager : MonoBehaviour
     // 남은 시간을 MM:SS 형식으로 표시. 3분 이하면 빨간색으로 변경
     void UpdateUI()
     {
+        if (timerText == null || !timerText.gameObject.activeInHierarchy) return;
         int minutes = Mathf.FloorToInt(currentTime / 60f);
         int seconds = Mathf.FloorToInt(currentTime % 60f);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);

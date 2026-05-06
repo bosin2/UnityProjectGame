@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currentHp = maxHp;
+        Debug.Log("hasPipe: " + GameManager.Instance?.hasPipe);
+        Debug.Log("hasGun: " + GameManager.Instance?.hasGun);
     }
 
     void Update()
