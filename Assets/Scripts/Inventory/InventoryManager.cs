@@ -10,8 +10,6 @@ public class InventoryManager : MonoBehaviour
     [Header("UI 연결")]
     public GameObject inventoryUI;
     public GameObject hotbarUI;
-    public Transform hotbarOriginalParent;
-    public Transform hotbarInvenParent;
 
     [Header("카테고리")]
     public GameObject[] categoryObjects;
@@ -31,9 +29,6 @@ public class InventoryManager : MonoBehaviour
 
     private enum Category { Key, Use, Equip }
     private Category currentCategory = Category.Key;
-
-    private enum InvenState { Category, ItemList }
-    private InvenState state = InvenState.Category;
 
     private List<ItemData> inventory = new List<ItemData>();
     private List<InvenSlotUI> slotUIs = new List<InvenSlotUI>();
@@ -61,49 +56,22 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         bool popupOpen = ItemPopup.Instance != null && ItemPopup.Instance.IsOpen;
-
         if (Input.GetKeyDown(KeyCode.E) && !popupOpen)
             ToggleInventory();
-
-        if (!isOpen || popupOpen) return;
-
-        if (state == InvenState.Category)
-            HandleCategoryInput();
-        else
-            HandleItemInput();
     }
 
-    void HandleCategoryInput()
+    // 카테고리 버튼 클릭시 호출
+    public void OnClickCategory(int idx)
     {
-        if (Input.GetKeyDown(KeyCode.W))
-            MoveCategoryIdx(-1);
-        if (Input.GetKeyDown(KeyCode.S))
-            MoveCategoryIdx(1);
-        if (Input.GetKeyDown(KeyCode.Return))
-            EnterCategory();
-    }
-
-    void HandleItemInput()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-            MoveItemIdx(-1);
-        if (Input.GetKeyDown(KeyCode.S))
-            MoveItemIdx(1);
-        if (Input.GetKeyDown(KeyCode.Escape))
-            ExitToCategory();
-        if (Input.GetKeyDown(KeyCode.Return))
-            OnItemEnter();
-    }
-
-    void MoveCategoryIdx(int dir)
-    {
-        categoryIdx = Mathf.Clamp(categoryIdx + dir, 0, categoryObjects.Length - 1);
+        categoryIdx = idx;
+        currentCategory = (Category)idx;
         RefreshCategoryCursor();
+        itemListPanel.SetActive(true);
+        RefreshItemList();
     }
 
     void RefreshCategoryCursor()
     {
-        currentCategory = (Category)categoryIdx;
         for (int i = 0; i < categoryObjects.Length; i++)
         {
             TextMeshProUGUI txt = categoryObjects[i].GetComponentInChildren<TextMeshProUGUI>();
@@ -112,36 +80,14 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void EnterCategory()
+    // 아이템 슬롯 클릭시 호출
+    public void OnClickItem(int idx)
     {
-        currentCategory = (Category)categoryIdx;
-        state = InvenState.ItemList;
-        itemIdx = 0;
-        itemListPanel.SetActive(true);
-        RefreshItemList();
-    }
-
-    void ExitToCategory()
-    {
-        state = InvenState.Category;
-        itemListPanel.SetActive(false);
-        foreach (var slot in slotUIs)
-            Destroy(slot.gameObject);
-        slotUIs.Clear();
-    }
-
-    void MoveItemIdx(int dir)
-    {
-        if (slotUIs.Count == 0) return;
-        itemIdx = Mathf.Clamp(itemIdx + dir, 0, slotUIs.Count - 1);
-        RefreshItemHighlight();
+        if (idx >= slotUIs.Count) return;
+        itemIdx = idx;
         RefreshDescription();
-    }
 
-    void OnItemEnter()
-    {
-        if (slotUIs.Count == 0 || itemIdx >= slotUIs.Count) return;
-        ItemData item = slotUIs[itemIdx].GetItem();
+        ItemData item = slotUIs[idx].GetItem();
 
         if (currentCategory == Category.Equip)
         {
@@ -158,12 +104,10 @@ public class InventoryManager : MonoBehaviour
                 () =>
                 {
                     UseItemDirectly(item);
-                    inventory.Remove(item);
-                    RefreshItemList();
                 },
                 () =>
                 {
-                    ItemPopup.Instance.ShowHotbarSlotPopup(item, (slotIndex) =>
+                    SlotSelectPopup.Instance.Show(item, (slotIndex) =>
                     {
                         HotbarManager.Instance.AddItemToSlot(item, slotIndex);
                         inventory.Remove(item);
@@ -188,6 +132,8 @@ public class InventoryManager : MonoBehaviour
             case ItemType.Key:
                 break;
         }
+        inventory.Remove(item);
+        RefreshItemList();
     }
 
     void ToggleEquip(ItemData item)
@@ -196,10 +142,8 @@ public class InventoryManager : MonoBehaviour
 
         if (item.type == ItemType.Armor)
         {
-            if (equippedArmor == item)
-                equippedArmor = null;
-            else
-                equippedArmor = item;
+            if (equippedArmor == item) equippedArmor = null;
+            else equippedArmor = item;
         }
         else if (item.type == ItemType.Shoes)
         {
@@ -223,23 +167,21 @@ public class InventoryManager : MonoBehaviour
         slotUIs.Clear();
 
         List<ItemData> items = GetCategoryItems();
-        foreach (var item in items)
+        for (int i = 0; i < items.Count; i++)
         {
+            int idx = i;
             GameObject obj = Instantiate(itemSlotPrefab, itemGridGroup);
             InvenSlotUI slotUI = obj.GetComponent<InvenSlotUI>();
-            slotUI.Setup(item, 1);
+            slotUI.Setup(items[i], 1);
+       
+            Button btn = obj.GetComponent<Button>();
+            if (btn != null)
+                btn.onClick.AddListener(() => OnClickItem(idx));
             slotUIs.Add(slotUI);
         }
 
         itemIdx = 0;
-        RefreshItemHighlight();
         RefreshDescription();
-    }
-
-    void RefreshItemHighlight()
-    {
-        for (int i = 0; i < slotUIs.Count; i++)
-            slotUIs[i].SetSelected(i == itemIdx);
     }
 
     void RefreshDescription()
@@ -305,25 +247,22 @@ public class InventoryManager : MonoBehaviour
     {
         isOpen = !isOpen;
         inventoryUI.SetActive(isOpen);
+        hotbarUI.SetActive(!isOpen);
 
         if (isOpen)
         {
             Time.timeScale = 0f;
-            hotbarUI.transform.SetParent(hotbarInvenParent);
-            hotbarUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
-            state = InvenState.Category;
             categoryIdx = 0;
+            currentCategory = Category.Key;
             itemListPanel.SetActive(false);
             RefreshCategoryCursor();
             RefreshStats();
         }
         else
         {
-            hotbarUI.transform.SetParent(hotbarOriginalParent);
-            hotbarUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
-            ExitToCategory();
+            foreach (var slot in slotUIs)
+                Destroy(slot.gameObject);
+            slotUIs.Clear();
             Time.timeScale = 1f;
         }
     }

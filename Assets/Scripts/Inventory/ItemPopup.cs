@@ -25,6 +25,16 @@ public class ItemPopup : MonoBehaviour
     void Start()
     {
         popupPanel.SetActive(false);
+
+        for (int i = 0; i < options.Length; i++)
+        {
+            int idx = i;
+            options[i].onClick.AddListener(() =>
+            {
+                actions[idx]?.Invoke();
+                Hide();
+            });
+        }
     }
 
     void Update()
@@ -137,7 +147,7 @@ public class ItemPopup : MonoBehaviour
                 Hide();
                 yield break;
             }
-            yield return null;
+            yield return new WaitForSecondsRealtime(0.01f);
         }
     }
 

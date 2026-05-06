@@ -82,6 +82,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDead) return;
         if (InventoryManager.Instance != null && InventoryManager.Instance.isOpen) return;
+
+        bool popupOpen = (ItemPopup.Instance != null && ItemPopup.Instance.IsOpen) ||
+                         (SlotSelectPopup.Instance != null && !SlotSelectPopup.Instance.Equals(null));
+
+        if (Input.GetMouseButtonDown(0) && !isAttacking && !isHurt && !popupOpen)
+            Attack();
+
         if (isAttacking || isHurt)
         {
             movement = Vector2.zero;

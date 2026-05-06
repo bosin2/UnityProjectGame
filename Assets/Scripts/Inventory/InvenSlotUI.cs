@@ -8,7 +8,6 @@ public class InvenSlotUI : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI countText;
-    public GameObject cursor; // 선택 표시
 
     private ItemData item;
 
@@ -21,12 +20,4 @@ public class InvenSlotUI : MonoBehaviour
     }
 
     public ItemData GetItem() => item;
-
-    public void SetSelected(bool selected)
-    {
-        cursor.SetActive(selected);
-        GetComponent<Image>().color = selected ?
-            new Color(1f, 1f, 0f, 0.3f) :  // 선택시 노란빛냥
-            new Color(1f, 1f, 1f, 0f);      // 미선택시 투명냥
-    }
 }

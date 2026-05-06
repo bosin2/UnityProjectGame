@@ -64,11 +64,21 @@ public class HotbarManager : MonoBehaviour
     // 특정 슬롯에 아이템 넣기
     public bool AddItemToSlot(ItemData item, int index)
     {
-        if (index < 0 || index >= items.Length) return false;
-        if (items[index] != null) return false; // slots → items로 바꾸냥!
+        Debug.Log($"슬롯 {index}에 {item.itemName} 시도냥");
+        if (index < 0 || index >= items.Length)
+        {
+            Debug.Log("인덱스 범위 초과냥!");
+            return false;
+        }
+        if (items[index] != null)
+        {
+            Debug.Log("슬롯 차있냥!");
+            return false;
+        }
         items[index] = item;
         slotIcons[index].sprite = item.icon;
         slotIcons[index].enabled = true;
+        Debug.Log($"슬롯아이콘: {slotIcons[index].name} / 스프라이트: {item.icon}냥");
         return true;
     }
     void UseItem(int index)
@@ -106,6 +116,11 @@ public class HotbarManager : MonoBehaviour
         items[index] = null;
         slotIcons[index].sprite = null;
         slotIcons[index].enabled = false;
+        if (index + 5 < slotIcons.Length)
+        {
+            slotIcons[index + 5].sprite = null;
+            slotIcons[index + 5].enabled = false;
+        }
     }
 
     public ItemData GetItem(int index) => items[index];
