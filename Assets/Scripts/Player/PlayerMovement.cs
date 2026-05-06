@@ -138,7 +138,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isHurt || isDead) return;
         if (!gameObject.activeInHierarchy) return;
-        StartCoroutine(HurtRoutine(knockbackDirection));
+        StartCoroutine(HurtRoutine(GetAxisAlignedDirection(knockbackDirection)));
+    }
+
+    Vector2 GetAxisAlignedDirection(Vector2 direction)
+    {
+        if (direction == Vector2.zero)
+            return lastDir == Vector2.zero ? Vector2.down : -lastDir.normalized;
+
+        if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
+            return new Vector2(Mathf.Sign(direction.x), 0f);
+
+        return new Vector2(0f, Mathf.Sign(direction.y));
     }
 
     // HP 감소 후 HP바 UI 갱신, 0 이하면 사망 처리

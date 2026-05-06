@@ -13,8 +13,24 @@ public class PlayerHPbar : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (hpSlider == null || fillImage == null)
+        {
+            Debug.LogWarning("[PlayerHPbar] HP UI references are missing. Disabling this component.", this);
+            enabled = false;
+            return;
+        }
+
+        if (Instance == null)
+        {
+            Instance = this;
+
+            if (transform.parent == null)
+                DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     void Start()

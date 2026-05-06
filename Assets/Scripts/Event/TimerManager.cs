@@ -17,8 +17,24 @@ public class TimerManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
-        else Destroy(gameObject);
+        if (timerText == null)
+        {
+            Debug.LogWarning("[TimerManager] timerText is missing. Disabling this component.", this);
+            enabled = false;
+            return;
+        }
+
+        if (Instance == null)
+        {
+            Instance = this;
+
+            if (transform.parent == null)
+                DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     void Start()

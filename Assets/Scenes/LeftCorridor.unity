@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 869844758}
   - component: {fileID: 869844760}
   - component: {fileID: 869844759}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4663,7 +4663,7 @@ GameObject:
   - component: {fileID: 1067607425}
   - component: {fileID: 1067607427}
   - component: {fileID: 1067607426}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10590,7 +10590,7 @@ GameObject:
   - component: {fileID: 1725353205}
   - component: {fileID: 1725353209}
   - component: {fileID: 1725353208}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11040,7 +11040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1869800980}
   - component: {fileID: 1869800979}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11177,7 +11177,7 @@ GameObject:
   - component: {fileID: 1888345935}
   - component: {fileID: 1888345937}
   - component: {fileID: 1888345936}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54580,7 +54580,7 @@ GameObject:
   - component: {fileID: 2039482358}
   - component: {fileID: 2039482360}
   - component: {fileID: 2039482359}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55105,6 +55105,10 @@ PrefabInstance:
     - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: recordDistance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2531968298916266086, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: m_Size.x
