@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
-  m_Name: "\uBC15\uCE74\uC2A4"
+  m_Name: "\uCEE4\uD53C"
   m_EditorClassIdentifier: 
-  itemName: "\uBC15\uCE74\uC2A4"
-  description: "\uAD50\uC218\uB2D8 \uBC29\uC5D0\uC11C \uCC3E\uC740 \uBC15\uCE74\uC2A4\uB2E4"
-  icon: {fileID: -7633136789291857684, guid: ee6420381eefefd449d51f2a71f5a76a, type: 3}
+  itemName: "\uCEE4\uD53C"
+  description: "\uC544\uC8FC \uC4F4 \uCEE4\uD53C\uB2E4. \uB9DB\uC5C6\uB2E4."
+  icon: {fileID: 0}
   type: 4
   healAmount: 0
   defenseAmount: 0

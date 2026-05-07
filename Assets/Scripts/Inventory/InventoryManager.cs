@@ -47,7 +47,6 @@ public class InventoryManager : MonoBehaviour
 
     private Dictionary<ItemData, int> itemCounts = new Dictionary<ItemData, int>();
 
-       public bool isOpen = false;
     public bool isOpen = false;
 
     void Awake()
@@ -97,6 +96,8 @@ public class InventoryManager : MonoBehaviour
         ItemStack existing = inventory.Find(s => s.item == item);
         if (existing != null)
         {
+            // 열쇠면 중복 획득 무시
+            if (item.type == ItemType.Key) return;
             existing.count += count;
         }
         else

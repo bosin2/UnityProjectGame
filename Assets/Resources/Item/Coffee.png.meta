@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e2923bb7a40de9d488c4aa178da95456
+guid: 88f85f29c1f0f734bba4782990617b2e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4605110536845794535
-    second: Cigar_0
+      213: -1850988681521255122
+    second: Coffee_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cigar_0
+      name: Coffee_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 464
-        height: 854
+        x: 2
+        y: 15
+        width: 98
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ec1a1462a3a8ef30800000000000000
-      internalID: 4605110536845794535
+      spriteID: e2d28a2e997ff46e0800000000000000
+      internalID: -1850988681521255122
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Cigar_0: 4605110536845794535
+      Coffee_0: -1850988681521255122
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -26,32 +26,45 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         dialogueBox.SetActive(false);
-        yesButton.onClick.AddListener(() => Debug.Log("YES 눌림!"));
-        noButton.onClick.AddListener(() => Debug.Log("NO 눌림!"));
+        choiceBox.SetActive(false);
+
         yesButton.onClick.AddListener(OnChoiceYes);
         noButton.onClick.AddListener(OnChoiceNo);
-        choiceBox.SetActive(false);
     }
 
     void Update()
     {
         if (!isDialogueActive && currentTarget != null && Input.GetKeyDown(KeyCode.Q))
         {
-            bool flagMissing = currentTarget.requiredFlag != "" &&
+            // 현재 phase 가져오기
+            int idx = currentTarget.currentPhaseIndex;
+
+            // phase가 더 없으면 마지막 phase 재사용
+            if (idx >= currentTarget.phases.Length)
+                idx = currentTarget.phases.Length - 1;
+
+            DialoguePhase phase = currentTarget.phases[idx];
+
+            // 선행 조건 체크
+            bool flagMissing = phase.requiredFlag != "" &&
                                (GameManager.Instance == null ||
-                                !GameManager.Instance.HasFlag(currentTarget.requiredFlag));
+                                !GameManager.Instance.HasFlag(phase.requiredFlag));
 
             if (flagMissing)
             {
-                StartDialogue(new string[] { currentTarget.hintMessage });
+                StartDialogue(new string[] { phase.hintMessage });
                 return;
             }
 
-            StartDialogue(currentTarget.dialogueLines, () =>
+            StartDialogue(phase.dialogueLines, () =>
             {
-                if (currentTarget.setFlag != "")
-                    GameManager.Instance?.SetFlag(currentTarget.setFlag);
-                currentTarget.onComplete?.Invoke();
+                if (phase.setFlag != "")
+                    GameManager.Instance?.SetFlag(phase.setFlag);
+                phase.onComplete?.Invoke();
+
+                // 다음 phase로 진행 (마지막이면 유지)
+                if (currentTarget.currentPhaseIndex < currentTarget.phases.Length - 1)
+                    currentTarget.currentPhaseIndex++;
             });
         }
 
@@ -124,10 +137,13 @@ public class PlayerInteract : MonoBehaviour
             isDialogueActive = false;
             if (hotbar != null) hotbar.SetActive(true);
 
-            if (currentTarget != null && currentTarget.hasChoice)
+            // 현재 phase에서 선택지 여부 확인
+            int idx = Mathf.Min(currentTarget.currentPhaseIndex, currentTarget.phases.Length - 1);
+            DialoguePhase phase = currentTarget != null ? currentTarget.phases[idx] : null;
+
+            if (phase != null && phase.hasChoice)
             {
-                choiceText.text = currentTarget.choiceQuestion;
-                choiceBox.SetActive(true);
+                ShowChoiceBox(phase.choiceQuestion);
             }
             else
             {
@@ -138,25 +154,52 @@ public class PlayerInteract : MonoBehaviour
         }
         StartCoroutine(TypeLine(currentLines[currentIndex]));
     }
+    void ShowChoiceBox(string question)
+    {
+        choiceText.text = question;
 
+        // 버튼 상태 강제 리셋
+        yesButton.onClick.RemoveAllListeners();
+        noButton.onClick.RemoveAllListeners();
+
+        yesButton.interactable = false;
+        noButton.interactable = false;
+
+        choiceBox.SetActive(true);
+
+        // 한 프레임 뒤에 활성화 (이전 클릭 이벤트 잔류 방지)
+        StartCoroutine(EnableChoiceButtons());
+    }
+
+    IEnumerator EnableChoiceButtons()
+    {
+        yield return null; // 한 프레임 대기
+
+        yesButton.interactable = true;
+        noButton.interactable = true;
+
+        yesButton.onClick.AddListener(OnChoiceYes);
+        noButton.onClick.AddListener(OnChoiceNo);
+    }
     void OnChoiceYes()
     {
         choiceBox.SetActive(false);
         if (currentTarget == null) return;
-        currentTarget.hasChoice = false;
 
-        Interactable target = currentTarget;
-        if (target.yesLines != null && target.yesLines.Length > 0)
+        int idx = Mathf.Min(currentTarget.currentPhaseIndex, currentTarget.phases.Length - 1);
+        DialoguePhase phase = currentTarget.phases[idx];
+
+        phase.hasChoice = false; // ← 추가!
+        onComplete?.Invoke();
+
+        if (phase.yesLines != null && phase.yesLines.Length > 0)
         {
-            StartDialogue(target.yesLines, () =>
-            {
-                target?.onChoiceYes?.Invoke();
-            });
+            StartDialogue(phase.yesLines, () => { phase.onChoiceYes?.Invoke(); });
         }
         else
         {
             Time.timeScale = 1f;
-            target?.onChoiceYes?.Invoke();
+            phase.onChoiceYes?.Invoke();
         }
     }
 
@@ -164,15 +207,21 @@ public class PlayerInteract : MonoBehaviour
     {
         choiceBox.SetActive(false);
         if (currentTarget == null) return;
-        currentTarget.hasChoice = false;
 
-        if (currentTarget.noLines != null && currentTarget.noLines.Length > 0)
+        int idx = Mathf.Min(currentTarget.currentPhaseIndex, currentTarget.phases.Length - 1);
+        DialoguePhase phase = currentTarget.phases[idx];
+
+        phase.hasChoice = false; // ← 추가!
+        onComplete?.Invoke();
+
+        if (phase.noLines != null && phase.noLines.Length > 0)
         {
-            StartDialogue(currentTarget.noLines);
+            StartDialogue(phase.noLines, () => { phase.onChoiceNo?.Invoke(); });
         }
         else
         {
             Time.timeScale = 1f;
+            phase.onChoiceNo?.Invoke();
         }
     }
 }

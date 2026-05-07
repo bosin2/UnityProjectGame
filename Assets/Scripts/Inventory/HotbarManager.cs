@@ -105,6 +105,7 @@ public class HotbarManager : MonoBehaviour
 
     public bool AddItemToSlot(ItemData item, int index, int count = 1)
     {
+        slotIcons[index].preserveAspect = true;
         if (index < 0 || index >= items.Length)
         {
             Debug.Log("인덱스 범위 초과!");
@@ -124,6 +125,7 @@ public class HotbarManager : MonoBehaviour
             slotIcons[index + 5].sprite = item.icon;
             slotIcons[index + 5].enabled = true;
             slotIcons[index + 5].color = new Color(1f, 1f, 1f, 1f);
+            slotIcons[index + 5].preserveAspect = true;
         }
         UpdateCountText(index);
         return true;

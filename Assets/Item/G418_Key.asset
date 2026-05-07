@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
-  m_Name: "\uBC15\uCE74\uC2A4"
+  m_Name: G418_Key
   m_EditorClassIdentifier: 
-  itemName: "\uBC15\uCE74\uC2A4"
-  description: "\uAD50\uC218\uB2D8 \uBC29\uC5D0\uC11C \uCC3E\uC740 \uBC15\uCE74\uC2A4\uB2E4"
-  icon: {fileID: -7633136789291857684, guid: ee6420381eefefd449d51f2a71f5a76a, type: 3}
-  type: 4
+  itemName: "G418\uC758 \uC5F4\uC1E0"
+  description: "G418\uC744 \uC5F4\uC218\uC788\uB294 \uC5F4\uC1E0\uB2E4"
+  icon: {fileID: 0}
+  type: 0
   healAmount: 0
   defenseAmount: 0
   speedAmount: 0
-  speedDuration: 5
+  speedDuration: 0
   keyId: 

@@ -791,40 +791,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uC4F0\uB808\uAE30 \uD1B5\uC774\uB2E4."
-  - "\uC73C \uB4DC\uB7EC\uC6CC..."
-  - "\uC751?  \uC800\uAE30 \uBB54\uAC00..."
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
-  hasChoice: 1
-  choiceQuestion: "\uC4F0\uB808\uAE30\uD1B5\uC744 \uB4A4\uC9C8\uAE4C?"
-  yesLines:
-  - "\uB0C4\uC0C8\uB098\uB294 \uC4F0\uB808\uAE30\uD1B5\uC5D0 \uC190\uC744 \uB123\uACE0
-    \uD718\uC801\uAC70\uB838\uB2E4."
-  - "[\uBA39\uB2E4\uB0A8\uC740 \uCD08\uCF54\uBC14] \uB97C \uD68D\uB4DD\uD588\uB2E4."
-  - "... \uC8FD\uACE0\uC2F6\uB2E4"
-  noLines:
-  - "\uC778\uAC04\uC758 \uC874\uC5C4\uC131\uC744 \uBC84\uB9AC\uC9C0\uB9D0\uC790..."
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 560543013}
-        m_TargetAssemblyTypeName: ItemGiver, Assembly-CSharp
-        m_MethodName: GiveItem
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  phases:
+  - dialogueLines:
+    - "\uC4F0\uB808\uAE30 \uD1B5\uC774\uB2E4."
+    - "\uC73C \uB4DC\uB7EC\uC6CC..."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueLines:
+    - "\uC751? \uC800\uAE30 \uBB54\uAC00 \uBCF4\uC774\uB294\uAC70\uAC19\uC740\uB370..."
+    - "(\uBC30\uC5D0\uC11C \uAF2C\uB974\uB975 \uC18C\uB9AC\uAC00 \uB09C\uB2E4)"
+    - "\uC544\uB2C8 \uC544\uBB34\uB9AC \uADF8\uB798\uB3C4 \uC774\uAC74 \uC544\uB2C8\uC9C0
+      \uC54A\uC744\uAE4C?"
+    - "\uC624\uB298 \uD558\uB8E8 \uC885\uC77C \uACF5\uBCF5\uC774\uC5C8\uB2E4."
+    - "\uC544\uB2C8\uC57C... \uC778\uAC04\uC774\uAE38 \uD3EC\uAE30\uD558\uC9C0\uB9D0\uC790"
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 1
+    choiceQuestion: "\uC4F0\uB808\uAE30\uD1B5\uC744 \uB4A4\uC9C8\uAE4C?"
+    yesLines:
+    - "\uC6B0\uC6B1...\uC6E9..\uC6B0\uC6B1!"
+    - "\uB0B4, \uB0B4\uAC00 \uC774\uB7F0\uC9D3\uC744 \uD558\uB2E4\uB2C8"
+    - "\uADF8\uB798\uB3C4... \uC0AC\uB294\uAC8C \uBA3C\uC800\uACA0\uC9C0? \uC81C\uBC1C
+      \uADF8\uB807\uAC8C \uB9D0\uD574\uC918"
+    - "[\uBA39\uB2E4\uB0A8\uC740 \uCD08\uCF54\uBC14]\uB97C \uD68D\uB4DD\uD588\uB2E4."
+    noLines:
+    - "\uC8FD\uC5B4\uB3C4 \uBA85\uC608\uB86D\uAC8C \uC8FD\uC790."
+    - 
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 560543013}
+          m_TargetAssemblyTypeName: ItemGiver, Assembly-CSharp
+          m_MethodName: GiveItem
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueLines:
+    - "\uAF34\uB3C4 \uBCF4\uAE30 \uC2EB\uB2E4."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 560543013}
+          m_TargetAssemblyTypeName: ItemGiver, Assembly-CSharp
+          m_MethodName: GiveItem
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &560543012
 BoxCollider2D:
   m_ObjectHideFlags: 0
