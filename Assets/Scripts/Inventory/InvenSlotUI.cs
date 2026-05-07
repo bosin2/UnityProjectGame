@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// 인벤토리 슬롯 하나의 UI를 담당하는 컴포넌트
 public class InvenSlotUI : MonoBehaviour
 {
     public Image icon;
+    public Image background;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI countText;
 
@@ -16,7 +16,7 @@ public class InvenSlotUI : MonoBehaviour
         item = data;
         icon.sprite = data.icon;
         nameText.text = data.itemName;
-        countText.text = count > 1 ? "x" + count : "";
+        countText.text = count > 1 ? "" + count : "";
     }
 
     public ItemData GetItem() => item;

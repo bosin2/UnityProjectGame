@@ -10,9 +10,10 @@ public class HotbarManager : MonoBehaviour
     public RectTransform[] slots;
     public Image[] slotIcons;
     public TextMeshProUGUI[] slotCountTexts;
+    public Button[] invenHotbarButtons;
 
     private int currentIdx = -1;
-    private ItemData[] items = new ItemData[5];
+    private ItemStack[] items = new ItemStack[5];
 
     void Awake()
     {
@@ -25,6 +26,15 @@ public class HotbarManager : MonoBehaviour
         if (slotCountTexts != null)
             foreach (var txt in slotCountTexts)
                 txt.gameObject.SetActive(false);
+
+        if (invenHotbarButtons != null)
+        {
+            for (int i = 0; i < invenHotbarButtons.Length; i++)
+            {
+                int idx = i;
+                invenHotbarButtons[idx].onClick.AddListener(() => OnClickInvenHotbarSlot(idx));
+            }
+        }
     }
 
     void Update()
@@ -38,7 +48,10 @@ public class HotbarManager : MonoBehaviour
         }
 
         if (currentIdx != -1 && Input.GetMouseButtonDown(1))
-            ShowHotbarPopup(currentIdx);
+        {
+            if (items[currentIdx] != null)
+                UseItem(currentIdx);
+        }
     }
 
     void SelectSlot(int index)
@@ -50,21 +63,21 @@ public class HotbarManager : MonoBehaviour
         highlight.position = slots[index].position;
     }
 
-    void ShowHotbarPopup(int index)
+    void OnClickInvenHotbarSlot(int index)
     {
-        ItemData item = items[index];
-        if (item == null) return;
+        if (items[index] == null) return;
 
-        ItemPopup.Instance.ShowHotbarPopup(item,
+        ItemPopup.Instance.ShowHotbarPopup(items[index].item,
             () =>
             {
                 UseItem(index);
             },
             () =>
             {
-                InventoryManager.Instance.AddItem(item);
+                // 핫바 카운트 그대로 인벤토리로 반환냥
+                InventoryManager.Instance.AddItem(items[index].item, items[index].count);
                 InventoryManager.Instance.RefreshItemList();
-                ConsumeItem(index);
+                ClearSlot(index);
             }
         );
     }
@@ -72,14 +85,13 @@ public class HotbarManager : MonoBehaviour
     void UpdateCountText(int index)
     {
         if (slotCountTexts == null || index >= slotCountTexts.Length) return;
-        ItemData item = items[index];
-        if (item == null)
+        if (items[index] == null)
         {
             slotCountTexts[index].text = "";
             slotCountTexts[index].gameObject.SetActive(false);
             return;
         }
-        int count = InventoryManager.Instance.GetItemCount(item);
+        int count = items[index].count;
         if (count > 1)
         {
             slotCountTexts[index].text = count.ToString();
@@ -91,26 +103,8 @@ public class HotbarManager : MonoBehaviour
         }
     }
 
-    public bool AddItem(ItemData item)
+    public bool AddItemToSlot(ItemData item, int index, int count = 1)
     {
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (items[i] == null)
-            {
-                items[i] = item;
-                slotIcons[i].sprite = item.icon;
-                slotIcons[i].enabled = true;
-                UpdateCountText(i);
-                return true;
-            }
-        }
-        Debug.Log("핫바 꽉 찼음");
-        return false;
-    }
-
-    public bool AddItemToSlot(ItemData item, int index)
-    {
-        Debug.Log($"슬롯 {index}에 {item.itemName} 시도");
         if (index < 0 || index >= items.Length)
         {
             Debug.Log("인덱스 범위 초과!");
@@ -118,10 +112,10 @@ public class HotbarManager : MonoBehaviour
         }
         if (items[index] != null)
         {
-            Debug.Log("슬롯 참!");
+            Debug.Log("슬롯 찼!");
             return false;
         }
-        items[index] = item;
+        items[index] = new ItemStack(item, count);
         slotIcons[index].sprite = item.icon;
         slotIcons[index].enabled = true;
         slotIcons[index].color = new Color(1f, 1f, 1f, 1f);
@@ -131,14 +125,14 @@ public class HotbarManager : MonoBehaviour
             slotIcons[index + 5].enabled = true;
             slotIcons[index + 5].color = new Color(1f, 1f, 1f, 1f);
         }
-        UpdateCountText(index); // 추가냥
+        UpdateCountText(index);
         return true;
     }
 
     void UseItem(int index)
     {
-        ItemData item = items[index];
-        if (item == null) return;
+        if (items[index] == null) return;
+        ItemData item = items[index].item;
 
         switch (item.type)
         {
@@ -158,12 +152,20 @@ public class HotbarManager : MonoBehaviour
             case ItemType.Shoes:
                 break;
         }
-
-        InventoryManager.Instance?.ConsumeItemCount(item);
         InventoryManager.Instance?.RefreshStats();
     }
 
     void ConsumeItem(int index)
+    {
+        if (items[index] == null) return;
+        items[index].count--;
+        if (items[index].count <= 0)
+            ClearSlot(index);
+        else
+            UpdateCountText(index);
+    }
+
+    void ClearSlot(int index)
     {
         items[index] = null;
         slotIcons[index].sprite = null;
@@ -177,6 +179,6 @@ public class HotbarManager : MonoBehaviour
         UpdateCountText(index);
     }
 
-    public ItemData GetItem(int index) => items[index];
-    public void RemoveItem(int index) => ConsumeItem(index);
+    public ItemData GetItem(int index) => items[index]?.item;
+    public void RemoveItem(int index) => ClearSlot(index);
 }
