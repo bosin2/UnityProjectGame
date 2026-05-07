@@ -27,6 +27,12 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI txtSpeed;
     public TextMeshProUGUI txtDex;
 
+    [Header("기본 아이템")]
+    public ItemData[] defaultItems;
+    public int[] defaultItemCounts;
+    public ItemData defaultArmor;
+    public ItemData defaultShoes;
+
     private enum Category { Key, Use, Equip }
     private Category currentCategory = Category.Key;
 
@@ -38,6 +44,8 @@ public class InventoryManager : MonoBehaviour
 
     private ItemData equippedArmor;
     private ItemData equippedShoes;
+
+    private Dictionary<ItemData, int> itemCounts = new Dictionary<ItemData, int>();
 
     public bool isOpen = false;
 
@@ -51,6 +59,26 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryUI.SetActive(false);
         itemListPanel.SetActive(false);
+
+        if (defaultItems != null)
+        {
+            for (int i = 0; i < defaultItems.Length; i++)
+            {
+                if (defaultItems[i] == null) continue;
+
+                inventory.Add(defaultItems[i]);
+                if (defaultItems[i].type == ItemType.Heal ||
+                    defaultItems[i].type == ItemType.SpeedBoost)
+                {
+                    int count = (defaultItemCounts != null && i < defaultItemCounts.Length)
+                        ? defaultItemCounts[i] : 1;
+                    itemCounts[defaultItems[i]] = count;
+                }
+            }
+        }
+
+        if (defaultArmor != null) { inventory.Add(defaultArmor); ToggleEquip(defaultArmor); }
+        if (defaultShoes != null) { inventory.Add(defaultShoes); ToggleEquip(defaultShoes); }
     }
 
     void Update()
@@ -69,7 +97,22 @@ public class InventoryManager : MonoBehaviour
         itemListPanel.SetActive(true);
         RefreshItemList();
     }
-
+    public void ConsumeItemCount(ItemData item)
+    {
+        if (itemCounts.ContainsKey(item))
+        {
+            itemCounts[item]--;
+            if (itemCounts[item] <= 0)
+            {
+                itemCounts.Remove(item);
+                inventory.Remove(item);
+            }
+        }
+        else
+        {
+            inventory.Remove(item);
+        }
+    }
     void RefreshCategoryCursor()
     {
         for (int i = 0; i < categoryObjects.Length; i++)
@@ -79,7 +122,10 @@ public class InventoryManager : MonoBehaviour
                 txt.color = i == categoryIdx ? Color.white : Color.gray;
         }
     }
-
+    public int GetItemCount(ItemData item)
+    {
+        return itemCounts.ContainsKey(item) ? itemCounts[item] : 1;
+    }
     // 아이템 슬롯 클릭시 호출
     public void OnClickItem(int idx)
     {
@@ -132,7 +178,20 @@ public class InventoryManager : MonoBehaviour
             case ItemType.Key:
                 break;
         }
-        inventory.Remove(item);
+
+        if (itemCounts.ContainsKey(item))
+        {
+            itemCounts[item]--;
+            if (itemCounts[item] <= 0)
+            {
+                itemCounts.Remove(item);
+                inventory.Remove(item);
+            }
+        }
+        else
+        {
+            inventory.Remove(item);
+        }
         RefreshItemList();
     }
 
@@ -160,7 +219,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void RefreshItemList()
+    public void RefreshItemList()
     {
         foreach (var slot in slotUIs)
             Destroy(slot.gameObject);
@@ -172,8 +231,10 @@ public class InventoryManager : MonoBehaviour
             int idx = i;
             GameObject obj = Instantiate(itemSlotPrefab, itemGridGroup);
             InvenSlotUI slotUI = obj.GetComponent<InvenSlotUI>();
-            slotUI.Setup(items[i], 1);
-       
+
+            int count = itemCounts.ContainsKey(items[i]) ? itemCounts[items[i]] : 1;
+            slotUI.Setup(items[i], count);
+
             Button btn = obj.GetComponent<Button>();
             if (btn != null)
                 btn.onClick.AddListener(() => OnClickItem(idx));
@@ -240,9 +301,19 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
+        if (item.type == ItemType.Heal || item.type == ItemType.SpeedBoost)
+        {
+            ItemData existing = inventory.Find(i => i == item);
+            if (existing != null)
+            {
+                itemCounts[existing]++;
+                RefreshItemList();
+                return;
+            }
+            itemCounts[item] = 1;
+        }
         inventory.Add(item);
     }
-
     public void ToggleInventory()
     {
         isOpen = !isOpen;

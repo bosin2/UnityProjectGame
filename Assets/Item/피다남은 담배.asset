@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
-  m_Name: NewItem
+  m_Name: "\uD53C\uB2E4\uB0A8\uC740 \uB2F4\uBC30"
   m_EditorClassIdentifier: 
-  itemName: "\uBA39\uB2E4\uB0A8\uC740 \uCD08\uCF54\uBC14"
-  icon: {fileID: 0}
+  itemName: "\uB2F4\uBC30"
+  description: "\uD53C\uB2E4\uB0A8\uC740 \uB2F4\uBC30\uB2E4"
+  icon: {fileID: 4605110536845794535, guid: e2923bb7a40de9d488c4aa178da95456, type: 3}
   type: 0
-  healAmount: 0
+  healAmount: 5
   defenseAmount: 0
   speedAmount: 0
   speedDuration: 0

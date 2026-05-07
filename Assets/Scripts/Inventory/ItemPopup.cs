@@ -85,13 +85,13 @@ public class ItemPopup : MonoBehaviour
 
         actions[0] = onUse;
         actions[1] = onEquipToSlot;
-        actions[2] = null; // 닫기냥
+        actions[2] = null; // 닫기
 
         RefreshHighlight();
         popupPanel.SetActive(true);
     }
 
-    // 장비용 팝업냥
+    // 장비용 팝업
     public void ShowEquipPopup(ItemData item, bool isEquipped, System.Action onEquip)
     {
         titleTxt.text = item.itemName;
@@ -113,7 +113,27 @@ public class ItemPopup : MonoBehaviour
         RefreshHighlight();
         popupPanel.SetActive(true);
     }
+    public void ShowHotbarPopup(ItemData item, System.Action onUse, System.Action onReturn)
+    {
+        titleTxt.text = item.itemName;
+        currentOptionIdx = 0;
+        optionCount = 3;
 
+        optionTexts[0].text = "사용";
+        optionTexts[1].text = "인벤토리로";
+        optionTexts[2].text = "닫기";
+
+        options[0].gameObject.SetActive(true);
+        options[1].gameObject.SetActive(true);
+        options[2].gameObject.SetActive(true);
+
+        actions[0] = onUse;
+        actions[1] = onReturn;
+        actions[2] = null;
+
+        RefreshHighlight();
+        popupPanel.SetActive(true);
+    }
     public void ShowHotbarSlotPopup(ItemData item, System.Action<int> onSlotSelect)
     {
         titleTxt.text = "슬롯 선택 (1~5)";

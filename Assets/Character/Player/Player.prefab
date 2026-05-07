@@ -5261,6 +5261,10 @@ PrefabInstance:
       propertyPath: 'slotIcons.Array.data[9]'
       value: 
       objectReference: {fileID: 229104715482361579}
+    - target: {fileID: 5519214855442409173, guid: b36e394317abe9344acbcc694170f7d0, type: 3}
+      propertyPath: slotCountTexts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6254145659838887257, guid: b36e394317abe9344acbcc694170f7d0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
