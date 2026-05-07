@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.DeleteKey("SpawnDirY");
         }
 
-        if (scene.name == "MainMenu" || scene.name == "Intro")
+        if (scene.name == "MainMenu" || scene.name == "Intro" || scene.name == "Tutorial")
             UICanvas.Instance?.HideUI();
         else
             UICanvas.Instance?.ShowUI();
