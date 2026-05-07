@@ -47,17 +47,23 @@ public class InventoryManager : MonoBehaviour
 
     private Dictionary<ItemData, int> itemCounts = new Dictionary<ItemData, int>();
 
-    public bool isOpen = false;
+       public bool isOpen = false;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        SetInventoryOpen(false);
     }
 
     void Start()
     {
-        inventoryUI.SetActive(false);
+        SetInventoryOpen(false);
         itemListPanel.SetActive(false);
 
         if (defaultItems != null)
@@ -85,7 +91,10 @@ public class InventoryManager : MonoBehaviour
     {
         bool popupOpen = ItemPopup.Instance != null && ItemPopup.Instance.IsOpen;
         if (Input.GetKeyDown(KeyCode.E) && !popupOpen)
+        {
+            print(isOpen ? "인벤토리 닫음" : "인벤토리 열음");
             ToggleInventory();
+        }
     }
 
     // 카테고리 버튼 클릭시 호출
@@ -316,9 +325,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void ToggleInventory()
     {
-        isOpen = !isOpen;
-        inventoryUI.SetActive(isOpen);
-        hotbarUI.SetActive(!isOpen);
+        SetInventoryOpen(!isOpen);
 
         if (isOpen)
         {
@@ -336,5 +343,19 @@ public class InventoryManager : MonoBehaviour
             slotUIs.Clear();
             Time.timeScale = 1f;
         }
+    }
+
+    void SetInventoryOpen(bool open)
+    {
+        isOpen = open;
+
+        if (inventoryUI != null)
+            inventoryUI.SetActive(open);
+
+        if (hotbarUI != null)
+            hotbarUI.SetActive(!open);
+
+        if (!open)
+            Time.timeScale = 1f;
     }
 }
