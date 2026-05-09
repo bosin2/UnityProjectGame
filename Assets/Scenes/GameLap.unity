@@ -251,15 +251,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "11tl 45\uBD84\uC774\uB2E4"
-  - "...\uC625\uC0C1\uC73C\uB85C \uAC00\uC57C\uD574 \uBE68\uB9AC"
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
+  phases:
+  - dialogueLines:
+    - "\uBE68\uB9AC \uC625\uC0C1\uC73C\uB85C \uAC00\uC57C\uD574"
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &70467068
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1017,18 +1028,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4."
-  - "\uC598\uB294 \uC5B4\uB51C\uAC04\uAC70\uC57C?"
-  - "...\uC751? \uC774\uAC8C \uBB50\uC9C0?"
-  - "\uC0B4\uB824\uC918...?"
-  - ...
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
+  phases:
+  - dialogueLines:
+    - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4."
+    - "\uC751? \uBB34\uC5B8\uAC00 \uC801\uD600\uC788\uB2E4."
+    - "\uB3C4\uB9DD\uCCD0...?"
+    - ...
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueLines:
+    - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &733228052
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3698,14 +3738,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uAEBC\uC838\uC788\uB2E4"
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
+  phases:
+  - dialogueLines:
+    - "\uAEBC\uC838\uC788\uB2E4. \uD655\uC778 \uD560 \uD544\uC694\uB294 \uC5C6\uC744\uAC83
+      \uAC19\uB2E4."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &1792494865
 BoxCollider2D:
   m_ObjectHideFlags: 0
