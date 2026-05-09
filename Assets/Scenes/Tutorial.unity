@@ -5768,22 +5768,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uB178\uD2B8\uBD81\uC774\uB2E4"
-  - "\uD654\uBA74\uC774 \uAEBC\uC838\uC788\uC5B4 \uCF1C\uC9C0\uC9C0\uC54A\uB294\uB2E4"
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
-  hasChoice: 0
-  choiceQuestion: 
-  yesLines: []
-  noLines: []
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls: []
+  phases:
+  - dialogueLines:
+    - "\uB178\uD2B8\uBD81\uC774\uB2E4. \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &1108757529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6347,23 +6351,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uC2DC\uACC4\uBC14\uB298\uC774 11\uC2DC 45\uBD84\uC744 \uAC00\uB9AC\uD0A8\uB2E4"
-  - "\uC544\uB2C8 \uC815\uBC94\uC11D\uC740 \uC9C0\uAE08\uAE4C\uC9C0 \uC548\uAE68\uC6CC\uC8FC\uACE0
-    \uBB50\uD55C\uAC70\uC57C?"
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: clockChecked
-  hasChoice: 0
-  choiceQuestion: 
-  yesLines: []
-  noLines: []
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls: []
+  phases:
+  - dialogueLines:
+    - "\uC2DC\uACC4\uBC14\uB298\uC774 11\uC2DC 45\uBD84\uC744 \uAC00\uB9AC\uD0A4\uACE0\uC788\uB2E4"
+    - "\uC815\uBC94\uC11D\uC740 \uC548\uAEA0\uC6CC\uC8FC\uACE0 \uBB50\uD55C\uAC70\uC57C?"
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: ClockEnd
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!1 &1512728038
 GameObject:
   m_ObjectHideFlags: 0
@@ -6613,8 +6621,8 @@ GameObject:
   - component: {fileID: 1556138184}
   - component: {fileID: 1556138183}
   - component: {fileID: 1556138186}
-  - component: {fileID: 1556138187}
   - component: {fileID: 1556138188}
+  - component: {fileID: 1556138187}
   - component: {fileID: 1556138189}
   m_Layer: 0
   m_Name: NPC
@@ -6751,60 +6759,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - ...
-  - "\uC6B0\uC9C4\uC544..? \uC5EC\uAE30\uC11C \uBB50\uD574..."
-  - "\uAE40\uC6B0\uC9C4 : \uB3C4\uB9DD\uCCD0..."
-  - "\uB108 \uC65C\uC774\uB798 \uC5BC\uAD74\uB3C4 \uBAB8\uB3C4...\uD53C\uD22C\uC131\uC774\uC796\uC544
-    \uBB34\uC2A8\uC77C\uC788\uC5C8\uC5B4?"
-  - "\uAE40\uC6B0\uC9C4 : ..."
-  - "\uAE40\uC6B0\uC9C4 : ...\uB9C8\uC9C0\uB9C9 \uD5EC\uAE30\uAC00 12\uC2DC\uC5D0\uC640"
-  - "\uAE40\uC6B0\uC9C4 : 12\uC2DC\uAE4C\uC9C0 \uC625\uC0C1\uC73C\uB85C \uC62C\uB77C\uAC00... "
-  - "...\uBB50? \uB108\uB294..."
-  - "\uAE40\uC6B0\uC9C4 : ...\uC774\uAC70 \uAC00\uC838\uAC00 \uB0B4\uAC00 \uC8FC\uC6B4\uAC70\uC57C"
-  - "[\uC1E0\uD30C\uC774\uD504\uB97C \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4. (\uD074\uB9AD\uC73C\uB85C
-    \uACF5\uACA9\uAC00\uB2A5)]"
-  - "\uAE40\uC6B0\uC9C4 : \uC870\uC2EC\uD574... \uB09C \uB2A6\uC5C8\uC5B4 \uAC08\uAC8C"
-  - "\uAE40\uC6B0\uC9C4 : ..."
-  - "\uAE40\uC6B0\uC9C4 : ...\uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC744 \uC870\uC2EC\uD574"
-  - "...\uBB34\uC2A8 \uC18C\uB9AC\uC57C \uADF8\uAC8C \uC5B4\uB514\uAC00..."
-  requiredFlag: clockChecked
-  hintMessage: "\uAE40\uC6B0\uC9C4: ... \uC2DC\uAC04 "
-  onComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 782408603}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: OnNPCDone
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1556138189}
-        m_TargetAssemblyTypeName: PipePickup, Assembly-CSharp
-        m_MethodName: GivePipe
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  setFlag: 
-  hasChoice: 0
-  choiceQuestion: 
-  yesLines: []
-  noLines: []
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls: []
+  phases:
+  - dialogueLines:
+    - "\uBE68\uB9AC \uC625\uC0C1\uC73C\uB85C\uAC00"
+    - "\uC774\uAC74\uB0B4\uAC00\uC8FC\uC6B4\uC1E0\uD30C\uC774\uD504\uC57C"
+    requiredFlag: ClockEnd
+    hintMessage: "...\uC2DC\uAC04"
+    onComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1556138189}
+          m_TargetAssemblyTypeName: PipePickup, Assembly-CSharp
+          m_MethodName: GivePipe
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 782408603}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: OnNPCDone
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!61 &1556138188
 BoxCollider2D:
   m_ObjectHideFlags: 0
