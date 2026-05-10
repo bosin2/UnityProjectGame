@@ -238,6 +238,7 @@ Transform:
   - {fileID: 634540651}
   - {fileID: 944138782}
   - {fileID: 1987762008}
+  - {fileID: 226625730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108838264
@@ -375,6 +376,10 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -62, y: 8}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 11400000, guid: a31386bb2e1878245a68a56e72daed0b, type: 2}
+  consumeKey: 1
+  noKeyMessage: "\uC7A0\uACA8\uC788\uB2E4."
+  unlockFlag: RightOpen
 --- !u!61 &173898299
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1158,6 +1163,10 @@ MonoBehaviour:
   targetSceneName: GameLap
   spawnPosition: {x: -2.3, y: -20}
   spawnDirection: {x: 0, y: 1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!1 &619211977
 GameObject:
   m_ObjectHideFlags: 0
@@ -38432,6 +38441,10 @@ MonoBehaviour:
   targetSceneName: LeftCorridor
   spawnPosition: {x: -65, y: -1}
   spawnDirection: {x: -1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &2099550839
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 3099275}
   - component: {fileID: 3099274}
   m_Layer: 0
-  m_Name: RightCorrider
+  m_Name: RightCorridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +167,10 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -153, y: -65}
   spawnDirection: {x: 1, y: 0}
+  requiredKey: {fileID: 11400000, guid: a31386bb2e1878245a68a56e72daed0b, type: 2}
+  consumeKey: 1
+  noKeyMessage: "\uC7A0\uACA8\uC788\uB2E4."
+  unlockFlag: RightOpen
 --- !u!61 &3099275
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -474,6 +478,10 @@ MonoBehaviour:
   targetSceneName: MainCorridor
   spawnPosition: {x: -51, y: -5.3}
   spawnDirection: {x: 1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &545600581
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4582,6 +4590,10 @@ MonoBehaviour:
   targetSceneName: Stair
   spawnPosition: {x: 19, y: -14}
   spawnDirection: {x: 0, y: 1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &880790673
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10910,6 +10922,10 @@ MonoBehaviour:
   targetSceneName: g421
   spawnPosition: {x: -9, y: 18}
   spawnDirection: {x: 1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &1127587479
 BoxCollider2D:
   m_ObjectHideFlags: 0
