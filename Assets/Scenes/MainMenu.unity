@@ -1318,6 +1318,8 @@ MonoBehaviour:
   hasPipe: 0
   stage: 0
   currentWeapon: pipe
+  hasRightCorridorKey: 0
+  gunEventDone: 0
 --- !u!4 &1082564782
 Transform:
   m_ObjectHideFlags: 0

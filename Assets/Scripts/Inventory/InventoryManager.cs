@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
+// 인벤토리 UI, 아이템 데이터, 카테고리 전환, 장비 착용/해제를 통합 관리하는 싱글톤.
+// E키로 열고 닫으며, 열리면 Time.timeScale=0f로 게임을 일시정지한다.
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
@@ -45,8 +47,6 @@ public class InventoryManager : MonoBehaviour
     private ItemData equippedArmor;
     private ItemData equippedShoes;
 
-    private Dictionary<ItemData, int> itemCounts = new Dictionary<ItemData, int>();
-
     public bool isOpen = false;
 
     void Awake()
@@ -61,6 +61,7 @@ public class InventoryManager : MonoBehaviour
         SetInventoryOpen(false);
     }
 
+    // 기본 아이템·방어구·신발을 인벤토리에 추가하고 장비 슬롯에 자동 착용
     void Start()
     {
         SetInventoryOpen(false);
@@ -81,6 +82,7 @@ public class InventoryManager : MonoBehaviour
         if (defaultShoes != null) { AddItem(defaultShoes, 1); ToggleEquip(defaultShoes); }
     }
 
+    // E키로 인벤토리 열기/닫기. 팝업이 열려 있으면 무시
     void Update()
     {
         bool popupOpen = ItemPopup.Instance != null && ItemPopup.Instance.IsOpen;
@@ -91,6 +93,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 아이템을 인벤토리에 추가. 열쇠는 중복 획득 무시, 그 외는 수량 누적
     public void AddItem(ItemData item, int count = 1)
     {
         ItemStack existing = inventory.Find(s => s.item == item);
@@ -106,6 +109,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 지정 수량만큼 제거. 수량이 0 이하면 스택 삭제
     public void RemoveItem(ItemData item, int count = 1)
     {
         ItemStack stack = inventory.Find(s => s.item == item);
@@ -115,22 +119,26 @@ public class InventoryManager : MonoBehaviour
             inventory.Remove(stack);
     }
 
+    // 수량과 무관하게 해당 아이템 스택 전체 삭제
     public void RemoveItemCompletely(ItemData item)
     {
         inventory.RemoveAll(s => s.item == item);
     }
 
+    // 인벤토리에서 해당 아이템의 현재 보유 수량 반환
     public int GetItemCount(ItemData item)
     {
         ItemStack stack = inventory.Find(s => s.item == item);
         return stack != null ? stack.count : 0;
     }
 
+    // 아이템 1개 소모 (RemoveItem 래퍼)
     public void ConsumeItemCount(ItemData item)
     {
         RemoveItem(item, 1);
     }
 
+    // 카테고리 버튼 클릭 시 현재 카테고리 전환 및 아이템 목록 갱신
     public void OnClickCategory(int idx)
     {
         categoryIdx = idx;
@@ -140,6 +148,7 @@ public class InventoryManager : MonoBehaviour
         RefreshItemList();
     }
 
+    // 선택된 카테고리 버튼 텍스트만 흰색, 나머지는 회색으로 강조 표시
     void RefreshCategoryCursor()
     {
         for (int i = 0; i < categoryObjects.Length; i++)
@@ -150,6 +159,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 아이템 슬롯 클릭: 장비 카테고리면 착용/해제 팝업, 그 외에는 사용/슬롯 장착 팝업 표시
     public void OnClickItem(int idx)
     {
         if (idx >= slotUIs.Count) return;
@@ -190,6 +200,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 인벤토리에서 아이템을 직접 사용 (핫바 거치지 않음). 사용 후 목록 갱신
     void UseItemDirectly(ItemData item)
     {
         switch (item.type)
@@ -208,6 +219,7 @@ public class InventoryManager : MonoBehaviour
         RefreshItemList();
     }
 
+    // 방어구/신발 착용 토글. 신발은 이동속도에 즉시 반영
     void ToggleEquip(ItemData item)
     {
         PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
@@ -232,6 +244,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 현재 카테고리 아이템 슬롯 UI를 전부 재생성
     public void RefreshItemList()
     {
         foreach (var slot in slotUIs)
@@ -256,6 +269,7 @@ public class InventoryManager : MonoBehaviour
         RefreshDescription();
     }
 
+    // 선택된 슬롯의 아이템 설명을 하단 텍스트에 업데이트
     void RefreshDescription()
     {
         if (slotUIs.Count == 0 || itemIdx >= slotUIs.Count)
@@ -284,6 +298,7 @@ public class InventoryManager : MonoBehaviour
         descriptionTxt.text = desc;
     }
 
+    // 플레이어 현재 스탯(HP, 속도, 방어력)을 인벤토리 스탯 텍스트에 반영
     public void RefreshStats()
     {
         PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
@@ -293,6 +308,7 @@ public class InventoryManager : MonoBehaviour
         txtDex.text = "DEX : " + (equippedArmor != null ? equippedArmor.defenseAmount : 0);
     }
 
+    // 현재 카테고리에 해당하는 ItemStack 목록 반환
     List<ItemStack> GetCategoryStacks()
     {
         switch (currentCategory)
@@ -310,6 +326,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 인벤토리 열기/닫기. 열리면 timeScale=0, 닫히면 슬롯 UI 정리 후 timeScale=1
     public void ToggleInventory()
     {
         SetInventoryOpen(!isOpen);
@@ -332,6 +349,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // 인벤토리 UI 표시/숨김 및 핫바 역전 처리
     void SetInventoryOpen(bool open)
     {
         isOpen = open;

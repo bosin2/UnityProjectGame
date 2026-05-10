@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// 인벤토리에서 "슬롯 장착" 선택 시 핫바 슬롯 번호를 고르는 팝업 싱글톤.
+// Show()에 아이템과 콜백을 넘기면 슬롯 버튼 클릭 시 해당 인덱스로 콜백이 호출된다.
 public class SlotSelectPopup : MonoBehaviour
 {
     public static SlotSelectPopup Instance;
@@ -58,4 +60,6 @@ public class SlotSelectPopup : MonoBehaviour
     {
         panel.SetActive(false);
     }
+
+    public bool IsOpen => panel != null && panel.activeSelf;
 }

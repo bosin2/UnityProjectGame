@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
+  m_Name: RightCorridorKey
+  m_EditorClassIdentifier: 
+  itemName: "\uC624\uB978\uCABD\uBCF5\uB3C4\uC5F4\uC1E0"
+  description: "\uC624\uB978\uCABD \uBCF5\uB3C4\uB97C \uC5F4 \uC218 \uC788\uB294
+    \uC5F4\uC1E0\uB2E4"
+  icon: {fileID: 1694913177206695654, guid: b5fec92ac3651fd46b655c1c771766a7, type: 3}
+  type: 1
+  healAmount: 0
+  defenseAmount: 0
+  speedAmount: 0
+  speedDuration: 0
+  keyId: RightCorridorKey

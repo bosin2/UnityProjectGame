@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+// 인벤토리/핫바 슬롯 클릭 시 "사용/장착/해제" 등의 선택지를 보여주는 팝업 싱글톤.
+// ShowUsePopup / ShowEquipPopup / ShowHotbarPopup 중 상황에 맞는 메서드를 호출한다.
 public class ItemPopup : MonoBehaviour
 {
     public static ItemPopup Instance;
@@ -35,6 +37,7 @@ public class ItemPopup : MonoBehaviour
         }
     }
 
+    // 소비 아이템용 팝업: "사용" / "슬롯 장착" / "닫기"
     public void ShowUsePopup(ItemData item, System.Action onUse, System.Action onEquipToSlot)
     {
         titleTxt.text = item.itemName;
@@ -54,6 +57,7 @@ public class ItemPopup : MonoBehaviour
         popupPanel.SetActive(true);
     }
 
+    // 장비 아이템용 팝업: 착용 중이면 "해제", 아니면 "장착" / "닫기"
     public void ShowEquipPopup(ItemData item, bool isEquipped, System.Action onEquip)
     {
         titleTxt.text = item.itemName;
@@ -73,6 +77,7 @@ public class ItemPopup : MonoBehaviour
         popupPanel.SetActive(true);
     }
 
+    // 핫바 슬롯 아이템용 팝업: "사용" / "해제(인벤토리 반환)" / "닫기"
     public void ShowHotbarPopup(ItemData item, System.Action onUse, System.Action onUnequip)
     {
         titleTxt.text = item.itemName;
@@ -90,40 +95,6 @@ public class ItemPopup : MonoBehaviour
         actions[2] = null;
 
         popupPanel.SetActive(true);
-    }
-
-    public void ShowHotbarSlotPopup(ItemData item, System.Action<int> onSlotSelect)
-    {
-        titleTxt.text = "슬롯 선택 (1~5)";
-
-        options[0].gameObject.SetActive(false);
-        options[1].gameObject.SetActive(false);
-        options[2].gameObject.SetActive(false);
-
-        popupPanel.SetActive(true);
-        StartCoroutine(WaitForSlotInput(onSlotSelect));
-    }
-
-    System.Collections.IEnumerator WaitForSlotInput(System.Action<int> onSlotSelect)
-    {
-        while (true)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-                {
-                    onSlotSelect?.Invoke(i);
-                    Hide();
-                    yield break;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Hide();
-                yield break;
-            }
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
     }
 
     public void Hide()

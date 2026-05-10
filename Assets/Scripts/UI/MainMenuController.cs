@@ -4,10 +4,10 @@ using UnityEngine.SceneManagement;
 // 메인 메뉴 버튼 이벤트 핸들러
 public class MainMenuController : MonoBehaviour
 {
-    // 게임 시작 버튼: 인트로 씬으로 전환
+    // 게임 시작 버튼: GameLap 씬으로 전환 (인트로/튜토리얼은 GameFlowManager 가 처리)
     public void OnStartGame()
     {
-        SceneManager.LoadScene("Intro");
+        SceneManager.LoadScene("GameLap");
     }
 
     // 설정 버튼 (미구현)

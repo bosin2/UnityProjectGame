@@ -26,6 +26,7 @@ public class UICanvas : MonoBehaviour
         if (hpUI != null) hpUI.SetActive(true);
     }
 
+    // 메인메뉴·인트로 등에서 HUD 전체 숨김
     public void HideUI()
     {
         if (timerUI != null) timerUI.SetActive(false);

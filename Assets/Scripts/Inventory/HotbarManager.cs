@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 핫바 슬롯(1~5번 키)을 관리하는 싱글톤.
+// 숫자키로 슬롯 선택, 우클릭으로 아이템 사용. 인벤토리에서 슬롯으로 아이템 이동 가능.
 public class HotbarManager : MonoBehaviour
 {
     public static HotbarManager Instance;
@@ -54,6 +56,7 @@ public class HotbarManager : MonoBehaviour
         }
     }
 
+    // 슬롯 하이라이트를 선택된 슬롯 위치로 이동
     void SelectSlot(int index)
     {
         if (index < 0 || index >= slots.Length) return;
@@ -63,6 +66,7 @@ public class HotbarManager : MonoBehaviour
         highlight.position = slots[index].position;
     }
 
+    // 인벤토리 내 핫바 슬롯 클릭 시 사용/해제 팝업 표시
     void OnClickInvenHotbarSlot(int index)
     {
         if (items[index] == null) return;
@@ -82,6 +86,7 @@ public class HotbarManager : MonoBehaviour
         );
     }
 
+    // 슬롯 수량 텍스트 갱신. 2개 이상일 때만 표시
     void UpdateCountText(int index)
     {
         if (slotCountTexts == null || index >= slotCountTexts.Length) return;
@@ -103,6 +108,7 @@ public class HotbarManager : MonoBehaviour
         }
     }
 
+    // 지정 슬롯에 아이템 추가. 빈 슬롯에만 배치 가능하며 아이콘도 함께 갱신
     public bool AddItemToSlot(ItemData item, int index, int count = 1)
     {
         slotIcons[index].preserveAspect = true;
@@ -131,6 +137,7 @@ public class HotbarManager : MonoBehaviour
         return true;
     }
 
+    // 슬롯의 아이템을 타입에 따라 즉시 사용하고 1개 소모
     void UseItem(int index)
     {
         if (items[index] == null) return;
@@ -157,6 +164,7 @@ public class HotbarManager : MonoBehaviour
         InventoryManager.Instance?.RefreshStats();
     }
 
+    // 아이템 수량 1 감소. 0 이하가 되면 슬롯 초기화
     void ConsumeItem(int index)
     {
         if (items[index] == null) return;
@@ -167,6 +175,7 @@ public class HotbarManager : MonoBehaviour
             UpdateCountText(index);
     }
 
+    // 슬롯 아이템, 아이콘, 수량 텍스트를 모두 초기화
     void ClearSlot(int index)
     {
         items[index] = null;
@@ -183,4 +192,8 @@ public class HotbarManager : MonoBehaviour
 
     public ItemData GetItem(int index) => items[index]?.item;
     public void RemoveItem(int index) => ClearSlot(index);
+
+    // HotbarUI.cs 에서 이관 — 핫바 GameObject 표시/숨김
+    public void Show() => gameObject.SetActive(true);
+    public void Hide() => gameObject.SetActive(false);
 }

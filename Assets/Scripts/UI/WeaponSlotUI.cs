@@ -40,4 +40,13 @@ public class WeaponSlotUI : MonoBehaviour
             ? pipeSprite
             : gunSprite;
     }
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 }
