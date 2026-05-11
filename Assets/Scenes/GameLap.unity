@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAE40\uC6B0\uC9C4: \uC544\uC9C1 \uC548\uB3FC..."
@@ -496,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uD5E4\uC5D1 11\uC2DC 45\uBD84?"
@@ -847,6 +849,10 @@ MonoBehaviour:
   targetSceneName: MainCorridor
   spawnPosition: {x: 33, y: 34}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &124573375
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1959,7 +1965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8753189110150325633, guid: b381ee44e0f25664ba55d4553873df07, type: 3}
       propertyPath: m_SortingOrder
-      value: 100
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2344,6 +2350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC815\uBC94\uC11D\uC758 \uC804\uACF5\uCC45\uC774\uB2E4."
@@ -7428,6 +7435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uBE68\uB9AC \uC625\uC0C1\uC73C\uB85C \uAC00\uC57C\uD574"
@@ -7760,6 +7768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAEBC\uC838\uC788\uB2E4. \uD655\uC778 \uD560 \uD544\uC694\uB294 \uC5C6\uC744\uAC83

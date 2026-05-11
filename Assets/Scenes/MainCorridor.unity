@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC0AC\uBB3C\uD568\uC774\uB2E4."
@@ -671,6 +672,11 @@ Transform:
   - {fileID: 1204317166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &378688643 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1224187053279379894, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+  m_PrefabInstance: {fileID: 1724205936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &442093945
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,6 +917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC4F0\uB808\uAE30 \uD1B5\uC774\uB2E4."
@@ -1340,6 +1347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: Bakcass1
   phases:
   - dialogueLines:
     - "\uB300\uBD80\uBD84 \uC7A0\uACA8 \uC788\uB2E4."
@@ -1446,10 +1454,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1224187053279379894, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2464660038248292042, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4434870239265336936, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
@@ -1601,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uBD80 \uC7A0\uACA8 \uC5F4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."
@@ -1701,6 +1706,97 @@ Transform:
   - {fileID: 173898297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &757672522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 757672523}
+  - component: {fileID: 757672525}
+  - component: {fileID: 757672524}
+  m_Layer: 0
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &757672523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757672522}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.03, y: 0.07, z: 0.017139927}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 378688643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757672524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757672522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b38d8fe51a3c04c833fa2bcca5531f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &757672525
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757672522}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.04699993, y: -0.42567182}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.75, y: 7.75}
+    newSize: {x: 3.1666667, y: 5.1666665}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3.1792889, y: 5.229468}
+  m_EdgeRadius: 0
 --- !u!1 &766582446
 GameObject:
   m_ObjectHideFlags: 0
@@ -5130,6 +5226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uBC29\uD654\uBB38\uC774 \uAFC8\uCA4D\uB3C4 \uD558\uC9C0 \uC54A\uB294\uB2E4."
@@ -9305,6 +9402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uBB38 \uC190\uC7A1\uC774\uAC00 \uC5C6\uB2E4."
@@ -9531,6 +9629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uBB34\uC5B8\uAC00\uC5D0 \uB9C9\uD600 \uC5F4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."
@@ -9736,6 +9835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: Medical_box
   phases:
   - dialogueLines:
     - "\uBA87\uAC1C\uC758 \uC0AC\uBB3C\uD568\uC774 \uC5F4\uB824\uC788\uB294 \uAC83
@@ -9867,6 +9967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC791\uB3D9\uD558\uC9C0 \uC54A\uB294 \uAC83 \uAC19\uB2E4."
@@ -10344,6 +10445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uB300\uBD80\uBD84 \uC7A0\uACA8\uC788\uB2E4."
@@ -10477,13 +10579,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2464660038248292042, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4434870239265336936, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429415106804261727, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8680625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429415106804261727, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_Offset.y
+      value: -2.1063745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: attackRange
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: attackCooldown
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: detectionRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136368513136907517, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: axisSwitchMargin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652336032633332105, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7767786804021480497, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
       propertyPath: m_Name
       value: Sumung
       objectReference: {fileID: 0}
+    - target: {fileID: 8894023643146836859, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1224187053279379894, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 757672523}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a69dc3002efccd45ab9692718e5be72, type: 3}
 --- !u!1 &1790350613
@@ -37299,6 +37444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC560\uB2C8 \uACFC\uC758 \uACFC\uBC29\uC774\uB2E4. "

@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
 
+        DisableAllAttackColliders();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -99,6 +100,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !isAttacking && !isHurt && !popupOpen)
             Attack();
+
+        // 공격 중이 아닐 때 항상 강제 비활성화 (Animator가 켜는 경우 방지)
+        if (!isAttacking)
+            DisableAllAttackColliders();
 
         // 공격/피격 중에는 이동 불가
         if (isAttacking || isHurt)

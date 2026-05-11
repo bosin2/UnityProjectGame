@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uD504\uB9B0\uD130\uAE30\uB2E4."
@@ -2581,6 +2582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uCC45\uC7A5\uC774\uB2E4. \uBCFC \uD544\uC694\uB294 \uC5C6\uC744\uAC83 \uAC19\uB2E4."
@@ -2849,6 +2851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: Bakcass
   phases:
   - dialogueLines:
     - "\uB0C9\uC7A5\uACE0\uB2E4."
@@ -3135,6 +3138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: Coffee
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC774 \uBA39\uB2E4 \uB0A8\uAE30\uC2E0 \uCEE4\uD53C\uAC00
@@ -3574,6 +3578,10 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -53, y: -59}
   spawnDirection: {x: -1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!61 &1521321701
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3711,6 +3719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uD589\uAC70\uB2E4."
@@ -3888,6 +3897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 418_Key
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uCC45\uC0C1\uC774\uB2E4."

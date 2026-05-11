@@ -4772,6 +4772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases: []
   currentPhaseIndex: 0
 --- !u!61 &1044724727
@@ -10808,6 +10809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uD53C\uB85C \uC778\uD574 \uB0B4\uBD80\uAC00 \uBCF4\uC774\uC9C0 \uC54A\uB294\uB2E4."
@@ -11032,6 +11034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: RightCorridor
   phases:
   - dialogueLines:
     - "\uC624\uB978\uCABD\uBCF5\uB3C4\uC5F4\uC1E0"

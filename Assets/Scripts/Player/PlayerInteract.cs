@@ -66,7 +66,6 @@ public class PlayerInteract : MonoBehaviour
                     GameManager.Instance?.SetFlag(phase.setFlag);
                 phase.onComplete?.Invoke();
 
-                // 다음 phase로 진행 (마지막이면 유지)
                 if (currentTarget.currentPhaseIndex < currentTarget.phases.Length - 1)
                 {
                     currentTarget.currentPhaseIndex++;
