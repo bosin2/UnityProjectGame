@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     // 예: "introDone", "tutorialDone", "ClockEnd"
     private HashSet<string> flags = new HashSet<string>();
 
+    // Interactable의 currentPhaseIndex를 씬 간에 유지하기 위한 저장소
+    private Dictionary<string, int> phaseIndices = new Dictionary<string, int>();
+
     void Awake()
     {
         // 싱글톤 보장: 이미 존재하면 새 인스턴스 제거
@@ -61,4 +64,8 @@ public class GameManager : MonoBehaviour
 
     // 플래그 보유 여부 반환
     public bool HasFlag(string flag) => flags.Contains(flag);
+
+    // Interactable의 currentPhaseIndex 저장/복원
+    public void SetPhaseIndex(string id, int index) => phaseIndices[id] = index;
+    public int GetPhaseIndex(string id) => phaseIndices.TryGetValue(id, out int v) ? v : 0;
 }
