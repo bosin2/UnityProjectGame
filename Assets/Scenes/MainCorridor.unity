@@ -1406,8 +1406,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 23.760296, y: 1.8414898, z: 1}
-  m_Center: {x: 0.08014107, y: -0.4207449, z: 0}
+  m_Size: {x: 23.845835, y: 1.9484138, z: 1}
+  m_Center: {x: 0.037371635, y: -0.36728287, z: 0}
 --- !u!1001 &647818903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9910,7 +9910,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.5575714, y: 0.39357996}
+  m_Offset: {x: -0.5575714, y: 0.500504}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9920,7 +9920,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10.38031, y: 3.0990896}
+  m_Size: {x: 10.38031, y: 3.3129377}
   m_EdgeRadius: 0
 --- !u!1 &1448572004
 GameObject:

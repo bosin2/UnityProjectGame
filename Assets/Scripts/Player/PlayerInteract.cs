@@ -101,6 +101,15 @@ public class PlayerInteract : MonoBehaviour
             currentTarget = target;
     }
 
+    // OnTriggerEnter2D가 누락된 경우를 보완 (공격 콜라이더 간섭 또는 범위 안에서 활성화)
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (currentTarget != null) return;
+        Interactable target = other.GetComponent<Interactable>();
+        if (target != null)
+            currentTarget = target;
+    }
+
     // 플레이어가 Interactable 범위를 벗어남
     void OnTriggerExit2D(Collider2D other)
     {
