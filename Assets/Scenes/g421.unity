@@ -1246,21 +1246,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uB4B7\uBB38\uC740 \uC5F4\uB9AC\uC9C0 \uC54A\uB294 \uAC83 \uAC19\uB2E4."
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
-  hasChoice: 0
-  choiceQuestion: 
-  yesLines: []
-  noLines: []
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls: []
+  phases: []
+  currentPhaseIndex: 0
 --- !u!61 &68268252
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1598,6 +1585,53 @@ Transform:
   - {fileID: 1622200180}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &449269281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 449269283}
+  - component: {fileID: 449269282}
+  m_Layer: 0
+  m_Name: DebugPlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &449269282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449269281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8675975dc0d26c548acf0680fe8d6f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 416563765199707265, guid: 52b7996c41a2d244383cd9cd498c5368, type: 3}
+  spawnPoint: {fileID: 1346271513}
+--- !u!4 &449269283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449269281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.762594, y: 3.397254, z: -0.14662145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1346271513}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &505636441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,7 +1726,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000215b56e9e76b7662a17aa7642389288a25d5c78c615f71f7
+  m_ApplyToSortingLayers: 00000000139506fd
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2762,6 +2796,37 @@ Transform:
   - {fileID: 969671259}
   - {fileID: 22221998}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1346271512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346271513}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346271513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346271512}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.1, y: 14.6, z: 0.10132261}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 449269283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1553982236
 GameObject:
@@ -9770,6 +9835,10 @@ MonoBehaviour:
   targetSceneName: LeftCorridor
   spawnPosition: {x: -88, y: -25}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
 --- !u!1 &1637003135
 GameObject:
   m_ObjectHideFlags: 0
@@ -9815,21 +9884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - "\uB4B7\uBB38\uC740 \uC5F4\uB9AC\uC9C0 \uC54A\uB294 \uAC83 \uAC19\uB2E4."
-  requiredFlag: 
-  hintMessage: ...
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  setFlag: 
-  hasChoice: 0
-  choiceQuestion: 
-  yesLines: []
-  noLines: []
-  onChoiceYes:
-    m_PersistentCalls:
-      m_Calls: []
+  phases: []
+  currentPhaseIndex: 0
 --- !u!61 &1637003138
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9974,3 +10030,4 @@ SceneRoots:
   - {fileID: 649664620}
   - {fileID: 1754322082}
   - {fileID: 732010978}
+  - {fileID: 449269283}
