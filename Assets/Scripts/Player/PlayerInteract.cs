@@ -68,7 +68,11 @@ public class PlayerInteract : MonoBehaviour
 
                 // 다음 phase로 진행 (마지막이면 유지)
                 if (currentTarget.currentPhaseIndex < currentTarget.phases.Length - 1)
+                {
                     currentTarget.currentPhaseIndex++;
+                    if (currentTarget.interactableId != "")
+                        GameManager.Instance?.SetPhaseIndex(currentTarget.interactableId, currentTarget.currentPhaseIndex);
+                }
             });
         }
 
