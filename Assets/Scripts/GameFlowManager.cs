@@ -30,7 +30,7 @@ public class GameFlowManager : MonoBehaviour
     public TextMeshProUGUI dialogueText; // 대사 텍스트
     public GameObject clickHint;         // "Space를 눌러 계속" 힌트 UI
     public Image fadePanel;              // 페이드 인/아웃용 검정 패널
-    public Image cutscene;              // 컷씬 이미지
+    public Image cutscene;               // 컷씬 이미지
 
     // 인트로 대사 한 줄과 표시할 이미지 정보
     [System.Serializable]
@@ -49,10 +49,10 @@ public class GameFlowManager : MonoBehaviour
     [SerializeField] private bool skipIntroTutorial = false;
 
     // 인트로 상태 변수
-    private int currentLine = 0;       // 현재 표시 중인 대사 인덱스
-    private bool isTyping = false;     // 타이핑 연출 진행 중 여부
-    private bool canClick = false;     // Space 입력으로 다음 줄 가능 여부
-    private bool introActive = true;   // false가 되면 Update 입력 무시
+    private int currentLine = 0;     // 현재 표시 중인 대사 인덱스
+    private bool isTyping = false;   // 타이핑 연출 진행 중 여부
+    private bool canClick = false;   // Space 입력으로 다음 줄 가능 여부
+    private bool introActive = true; // false가 되면 Update 입력 무시
 
     // Space 연타 방지 쿨다운
     private float lastSpaceTime = -1f;
@@ -86,8 +86,9 @@ public class GameFlowManager : MonoBehaviour
             tutorialRoot?.SetActive(false);
             gameplayRoot?.SetActive(true);
 
-            // 열쇠 있고 총 이벤트 미완료면 gunNPC 활성화
-            if (GameManager.Instance.hasRightCorridorKey && !GameManager.Instance.gunEventDone)
+            // 열쇠 있고 NPC 아직 안 죽었으면 gunNPC 활성화
+            if (GameManager.Instance.hasRightCorridorKey
+                && !GameManager.Instance.HasFlag("gunNPCDead"))
                 gunNPC?.SetActive(true);
             else
                 gunNPC?.SetActive(false);
@@ -164,25 +165,6 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    // ── 총 획득 이벤트 ───────────────────────────────────────────────────
-
-    // gunNPC 대화 완료 시 호출: 총 지급 및 무기 전환
-    public void OnGunNPCDone()
-    {
-        if (GameManager.Instance == null) return;
-        GameManager.Instance.hasGun = true;
-        GameManager.Instance.gunEventDone = true;
-        gunNPC?.SetActive(false);
-
-        // 플레이어 무기를 총(1)으로 전환
-        var player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            var pm = player.GetComponent<PlayerMovement>();
-            pm?.SwitchWeapon(1);
-        }
-    }
-
     // ── 플레이어 조작 잠금/해제 ─────────────────────────────────────────
 
     // PlayerMovement 컴포넌트를 활성/비활성화해 조작을 잠그거나 해제
@@ -235,7 +217,7 @@ public class GameFlowManager : MonoBehaviour
         foreach (char c in line.text)
         {
             dialogueText.text += c;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.07f);
         }
 
         isTyping = false;
@@ -326,22 +308,25 @@ public class GameFlowManager : MonoBehaviour
         GameManager.Instance.hasPipe = true;
     }
 
-    // NPC 대화 완료 → 게임플레이로 전환
+    // NPC 대화 완료 → 페이드 후 게임플레이로 전환
     public void OnNPCDone()
     {
         if (GameManager.Instance == null) return;
         GameManager.Instance.stage = 1;
-        StartCoroutine(TransitionToGameplay());
+        StartCoroutine(NPCFadeOutAndGameplay());
     }
 
-    // 튜토리얼 종료: 페이드 후 gameplayRoot 활성화, HUD 표시
-    IEnumerator TransitionToGameplay()
+    // 튜토리얼 NPC 페이드 아웃 후 gameplayRoot 활성화, HUD 표시
+    IEnumerator NPCFadeOutAndGameplay()
     {
-        // 페이드 아웃 (unscaledDeltaTime: timeScale=0 상태에서도 동작)
+        // 대화 끝나고 timeScale 복구 먼저
+        Time.timeScale = 1f;
+
+        // 페이드 아웃
         float t = 0f;
         while (t < 1f)
         {
-            t += Time.unscaledDeltaTime;
+            t += Time.deltaTime;
             fadePanel.color = new Color(0, 0, 0, t);
             yield return null;
         }
@@ -349,15 +334,15 @@ public class GameFlowManager : MonoBehaviour
         tutorialRoot?.SetActive(false);
         gameplayRoot?.SetActive(true);
         UICanvas.Instance?.ShowUI();
-
-        // 튜토리얼 완료 플래그 저장
         GameManager.Instance?.SetFlag("tutorialDone");
+
+        yield return new WaitForSeconds(0.3f);
 
         // 페이드 인
         t = 1f;
         while (t > 0f)
         {
-            t -= Time.unscaledDeltaTime;
+            t -= Time.deltaTime;
             fadePanel.color = new Color(0, 0, 0, t);
             yield return null;
         }
@@ -367,4 +352,88 @@ public class GameFlowManager : MonoBehaviour
         WeaponSlotUI.Instance?.Show();
         HotbarManager.Instance?.Show();
     }
+
+    // ── 총 획득 이벤트 ──────────────────────────────────────────────────
+
+    // gunNPC 1차 대화 완료 시 호출: 총 지급 및 무기 전환
+    public void OnGunNPCDone()
+    {
+        if (GameManager.Instance == null) return;
+        GameManager.Instance.hasGun = true;
+
+        // 플레이어 무기를 권총(1)으로 전환
+        var player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            var pm = player.GetComponent<PlayerMovement>();
+            pm?.SwitchWeapon(1);
+        }
+    }
+
+    // gunNPC 2차 대화 완료 시 호출: 총 쏘는 연출 시작
+    public void OnGunNPCShot()
+    {
+        StartCoroutine(GunShotEvent());
+    }
+    // 총알에 NPC 피격 시 호출
+    public void OnGunNPCHit()
+    {
+        if (GameManager.Instance.HasFlag("gunNPCDead")) return;
+        StartCoroutine(GunShotEvent());
+    }
+    // 총 쏘는 연출: 화면 붉어짐 → 검정 → NPC 사망 애니메이션 → 우는 대사
+    IEnumerator GunShotEvent()
+    {
+        Time.timeScale = 1f;
+
+        // 화면 붉어지기
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 3f;
+            fadePanel.color = new Color(1, 0, 0, Mathf.Lerp(0, 0.6f, t));
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        // 검정으로 전환
+        t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 2f;
+            fadePanel.color = new Color(0, 0, 0, Mathf.Lerp(0, 1f, t));
+            yield return null;
+        }
+
+        // NPC 사망 애니메이션 재생
+        var anim = gunNPC?.GetComponent<Animator>();
+        if (anim != null) anim.SetTrigger("Die");
+
+        // 페이드 인
+        t = 1f;
+        while (t > 0f)
+        {
+            t -= Time.deltaTime;
+            fadePanel.color = new Color(0, 0, 0, t);
+            yield return null;
+        }
+        fadePanel.color = new Color(0, 0, 0, 0);
+
+        // 애니메이션 완료 대기
+        if (anim != null)
+        {
+            yield return null;
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
+                   && anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
+                yield return null;
+            }
+            anim.enabled = false; // 마지막 프레임 고정
+        }
+
+        // 시체 남기고 플래그 세팅
+        GameManager.Instance?.SetFlag("gunNPCDead");
+    }
+
 }

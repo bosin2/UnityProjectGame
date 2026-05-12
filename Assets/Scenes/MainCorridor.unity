@@ -380,6 +380,8 @@ MonoBehaviour:
   consumeKey: 1
   noKeyMessage: "\uC7A0\uACA8\uC788\uB2E4."
   unlockFlag: RightOpen
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &173898299
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -558,6 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC0AC\uBB3C\uD568\uC774\uB2E4."
@@ -916,6 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC4F0\uB808\uAE30 \uD1B5\uC774\uB2E4."
@@ -1043,7 +1047,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.8870964, y: -5.524186}
+  m_Offset: {x: 1.0672088, y: -5.524186}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1053,7 +1057,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.0967712, y: 12.048372}
+  m_Size: {x: 3.456996, y: 12.048372}
   m_EdgeRadius: 0
 --- !u!114 &560543013
 MonoBehaviour:
@@ -1167,6 +1171,8 @@ MonoBehaviour:
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!1 &619211977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,9 +1300,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 634540651}
-  - component: {fileID: 634540654}
   - component: {fileID: 634540653}
   - component: {fileID: 634540652}
+  - component: {fileID: 634540654}
   m_Layer: 0
   m_Name: Locker4
   m_TagString: Untagged
@@ -1345,10 +1351,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
-    - "\uB300\uBD80\uBD84 \uC7A0\uACA8 \uC788\uB2E4."
-    - "\uBA87\uAC1C\uB294 \uC5F4\uB824 \uC788\uB2E4."
+    - "\uB300\uBD80\uBD84 \uC7A0\uACA8 \uC788\uB2E4"
+    - "\uBA87\uAC1C\uB294 \uC5F4\uB824\uC788\uB294\uAC83 \uAC19\uC740\uB370?"
     requiredFlag: 
     hintMessage: 
     onComplete:
@@ -1366,7 +1373,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - dialogueLines:
-    - "\uBC15\uCE74\uC2A4\uB97C \uD68D\uB4DD\uD588\uB2E4."
+    - "\uC5F4\uC2EC\uD788 \uB4A4\uC838\uBCF4\uB2C8 [\uBC15\uCE74\uC2A4]\uB97C \uBC1C\uACAC\uD588"
     requiredFlag: 
     hintMessage: 
     onComplete:
@@ -1384,13 +1391,16 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   currentPhaseIndex: 0
---- !u!65 &634540654
-BoxCollider:
+--- !u!61 &634540654
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634540650}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1399,12 +1409,34 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 23.760296, y: 1.8414898, z: 1}
-  m_Center: {x: 0.08014107, y: -0.4207449, z: 0}
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.08027649, y: -0.21406841}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 24.279957, y: 1.8562756}
+  m_EdgeRadius: 0
 --- !u!1001 &647818903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1602,6 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uBD80 \uC7A0\uACA8 \uC5F4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."
@@ -1656,7 +1689,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -15.530012, y: 1.1158772}
+  m_Offset: {x: -15.530012, y: 1.5097294}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1666,7 +1699,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 22.3867, y: 2.3958702}
+  m_Size: {x: 22.3867, y: 3.1835747}
   m_EdgeRadius: 0
 --- !u!1 &749108196
 GameObject:
@@ -5187,7 +5220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 944138782}
   - component: {fileID: 944138784}
-  - component: {fileID: 944138783}
+  - component: {fileID: 944138785}
   m_Layer: 0
   m_Name: Firedoor
   m_TagString: Untagged
@@ -5210,58 +5243,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 73529131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &944138783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944138781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phases:
-  - dialogueLines:
-    - "\uBC29\uD654\uBB38\uC774 \uAFC8\uCA4D\uB3C4 \uD558\uC9C0 \uC54A\uB294\uB2E4."
-    - "\uC5EC\uAE30 \uB9D0\uACE0 \uB2E4\uB978 \uACC4\uB2E8\uC744 \uCC3E\uC544\uC57C
-      \uD560 \uAC83 \uAC19\uB2E4."
-    requiredFlag: 
-    hintMessage: 
-    onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    setFlag: 
-    hasChoice: 0
-    choiceQuestion: 
-    yesLines: []
-    noLines: []
-    onChoiceYes:
-      m_PersistentCalls:
-        m_Calls: []
-    onChoiceNo:
-      m_PersistentCalls:
-        m_Calls: []
-  - dialogueLines:
-    - "\uB2E4\uB978 \uACC4\uB2E8\uC774 \uC5B4\uB514 \uC788\uB354\uB77C?"
-    requiredFlag: 
-    hintMessage: 
-    onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    setFlag: 
-    hasChoice: 0
-    choiceQuestion: 
-    yesLines: []
-    noLines: []
-    onChoiceYes:
-      m_PersistentCalls:
-        m_Calls: []
-    onChoiceNo:
-      m_PersistentCalls:
-        m_Calls: []
-  currentPhaseIndex: 0
 --- !u!61 &944138784
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5296,7 +5277,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.4764154, y: -2.0943847}
+  m_Offset: {x: 0.08999467, y: -2.0943847}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5306,8 +5287,30 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9528308, y: 12.644641}
+  m_Size: {x: 1.1799893, y: 12.644641}
   m_EdgeRadius: 0
+--- !u!114 &944138785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944138781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSceneName: 
+  spawnPosition: {x: 0, y: 0}
+  spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 1
+  blockedMessage: "\uBC29\uD654\uBB38\uC774 \uAD73\uAC8C \uB2EB\uD600\uC788\uB2E4.
+    \uB2E4\uB978 \uACC4\uB2E8\uC744 \uCC3E\uC544\uC57C \uD560 \uAC83 \uAC19\uB2E4."
 --- !u!1 &982752243
 GameObject:
   m_ObjectHideFlags: 0
@@ -9363,6 +9366,7 @@ GameObject:
   - component: {fileID: 1165556408}
   - component: {fileID: 1165556410}
   - component: {fileID: 1165556409}
+  - component: {fileID: 1165556411}
   m_Layer: 0
   m_Name: Door2
   m_TagString: Untagged
@@ -9397,25 +9401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
-  - dialogueLines:
-    - "\uBB38 \uC190\uC7A1\uC774\uAC00 \uC5C6\uB2E4."
-    requiredFlag: 
-    hintMessage: 
-    onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    setFlag: 
-    hasChoice: 0
-    choiceQuestion: 
-    yesLines: []
-    noLines: []
-    onChoiceYes:
-      m_PersistentCalls:
-        m_Calls: []
-    onChoiceNo:
-      m_PersistentCalls:
-        m_Calls: []
   - dialogueLines:
     - "\uC774\uAC78 \uB204\uAC00 \uBD80\uC21C\uAC70\uC9C0?"
     requiredFlag: 
@@ -9469,7 +9456,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.6320362, y: -42.32242}
+  m_Offset: {x: 1.9871893, y: -41.847145}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9479,8 +9466,29 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.6390228, y: 5.5915413}
+  m_Size: {x: 1.107008, y: 3.7279663}
   m_EdgeRadius: 0
+--- !u!114 &1165556411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165556407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSceneName: 
+  spawnPosition: {x: 0, y: 0}
+  spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 1
+  blockedMessage: "\uBB38\uC5D0 \uC190\uC7A1\uC774\uAC00 \uC5C6\uB2E4."
 --- !u!1 &1204317165
 GameObject:
   m_ObjectHideFlags: 0
@@ -9588,7 +9596,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323660936}
   - component: {fileID: 1323660938}
-  - component: {fileID: 1323660937}
+  - component: {fileID: 1323660939}
   m_Layer: 0
   m_Name: Door1
   m_TagString: Untagged
@@ -9605,44 +9613,12 @@ Transform:
   m_GameObject: {fileID: 1323660935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.8, y: -20, z: 0}
+  m_LocalPosition: {x: 14.67, y: -20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 73529131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1323660937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323660935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phases:
-  - dialogueLines:
-    - "\uBB34\uC5B8\uAC00\uC5D0 \uB9C9\uD600 \uC5F4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."
-    requiredFlag: 
-    hintMessage: 
-    onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    setFlag: 
-    hasChoice: 0
-    choiceQuestion: 
-    yesLines: []
-    noLines: []
-    onChoiceYes:
-      m_PersistentCalls:
-        m_Calls: []
-    onChoiceNo:
-      m_PersistentCalls:
-        m_Calls: []
-  currentPhaseIndex: 0
 --- !u!61 &1323660938
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9689,6 +9665,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.4473248, y: 4.475362}
   m_EdgeRadius: 0
+--- !u!114 &1323660939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323660935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSceneName: 
+  spawnPosition: {x: 0, y: 0}
+  spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 0
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 1
+  blockedMessage: "\uBB34\uC5B8\uAC00\uC5D0 \uB9C9\uD600 \uC5F4\uB9AC\uC9C0 \uC54A\uB294\uB2E4."
 --- !u!1 &1398482992
 GameObject:
   m_ObjectHideFlags: 0
@@ -9828,6 +9825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uBA87\uAC1C\uC758 \uC0AC\uBB3C\uD568\uC774 \uC5F4\uB824\uC788\uB294 \uAC83
@@ -9902,7 +9900,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.5575714, y: 0.39357996}
+  m_Offset: {x: -0.5575714, y: 0.7874265}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9912,7 +9910,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10.38031, y: 3.0990896}
+  m_Size: {x: 10.38031, y: 3.8867826}
   m_EdgeRadius: 0
 --- !u!1 &1448572004
 GameObject:
@@ -9959,6 +9957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC791\uB3D9\uD558\uC9C0 \uC54A\uB294 \uAC83 \uAC19\uB2E4."
@@ -10436,9 +10435,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
-    - "\uB300\uBD80\uBD84 \uC7A0\uACA8\uC788\uB2E4."
+    - "\uB300\uBD80\uBD84 \uC7A0\uACA8\uC788\uB294\uAC83 \uAC19\uB2E4."
+    - "\uAC9C\uACFC\uD559\uC0DD\uB4E4\uC774 \uC0AC\uBB3C\uD568\uC744 \uC7A0\uAD70\uB2E4\uACE0?"
     requiredFlag: 
     hintMessage: 
     onComplete:
@@ -10456,18 +10457,20 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - dialogueLines:
-    - "\uC5F4\uB9B0 \uC0AC\uBB3C\uD568 \uC548\uC5D0\uB294 \uC4F0\uB808\uAE30\uB9CC
-      \uAC00\uB4DD\uD558\uB514."
+    - "\uC5F4\uB9B0 \uBB38\uC744 \uCC3E\uC544\uBCFC\uAE4C?"
     requiredFlag: 
     hintMessage: 
     onComplete:
       m_PersistentCalls:
         m_Calls: []
     setFlag: 
-    hasChoice: 0
-    choiceQuestion: 
-    yesLines: []
-    noLines: []
+    hasChoice: 1
+    choiceQuestion: "\uC5F4\uC5B4\uBCFC\uAE4C \uB9D0\uAE4C"
+    yesLines:
+    - "\uC5F4\uC5B4\uBD24\uB294\uB370 \uC4F0\uB808\uAE30\uBC16\uC5D0 \uC5C6\uB2E4..."
+    - "\uBA39\uC744 \uAC83 \uC880 \uCC44\uC6CC\uC8FC\uC9C0"
+    noLines:
+    - "\uC74C \uAC1C\uC778 \uD504\uB77C\uC774\uBC84\uC2DC\uB294 \uC911\uC694\uD558\uC9C0 "
     onChoiceYes:
       m_PersistentCalls:
         m_Calls: []
@@ -37400,6 +37403,7 @@ GameObject:
   - component: {fileID: 1987762008}
   - component: {fileID: 1987762010}
   - component: {fileID: 1987762009}
+  - component: {fileID: 1987762011}
   m_Layer: 0
   m_Name: Anime
   m_TagString: Untagged
@@ -37434,6 +37438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC560\uB2C8 \uACFC\uC758 \uACFC\uBC29\uC774\uB2E4. "
@@ -37538,6 +37543,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2.0234299}
   m_EdgeRadius: 0
+--- !u!114 &1987762011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987762007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSceneName: 
+  spawnPosition: {x: 0, y: 0}
+  spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 1
+  blockedMessage: "\uC7A0\uACA8\uC788\uB2E4. \uC548\uC5D0 \uBB34\uC5B8\uAC00 \uBCF4\uC778\uB2E4."
 --- !u!1 &2035714380
 GameObject:
   m_ObjectHideFlags: 0
@@ -38445,6 +38471,8 @@ MonoBehaviour:
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &2099550839
 BoxCollider2D:
   m_ObjectHideFlags: 0

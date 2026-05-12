@@ -167,6 +167,12 @@ MonoBehaviour:
   targetSceneName: Rooftop
   spawnPosition: {x: 10, y: -16}
   spawnDirection: {x: 0, y: 1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &230877806
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -402,7 +408,7 @@ GameObject:
   - component: {fileID: 1477028211}
   - component: {fileID: 1477028210}
   m_Layer: 0
-  m_Name: 'Corrider '
+  m_Name: 'Corridor '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +423,7 @@ Transform:
   m_GameObject: {fileID: 1477028208}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.7, y: -19.3, z: 0}
+  m_LocalPosition: {x: 19.7, y: -19.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,8 +442,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: LeftCorridor
-  spawnPosition: {x: -78, y: -115}
+  spawnPosition: {x: -78, y: -110}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1477028211
 BoxCollider2D:
   m_ObjectHideFlags: 0

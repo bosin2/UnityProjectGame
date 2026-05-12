@@ -784,6 +784,12 @@ MonoBehaviour:
   targetSceneName: Stair
   spawnPosition: {x: 5, y: -35}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1520649050
 BoxCollider2D:
   m_ObjectHideFlags: 0

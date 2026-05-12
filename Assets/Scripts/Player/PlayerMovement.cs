@@ -363,7 +363,21 @@ public class PlayerMovement : MonoBehaviour
 
             // GetComponentInParent: 히트박스가 자식 오브젝트여도 부모의 MonsterAI를 찾음
             MonsterAI monster = hit.collider.GetComponentInParent<MonsterAI>();
-            if (monster != null) monster.TakeDamage(shoot_damage);
+            if (monster != null)
+            {
+                monster.TakeDamage(shoot_damage);
+            }
+            else
+            {
+                // MonsterAI 없으면 gunNPC인지 확인
+                var flowManager = FindFirstObjectByType<GameFlowManager>();
+                if (flowManager != null &&
+                    (hit.collider.gameObject == flowManager.gunNPC ||
+                    hit.collider.transform.IsChildOf(flowManager.gunNPC.transform)))
+                {
+                    flowManager.OnGunNPCHit();
+                }
+            }
         }
     }
 

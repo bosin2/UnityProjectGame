@@ -20,9 +20,21 @@ public class DoorTrigger : MonoBehaviour
     [Header("공유 잠금 해제 플래그 (같은 구역 문 여러 개일 때)")]
     [SerializeField] private string unlockFlag = ""; // 문 여러 개가 같은 플래그를 공유하면 하나만 열어도 모두 개방
 
+    [Header("진입 불가")]
+    [SerializeField] private bool isBlocked = false;
+    [SerializeField] private string blockedMessage = "이쪽은 갈 수 없습니다.";
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+
+        if (isBlocked)
+        {
+            PlayerInteract pi = other.GetComponent<PlayerInteract>();
+            if (pi != null)
+                pi.StartDialogue(new string[] { blockedMessage });
+            return;
+        }
 
         // 열쇠 조건 확인
         if (requiredKey != null)
