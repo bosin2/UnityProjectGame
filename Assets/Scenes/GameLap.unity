@@ -8613,7 +8613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].setFlag
-      value: gunNPCTalked
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].setFlag
@@ -8633,7 +8633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].requiredFlag
-      value: 
+      value: gunNPCDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
+      propertyPath: phases.Array.data[3].requiredFlag
+      value: gunNPCDead
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[0].dialogueLines.Array.size
@@ -9062,7 +9066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -9079,7 +9083,7 @@ PrefabInstance:
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 378217736}
+      objectReference: {fileID: 1870976545}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -9106,7 +9110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnGunNPCShot
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -9122,7 +9126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameFlowManager, Assembly-CSharp
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -9134,7 +9138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName

@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uD504\uB9B0\uD130\uAE30\uB2E4."
@@ -2581,6 +2582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uCC45\uC7A5\uC774\uB2E4. \uBCFC \uD544\uC694\uB294 \uC5C6\uC744\uAC83 \uAC19\uB2E4."
@@ -2849,6 +2851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uB0C9\uC7A5\uACE0\uB2E4."
@@ -3135,6 +3138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC774 \uBA39\uB2E4 \uB0A8\uAE30\uC2E0 \uCEE4\uD53C\uAC00
@@ -3574,6 +3578,12 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -53, y: -59}
   spawnDirection: {x: -1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1521321701
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3711,6 +3721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uD589\uAC70\uB2E4."
@@ -3750,6 +3761,52 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   currentPhaseIndex: 0
+--- !u!1 &1863120760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863120762}
+  - component: {fileID: 1863120761}
+  m_Layer: 0
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1863120761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863120760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba197f08b929b146bd83d332f2237ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmName: room
+  playOnStart: 1
+--- !u!4 &1863120762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863120760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.686269, y: 22.197779, z: -0.5222639}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1875293306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3888,6 +3945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uCC45\uC0C1\uC774\uB2E4."
@@ -4255,3 +4313,4 @@ SceneRoots:
   - {fileID: 457448837}
   - {fileID: 387662113}
   - {fileID: 2015112099}
+  - {fileID: 1863120762}

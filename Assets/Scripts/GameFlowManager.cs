@@ -97,8 +97,10 @@ public class GameFlowManager : MonoBehaviour
             WeaponSlotUI.Instance?.Show();
             HotbarManager.Instance?.Show();
             UICanvas.Instance?.ShowUI();
+            AudioManager.Instance?.PlayBGM("prologue");
             return;
         }
+    
 
         // 인트로만 완료한 상태로 복귀한 경우
         if (GameManager.Instance.HasFlag("introDone"))
@@ -109,6 +111,7 @@ public class GameFlowManager : MonoBehaviour
             SetPlayerControl(true);
             WeaponSlotUI.Instance?.Show();
             HotbarManager.Instance?.Show();
+            AudioManager.Instance?.PlayBGM("prologue");
             return;
         }
 
@@ -124,6 +127,7 @@ public class GameFlowManager : MonoBehaviour
             UICanvas.Instance?.ShowUI();
             GameManager.Instance.stage = 1;
             GameManager.Instance.hasPipe = true; // 스킵 시 파이프 자동 지급
+            AudioManager.Instance?.PlayBGM("prologue");
             return;
         }
 
@@ -132,6 +136,7 @@ public class GameFlowManager : MonoBehaviour
         tutorialRoot?.SetActive(false);
         gameplayRoot?.SetActive(false);
         UICanvas.Instance?.HideUI();
+        AudioManager.Instance?.StopBGM();
 
         cutscene.color = new Color(1, 1, 1, 0);
         clickHint.SetActive(false);
@@ -287,6 +292,7 @@ public class GameFlowManager : MonoBehaviour
 
         // 인트로 완료 플래그 저장 (씬 복귀 시 상태 복원에 사용)
         GameManager.Instance?.SetFlag("introDone");
+        AudioManager.Instance?.PlayBGM("prologue");
         HotbarManager.Instance?.Show();
         WeaponSlotUI.Instance?.Show();
         SetPlayerControl(true);

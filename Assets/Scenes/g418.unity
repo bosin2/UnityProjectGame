@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18341591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 18341593}
+  - component: {fileID: 18341592}
+  m_Layer: 0
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &18341592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18341591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba197f08b929b146bd83d332f2237ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmName: room
+  playOnStart: 1
+--- !u!4 &18341593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18341591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.686269, y: 22.197779, z: -0.5222639}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &30885783
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -307,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -435,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -1441,6 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -1569,6 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -1766,6 +1817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC720\uC77C\uD558\uAC8C \uC804\uC6D0\uC774 \uCF1C\uC838\uC788\uB2E4."
@@ -4411,6 +4463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -4557,6 +4610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -4673,6 +4727,12 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -98, y: -70}
   spawnDirection: {x: 0, y: 1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &975103041
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4779,6 +4839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -5093,6 +5154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -6563,6 +6625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableId: 
   phases:
   - dialogueLines:
     - "\uC804\uC6D0\uC774 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
@@ -16810,3 +16873,4 @@ SceneRoots:
   - {fileID: 1170553230}
   - {fileID: 732685364}
   - {fileID: 1237965066}
+  - {fileID: 18341593}

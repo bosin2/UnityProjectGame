@@ -200,6 +200,12 @@ MonoBehaviour:
   targetSceneName: LeftCorridor
   spawnPosition: {x: -55, y: -83}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &405319007
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -507,6 +513,12 @@ MonoBehaviour:
   targetSceneName: MainCorridor
   spawnPosition: {x: 20, y: -12}
   spawnDirection: {x: 0, y: -1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &545600581
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10825,6 +10837,12 @@ MonoBehaviour:
   targetSceneName: KimRap
   spawnPosition: {x: 19, y: -21}
   spawnDirection: {x: 0, y: 1}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1475946470
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11105,6 +11123,12 @@ MonoBehaviour:
   targetSceneName: G418
   spawnPosition: {x: 46, y: -16.5}
   spawnDirection: {x: -1, y: 0}
+  requiredKey: {fileID: 0}
+  consumeKey: 1
+  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  unlockFlag: 
+  isBlocked: 0
+  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1767522378
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11151,6 +11175,52 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.7948456, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1850230012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1850230014}
+  - component: {fileID: 1850230013}
+  m_Layer: 0
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1850230013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850230012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba197f08b929b146bd83d332f2237ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmName: corridor
+  playOnStart: 1
+--- !u!4 &1850230014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850230012}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.686269, y: 22.197779, z: -0.5222639}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869800978
 GameObject:
   m_ObjectHideFlags: 0
@@ -55798,3 +55868,4 @@ SceneRoots:
   - {fileID: 417971046}
   - {fileID: 2125948132}
   - {fileID: 1093970183}
+  - {fileID: 1850230014}

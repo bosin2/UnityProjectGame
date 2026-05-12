@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     public int shoot_damage = 30;       // 원거리 공격 데미지
     public float shootBulletSpeed = 10f; // 총알 이동 속도
 
+    [Header("발소리 설정")]
+    public float footstepInterval = 0.4f;  // 발소리 간격
+    private float footstepTimer = 0f;
+
     [Header("공격 콜라이더 (방향별)")]
     public Collider2D attack_Left;
     public Collider2D attack_Right;
@@ -127,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("DirY", lastDir.y);
         anim.SetBool("IsWalking", movement != Vector2.zero && !isAttacking && !isHurt);
 
+        HandleFootstepSound();
+
         // Tab 키로 무기 전환 (권총 소지 시에만 가능)
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -188,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         movement = Vector2.zero;
+        AudioManager.Instance.PlaySFX("death");
 
         // 마지막 이동 방향에 따라 스프라이트 플립 결정
         float dirX = anim.GetFloat("DirX");
@@ -214,6 +221,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isHurt = true;
         anim.SetBool("IsHurt", true);
+        AudioManager.Instance.PlaySFX("hurt");
 
         // 피격 시 공격 상태 즉시 초기화
         if (isAttacking)
@@ -272,6 +280,7 @@ public class PlayerMovement : MonoBehaviour
     void AttackMelee()
     {
         anim.SetBool("IsAttacking", true);
+        AudioManager.Instance.PlaySFX("swing");
     }
 
     // 애니메이션 이벤트: 근접 공격 히트박스 활성화
@@ -312,6 +321,7 @@ public class PlayerMovement : MonoBehaviour
     void AttackShoot()
     {
         anim.SetBool("IsAttacking", true);
+        AudioManager.Instance.PlaySFX("gunhit");
         StartCoroutine(ShootBulletCoroutine(lastDir));
         float shootDuration = GetCurrentAnimationLength();
         CancelInvoke("EndAttack");
@@ -360,6 +370,7 @@ public class PlayerMovement : MonoBehaviour
         if (hit.collider != null)
         {
             ShowHitEffect(hit.point);
+            AudioManager.Instance.PlaySFX("hurt");
 
             // GetComponentInParent: 히트박스가 자식 오브젝트여도 부모의 MonsterAI를 찾음
             MonsterAI monster = hit.collider.GetComponentInParent<MonsterAI>();
@@ -403,6 +414,26 @@ public class PlayerMovement : MonoBehaviour
         if (currentWeapon == weaponType) return;
         currentWeapon = weaponType;
         anim.SetInteger("Weapon", weaponType);
+        AudioManager.Instance.PlaySFX("click");
+    }
+
+    // 이동 중일 때 일정 간격으로 발소리 재생
+    void HandleFootstepSound()
+    {
+        // 실제로 움직이고 있을 때만 (공격·피격·사망 중에는 자동으로 false)
+        if (!IsMoving)
+        {
+            footstepTimer = 0f;  // 멈추면 타이머 리셋
+            return;
+        }
+
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= footstepInterval)
+        {
+            AudioManager.Instance.PlaySFX("walk");
+            footstepTimer = 0f;
+        }
     }
 
     // 현재 재생 중인 애니메이션 클립의 길이 반환 (원거리 공격 타이밍 계산용)
