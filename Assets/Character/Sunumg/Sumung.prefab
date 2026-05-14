@@ -163,6 +163,7 @@ MonoBehaviour:
   target: {fileID: 0}
   hpBarPrefab: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
   hpBarOffset: {x: 0, y: 4.5, z: 0}
+  axisSwitchMargin: 0.7
 --- !u!61 &5429415106804261727
 BoxCollider2D:
   m_ObjectHideFlags: 0
