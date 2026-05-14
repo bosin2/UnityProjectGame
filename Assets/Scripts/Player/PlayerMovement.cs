@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float shootBulletSpeed = 10f; // 총알 이동 속도
 
     [Header("발소리 설정")]
-    public float footstepInterval = 0.4f;  // 발소리 간격
+    public float footstepInterval = 0.2f;  // 발소리 간격
     private float footstepTimer = 0f;
 
     [Header("공격 콜라이더 (방향별)")]
