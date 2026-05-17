@@ -117,9 +117,9 @@ public class PlayerMovement : MonoBehaviour
             // 대각선 이동 방지: x축 우선
             if (x != 0)
                 movement = new Vector2(x, 0);
-            else if (y != 0)
+            if (y != 0)
                 movement = new Vector2(0, y);
-            else
+            if (x == 0 && y == 0)
                 movement = Vector2.zero;
 
             if (movement != Vector2.zero)

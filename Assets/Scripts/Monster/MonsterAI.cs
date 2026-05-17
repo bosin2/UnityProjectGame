@@ -296,6 +296,7 @@ public class MonsterAI : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         anim.SetBool("IsDie", true);
+        GetComponent<Collider2D>().enabled = false;
 
         if (hpBarInstance != null)
             Destroy(hpBarInstance);

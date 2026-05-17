@@ -3945,7 +3945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: G418_Key
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uCC45\uC0C1\uC774\uB2E4."
@@ -4010,48 +4010,6 @@ MonoBehaviour:
     - "\uC751?"
     - "[G418]\uC758 \uCE74\uB4DC\uD0A4\uB97C \uC5BB\uC5C8\uB2E4."
     - "\uC6B4\uC774 \uC88B\uC558\uB124"
-    onChoiceYes:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1956876047}
-          m_TargetAssemblyTypeName: ItemGiver, Assembly-CSharp
-          m_MethodName: GiveItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onChoiceNo:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1956876047}
-          m_TargetAssemblyTypeName: ItemGiver, Assembly-CSharp
-          m_MethodName: GiveItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - dialogueLines:
-    - "\uC774\uC81C \uB354 \uBCFC\uAC83\uC740 \uC5C6\uB294\uAC83 \uAC19\uB2E4."
-    requiredFlag: 
-    hintMessage: 
-    onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    setFlag: 
-    hasChoice: 1
-    choiceQuestion: "\uAEBC\uB0B4 \uBCFC\uAE4C?"
-    yesLines: []
-    noLines: []
     onChoiceYes:
       m_PersistentCalls:
         m_Calls:
