@@ -1634,7 +1634,7 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 63b492ef1066df14e9490db0e5ce5a37, type: 3}
     clearImage: 0
   gunNPC: {fileID: 1870976545}
-  skipIntroTutorial: 0
+  skipIntroTutorial: 1
 --- !u!4 &378217737
 Transform:
   m_ObjectHideFlags: 0
@@ -1754,8 +1754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcaf0ca763647d47928acd9d2c4cd27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasGun: 0
-  hasPipe: 0
+  hasGun: 1
+  hasPipe: 1
   stage: 0
   currentWeapon: pipe
   hasRightCorridorKey: 0

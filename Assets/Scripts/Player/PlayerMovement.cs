@@ -247,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isHurt = true;
         anim.SetBool("IsHurt", true);
-        AudioManager.Instance.PlaySFX("hurt");
+        //AudioManager.Instance.PlaySFX("hurt");
 
         // 피격 시 공격 상태 즉시 초기화
         if (isAttacking)
@@ -347,7 +347,7 @@ public class PlayerMovement : MonoBehaviour
     void AttackShoot()
     {
         anim.SetBool("IsAttacking", true);
-        AudioManager.Instance.PlaySFX("gunhit");
+        //AudioManager.Instance.PlaySFX("gunhit");
         StartCoroutine(ShootBulletCoroutine(lastDir));
         float shootDuration = GetCurrentAnimationLength();
         CancelInvoke("EndAttack");
@@ -396,7 +396,7 @@ public class PlayerMovement : MonoBehaviour
         if (hit.collider != null)
         {
             ShowHitEffect(hit.point);
-            AudioManager.Instance.PlaySFX("hurt");
+            //AudioManager.Instance.PlaySFX("hurt");
 
             // GetComponentInParent: 히트박스가 자식 오브젝트여도 부모의 MonsterAI를 찾음
             MonsterAI monster = hit.collider.GetComponentInParent<MonsterAI>();
@@ -457,7 +457,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (footstepTimer >= footstepInterval)
         {
-            AudioManager.Instance.PlaySFX("walk");
+            //AudioManager.Instance.PlaySFX("walk");
             footstepTimer = 0f;
         }
     }

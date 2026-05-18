@@ -11629,10 +11629,10 @@ MonoBehaviour:
   targetSceneName: G418
   spawnPosition: {x: 46, y: -16.5}
   spawnDirection: {x: -1, y: 0}
-  requiredKey: {fileID: 0}
+  requiredKey: {fileID: 11400000, guid: c97b1dfbf9f00404a80fbc531a038e61, type: 2}
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
-  unlockFlag: 
+  unlockFlag: G418
   isBlocked: 0
   blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
 --- !u!61 &1767522378
