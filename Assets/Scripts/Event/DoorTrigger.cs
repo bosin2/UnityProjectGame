@@ -22,7 +22,7 @@ public class DoorTrigger : MonoBehaviour
 
     [Header("진입 불가")]
     [SerializeField] private bool isBlocked = false;
-    [SerializeField] private string blockedMessage = "이쪽은 갈 수 없습니다.";
+    [SerializeField] private string blockedMessage = " ";
 
     void OnTriggerEnter2D(Collider2D other)
     {

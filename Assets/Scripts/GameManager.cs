@@ -64,7 +64,17 @@ public class GameManager : MonoBehaviour
 
     // 플래그 보유 여부 반환
     public bool HasFlag(string flag) => flags.Contains(flag);
-
+    public void ResetGame()
+    {
+        hasGun = false;
+        hasPipe = false;
+        hasRightCorridorKey = false;
+        gunEventDone = false;
+        stage = 0;
+        currentWeapon = "pipe";
+        flags.Clear();
+        phaseIndices.Clear();
+    }
     // Interactable의 currentPhaseIndex 저장/복원
     public void SetPhaseIndex(string id, int index) => phaseIndices[id] = index;
     public int GetPhaseIndex(string id) => phaseIndices.TryGetValue(id, out int v) ? v : 0;

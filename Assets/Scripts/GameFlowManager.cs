@@ -376,18 +376,13 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    // gunNPC 2차 대화 완료 시 호출: 총 쏘는 연출 시작
-    public void OnGunNPCShot()
-    {
-        StartCoroutine(GunShotEvent());
-    }
     // 총알에 NPC 피격 시 호출
     public void OnGunNPCHit()
     {
         if (GameManager.Instance.HasFlag("gunNPCDead")) return;
         StartCoroutine(GunShotEvent());
     }
-    // 총 쏘는 연출: 화면 붉어짐 → 검정 → NPC 사망 애니메이션 → 우는 대사
+    // 총 쏘는 연출: 화면 붉어짐 → 검정 → NPC 사망 애니메이션
     IEnumerator GunShotEvent()
     {
         Time.timeScale = 1f;

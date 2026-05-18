@@ -1,6 +1,8 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEditor.Rendering.LookDev;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // 플레이어 이동, 공격, 피격, HP 관리를 담당하는 영구 싱글톤.
 // DontDestroyOnLoad로 씬 전환 후에도 유지된다.
@@ -19,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("발소리 설정")]
     public float footstepInterval = 0.2f;  // 발소리 간격
     private float footstepTimer = 0f;
+
+    [Header("패널")]
+    public Image fadePanel;
 
     [Header("공격 콜라이더 (방향별)")]
     public Collider2D attack_Left;
@@ -177,9 +182,23 @@ public class PlayerMovement : MonoBehaviour
         PlayerHPbar.Instance?.Refresh(currentHp, maxHp);
 
         if (currentHp <= 0)
-            Die();
-    }
 
+            StartCoroutine(DeathFadeRoutine());
+    }
+    IEnumerator DeathFadeRoutine()
+    {
+        // 화면 붉어지기
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 3f;
+            fadePanel.color = new Color(1, 0, 0, Mathf.Lerp(0, 0.6f, t));
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.3f);
+        Die();
+    }
     // HP 회복 후 HP바 갱신 (플래시 효과 없음)
     public void Heal(int amount)
     {
@@ -196,7 +215,6 @@ public class PlayerMovement : MonoBehaviour
         movement = Vector2.zero;
         AudioManager.Instance.PlaySFX("death");
 
-        // 마지막 이동 방향에 따라 스프라이트 플립 결정
         float dirX = anim.GetFloat("DirX");
         float dirY = anim.GetFloat("DirY");
         if (Mathf.Abs(dirX) >= Mathf.Abs(dirY))
@@ -208,12 +226,20 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(DieRoutine());
     }
 
-    // 사망 애니메이션 후 오브젝트 비활성화 및 게임오버 씬 전환
     IEnumerator DieRoutine()
     {
-        yield return new WaitForSeconds(1.5f);
+        // 애니메이션 완료 대기
+        yield return null; // 한 프레임 대기 (IsDie 반영되게)
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
+               && anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+        {
+            yield return null;
+        }
+        anim.enabled = false; // 마지막 프레임 고정
+
+        GameManager.Instance?.ResetGame();
         gameObject.SetActive(false);
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("MainMenu");
     }
 
     // 피격: 현재 공격 중단, 넉백 적용, 무적 시간 처리
