@@ -1,122 +1,80 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using UnityEngine;
 
-// 몬스터의 AI 상태 머신, 이동, 공격, 피격, HP바 표시를 통합 관리하는 컴포넌트
-public class MonsterAI : MonoBehaviour
+/// <summary>
+/// 기본 몬스터 AI: Idle → Walk(감지) → Attack 상태 머신.
+/// MonsterBase에서 HP / 피격 / 사망 / HP바를 상속한다.
+/// </summary>
+public class MonsterAI : MonsterBase
 {
     [Header("스탯")]
-    public int hp = 60;
-    public int damage = 15;
-    public float speed = 2f;
+    public int   damage = 15;
+    public float speed  = 2f;
 
-    [Header("감지 및 공격 범위")]
-    public float detectionRange = 18f;
-    public float attackRange = 1.2f;
-    public float attackCooldown = 1.0f;
+    [Header("감지 / 공격 범위")]
+    public float detectionRange   = 18f;
+    public float attackRange      = 1.2f;
+    public float attackCooldown   = 1.0f;
 
     [Header("접촉 데미지")]
     public float contactDamageInterval = 1.5f;
-    private float contactDamageCooldown = 0f;
 
-    [Header("타겟")]
-    public Transform target;
+    [Header("축 전환 마진 (4방향 이동 부드럽게)")]
+    [SerializeField] private float axisSwitchMargin = 0.7f;
 
-    [Header("HP바")]
-    public GameObject hpBarPrefab;
-    public Vector3 hpBarOffset = new Vector3(0, 1f, 0);
-    private GameObject hpBarInstance;
-    private Image hpFillImage;
-
-    private int maxHp;
-    private Rigidbody2D rb;
-    private Animator anim;
-    private SpriteRenderer spriteRenderer;
-    private bool isDead = false;
+    // ── 내부 상태 ──────────────────────────────────────────────────────
+    private Transform   target;               // 추적 대상 (플레이어)
+    private PlayerHealth targetHealth;        // 데미지 / 넉백 전달용
 
     private enum State { Idle, Walk, Attack }
     private State currentState = State.Idle;
-    private bool isAttacking = false;
+    private bool  isAttacking  = false;
+
+    private float contactCooldown = 0f;
 
     private enum MoveAxis { None, Horizontal, Vertical }
-    private MoveAxis currentMoveAxis = MoveAxis.None;
+    private MoveAxis currentAxis = MoveAxis.None;
 
-    [SerializeField] private float axisSwitchMargin = 0.7f;
+    // ── 초기화 ──────────────────────────────────────────────────────
 
-    // 컴포넌트 초기화, HP바 생성, 플레이어 탐색 후 Idle 상태로 진입
-    void Start()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start(); // MonsterBase.Start() : HP 설정 + HP바 생성
 
-        rb.gravityScale = 0f;
+        rb.gravityScale   = 0f;
         rb.freezeRotation = true;
-
-        maxHp = hp;
-
-        if (hpBarPrefab != null)
-        {
-            hpBarInstance = Instantiate(hpBarPrefab);
-
-            Canvas hpCanvas = hpBarInstance.GetComponent<Canvas>();
-            if (hpCanvas != null)
-                hpCanvas.worldCamera = Camera.main;
-
-            Image[] images = hpBarInstance.GetComponentsInChildren<Image>();
-            Debug.Log("이미지 개수: " + images.Length);
-            if (images.Length >= 2)
-            {
-                hpFillImage = images[1];
-                Debug.Log("Fill 연결됨: " + hpFillImage.name);
-            }
-        }
 
         FindPlayer();
         ChangeState(State.Idle);
     }
 
-    // 매 프레임 HP바 월드 위치를 몬스터 머리 위로 갱신
-    void LateUpdate()
-    {
-        if (hpBarInstance != null)
-            hpBarInstance.transform.position = transform.position + hpBarOffset;
-    }
-
-    // 씬에서 활성화된 PlayerMovement를 찾아 target으로 설정
     void FindPlayer()
     {
         if (target != null) return;
-
-        PlayerMovement[] players = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
-        foreach (var player in players)
+        PlayerHealth ph = FindPlayerHealth(); // MonsterBase 유틸
+        if (ph != null)
         {
-            if (player.gameObject.activeInHierarchy)
-            {
-                target = player.transform;
-                return;
-            }
+            target       = ph.transform;
+            targetHealth = ph;
         }
     }
 
-    // 플레이어와의 거리에 따라 Idle/Walk/Attack 상태 전환. 다른 씬의 플레이어는 무시
+    // ── Update / FixedUpdate ──────────────────────────────────────────
+
     void Update()
     {
         if (isDead) return;
 
-        if (contactDamageCooldown > 0)
-            contactDamageCooldown -= Time.deltaTime;
+        if (contactCooldown > 0) contactCooldown -= Time.deltaTime;
 
-        if (target == null)
-        {
-            FindPlayer();
-            return;
-        }
+        if (target == null) { FindPlayer(); return; }
 
-        if (target.gameObject.scene.name != gameObject.scene.name &&
-            target.gameObject.scene.name != "DontDestroyOnLoad")
+        // 씬이 다른 플레이어는 무시
+        if (target.gameObject.scene.name != gameObject.scene.name
+            && target.gameObject.scene.name != "DontDestroyOnLoad")
         {
-            target = null;
+            target       = null;
+            targetHealth = null;
             rb.linearVelocity = Vector2.zero;
             ChangeState(State.Idle);
             return;
@@ -125,16 +83,11 @@ public class MonsterAI : MonoBehaviour
         if (isAttacking) return;
 
         float dist = Vector2.Distance(transform.position, target.position);
-
-        if (dist <= attackRange)
-            ChangeState(State.Attack);
-        else if (dist <= detectionRange)
-            ChangeState(State.Walk);
-        else
-            ChangeState(State.Idle);
+        if      (dist <= attackRange)     ChangeState(State.Attack);
+        else if (dist <= detectionRange)  ChangeState(State.Walk);
+        else                              ChangeState(State.Idle);
     }
 
-    // Walk 상태일 때만 4방향 이동 적용. 그 외에는 정지
     void FixedUpdate()
     {
         if (isDead) return;
@@ -145,44 +98,32 @@ public class MonsterAI : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
     }
 
-    // x/y 차이 중 큰 축 방향으로만 이동해 4방향 이동을 구현
+    // ── 이동 ──────────────────────────────────────────────────────────
+
     void MoveInFourDirections()
     {
         Vector2 diff = (Vector2)(target.position - transform.position);
-
         float absX = Mathf.Abs(diff.x);
         float absY = Mathf.Abs(diff.y);
 
-        if (currentMoveAxis == MoveAxis.None)
-        {
-            currentMoveAxis = absX >= absY
-                ? MoveAxis.Horizontal
-                : MoveAxis.Vertical;
-        }
-        else if (currentMoveAxis == MoveAxis.Horizontal)
-        {
-            if (absY > absX + axisSwitchMargin)
-                currentMoveAxis = MoveAxis.Vertical;
-        }
-        else if (currentMoveAxis == MoveAxis.Vertical)
-        {
-            if (absX > absY + axisSwitchMargin)
-                currentMoveAxis = MoveAxis.Horizontal;
-        }
+        if (currentAxis == MoveAxis.None)
+            currentAxis = absX >= absY ? MoveAxis.Horizontal : MoveAxis.Vertical;
+        else if (currentAxis == MoveAxis.Horizontal && absY > absX + axisSwitchMargin)
+            currentAxis = MoveAxis.Vertical;
+        else if (currentAxis == MoveAxis.Vertical   && absX > absY + axisSwitchMargin)
+            currentAxis = MoveAxis.Horizontal;
 
-        Vector2 moveDir;
-
-        if (currentMoveAxis == MoveAxis.Horizontal)
-            moveDir = new Vector2(diff.x > 0 ? 1 : -1, 0);
-        else
-            moveDir = new Vector2(0, diff.y > 0 ? 1 : -1);
+        Vector2 moveDir = currentAxis == MoveAxis.Horizontal
+            ? new Vector2(diff.x > 0 ? 1 : -1, 0)
+            : new Vector2(0, diff.y > 0 ? 1 : -1);
 
         rb.linearVelocity = moveDir * speed;
         anim.SetFloat("DirX", moveDir.x);
         anim.SetFloat("DirY", moveDir.y);
     }
 
-    // 상태를 전환하고 각 상태에 맞는 속도/애니메이션 파라미터 적용
+    // ── 상태 머신 ─────────────────────────────────────────────────────
+
     void ChangeState(State newState)
     {
         if (currentState == newState && newState != State.Attack) return;
@@ -194,56 +135,44 @@ public class MonsterAI : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 anim.SetBool("IsWalking", false);
                 break;
-
             case State.Walk:
                 anim.SetBool("IsWalking", true);
                 anim.SetBool("IsAttacking", false);
                 break;
-
             case State.Attack:
                 if (!isAttacking) StartCoroutine(AttackRoutine());
                 break;
         }
     }
 
-    // 공격 애니메이션 재생 후 쿨다운 대기, 범위 내 플레이어에게 데미지와 넉백 적용
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
         rb.linearVelocity = Vector2.zero;
 
-        if (target == null)
-        {
-            isAttacking = false;
-            ChangeState(State.Idle);
-            yield break;
-        }
+        if (target == null) { isAttacking = false; ChangeState(State.Idle); yield break; }
 
+        // 공격 방향 설정
         Vector2 rawDir = (target.position - transform.position).normalized;
-        Vector2 attackDir;
-        if (Mathf.Abs(rawDir.x) >= Mathf.Abs(rawDir.y))
-            attackDir = new Vector2(rawDir.x > 0 ? 1 : -1, 0);
-        else
-            attackDir = new Vector2(0, rawDir.y > 0 ? 1 : -1);
+        Vector2 attackDir = Mathf.Abs(rawDir.x) >= Mathf.Abs(rawDir.y)
+            ? new Vector2(rawDir.x > 0 ? 1 : -1, 0)
+            : new Vector2(0, rawDir.y > 0 ? 1 : -1);
 
         anim.SetFloat("DirX", attackDir.x);
         anim.SetFloat("DirY", attackDir.y);
-        anim.SetBool("IsWalking", false);
+        anim.SetBool("IsWalking",   false);
         anim.SetBool("IsAttacking", true);
 
         yield return new WaitForSeconds(attackCooldown);
 
-        if (target != null)
+        // 범위 내 플레이어에게 데미지 + 넉백
+        if (target != null && targetHealth != null)
         {
             Vector2 toPlayer = target.position - transform.position;
             if (toPlayer.magnitude <= attackRange + 0.5f)
             {
-                PlayerMovement player = target.GetComponent<PlayerMovement>();
-                if (player != null)
-                {
-                    player.TakeHit(toPlayer.normalized);
-                    player.TakeDamage(damage);
-                }
+                targetHealth.TakeHit(toPlayer.normalized);
+                targetHealth.TakeDamage(damage);
             }
         }
 
@@ -252,61 +181,27 @@ public class MonsterAI : MonoBehaviour
         ChangeState(State.Idle);
     }
 
-    // 플레이어와 충돌 중일 때 일정 간격으로 접촉 데미지와 넉백 적용
+    // ── 접촉 데미지 ───────────────────────────────────────────────────
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (isDead) return;
         if (!collision.gameObject.CompareTag("Player")) return;
-        if (contactDamageCooldown > 0) return;
+        if (contactCooldown > 0) return;
 
-        PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
-        if (player != null)
+        PlayerHealth ph = collision.gameObject.GetComponent<PlayerHealth>();
+        if (ph != null)
         {
             Vector2 knockDir = (collision.transform.position - transform.position).normalized;
-            player.TakeHit(knockDir);
-            player.TakeDamage(damage);
-            contactDamageCooldown = contactDamageInterval;
+            ph.TakeHit(knockDir);
+            ph.TakeDamage(damage);
+            contactCooldown = contactDamageInterval;
         }
     }
 
-    // 데미지 수치만큼 HP 감소, 피격 애니메이션 재생. HP 0 이하면 사망 처리
-    public void TakeDamage(int amount)
-    {
-        Debug.Log("몬스터 데미지 받음: " + amount);
-        if (isDead) return;
+    // ── 에디터 기즈모 ─────────────────────────────────────────────────
 
-        hp -= amount;
-        anim.SetTrigger("IsHurt");
-        UpdateHPBar();
-
-        if (hp <= 0)
-            StartCoroutine(DieRoutine());
-    }
-
-    // HP 비율에 맞게 HP바 fillAmount 갱신
-    void UpdateHPBar()
-    {
-        if (hpFillImage != null)
-            hpFillImage.fillAmount = (float)hp / maxHp;
-    }
-
-    // 사망 애니메이션 재생, HP바 제거 후 오브젝트 삭제
-    IEnumerator DieRoutine()
-    {
-        isDead = true;
-        rb.linearVelocity = Vector2.zero;
-        anim.SetBool("IsDie", true);
-        GetComponent<Collider2D>().enabled = false;
-
-        if (hpBarInstance != null)
-            Destroy(hpBarInstance);
-
-        yield return new WaitForSeconds(1.5f);
-        Destroy(gameObject);
-    }
-
-    // 에디터에서 감지 범위(노란색)와 공격 범위(빨간색)를 기즈모로 시각화
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);

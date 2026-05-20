@@ -2,24 +2,26 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-// 인벤토리/핫바 슬롯 클릭 시 "사용/장착/해제" 등의 선택지를 보여주는 팝업 싱글톤.
-// ShowUsePopup / ShowEquipPopup / ShowHotbarPopup 중 상황에 맞는 메서드를 호출한다.
+/// <summary>
+/// 인벤토리/핫바 슬롯 클릭 시 "사용 / 장착 / 해제" 선택지를 보여주는 팝업.
+/// ShowUsePopup / ShowEquipPopup / ShowHotbarPopup 을 상황에 맞게 호출한다.
+/// </summary>
 public class ItemPopup : MonoBehaviour
 {
-    public static ItemPopup Instance;
+    // 소프트 참조
+    public static ItemPopup Instance { get; private set; }
 
     [Header("UI 연결")]
-    public GameObject popupPanel;
+    public GameObject      popupPanel;
     public TextMeshProUGUI titleTxt;
-    public Button[] options;
+    public Button[]        options;
     public TextMeshProUGUI[] optionTexts;
 
     private System.Action[] actions = new System.Action[3];
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        Instance = this;
     }
 
     void Start()
@@ -37,7 +39,9 @@ public class ItemPopup : MonoBehaviour
         }
     }
 
-    // 소비 아이템용 팝업: "사용" / "슬롯 장착" / "닫기"
+    // ── 팝업 종류별 표시 ─────────────────────────────────────────────
+
+    /// <summary>소비 아이템: "사용" / "슬롯 장착" / "닫기"</summary>
     public void ShowUsePopup(ItemData item, System.Action onUse, System.Action onEquipToSlot)
     {
         titleTxt.text = item.itemName;
@@ -57,7 +61,7 @@ public class ItemPopup : MonoBehaviour
         popupPanel.SetActive(true);
     }
 
-    // 장비 아이템용 팝업: 착용 중이면 "해제", 아니면 "장착" / "닫기"
+    /// <summary>장비 아이템: "착용" 또는 "해제" / "닫기"</summary>
     public void ShowEquipPopup(ItemData item, bool isEquipped, System.Action onEquip)
     {
         titleTxt.text = item.itemName;
@@ -77,7 +81,7 @@ public class ItemPopup : MonoBehaviour
         popupPanel.SetActive(true);
     }
 
-    // 핫바 슬롯 아이템용 팝업: "사용" / "해제(인벤토리 반환)" / "닫기"
+    /// <summary>핫바 슬롯 아이템: "사용" / "해제(인벤토리 반환)" / "닫기"</summary>
     public void ShowHotbarPopup(ItemData item, System.Action onUse, System.Action onUnequip)
     {
         titleTxt.text = item.itemName;
@@ -103,5 +107,5 @@ public class ItemPopup : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public bool IsOpen => popupPanel.activeSelf;
+    public bool IsOpen => popupPanel != null && popupPanel.activeSelf;
 }

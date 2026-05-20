@@ -1,66 +1,70 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-// 플레이어 HP를 슬라이더 UI로 표시하고 피격 시 플래시 효과를 재생하는 싱글톤.
-// UICanvas와 함께 DontDestroyOnLoad로 씬 전환 후에도 유지된다.
+/// <summary>
+/// 플레이어 HP를 슬라이더 UI로 표시하는 컴포넌트.
+/// PlayerHealth.OnHPChanged 이벤트를 구독해 반응형으로 갱신한다.
+/// UICanvas의 일부로 씬 전환 후에도 유지된다.
+/// </summary>
 public class PlayerHPbar : MonoBehaviour
 {
-    public static PlayerHPbar Instance;
-
     [Header("UI 연결")]
     public Slider hpSlider;
-    public Image fillImage;
-    public GameObject damageFlash; // 피격 시 깜빡이는 플래시 오브젝트
+    public Image  fillImage;
+    public GameObject damageFlash; // 피격 시 깜빡이는 오브젝트
+
+    private PlayerHealth playerHealth;
 
     void Awake()
     {
-        // UI 레퍼런스 누락 시 컴포넌트 비활성화
         if (hpSlider == null || fillImage == null)
         {
-            Debug.LogWarning("[PlayerHPbar] HP UI references are missing. Disabling this component.", this);
+            Debug.LogWarning("[PlayerHPbar] HP UI 참조가 없습니다. 컴포넌트를 비활성화합니다.", this);
             enabled = false;
             return;
         }
 
-        if (Instance == null)
-        {
-            Instance = this;
-
-            // 루트 오브젝트일 때만 DontDestroyOnLoad 적용 (Canvas 자식이면 적용 안 함)
-            if (transform.parent == null)
-                DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this);
-        }
+        // 루트 오브젝트일 때만 DontDestroyOnLoad 적용
+        if (transform.parent == null)
+            DontDestroyOnLoad(gameObject);
     }
 
-    // 씬 시작 시 현재 플레이어 HP로 슬라이더 초기화 (플래시 없음)
     void Start()
     {
-        if (hpSlider == null || fillImage == null) return;
-        PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
-        if (player != null)
-            Refresh(player.CurrentHp, player.maxHp, false);
+        // 플레이어를 찾아 이벤트 구독 (아직 없으면 코루틴으로 재시도)
+        StartCoroutine(SubscribeToPlayer());
     }
 
-    // HP 비율에 따라 슬라이더와 색상을 갱신하고 선택적으로 플래시 효과 재생.
-    // 50% 초과=초록, 25% 초과=노랑, 25% 이하=빨강
+    // 플레이어가 생성될 때까지 매 프레임 탐색 후 이벤트 구독
+    IEnumerator SubscribeToPlayer()
+    {
+        while (playerHealth == null)
+        {
+            playerHealth = FindAnyObjectByType<PlayerHealth>();
+            yield return null;
+        }
+
+        playerHealth.OnHPChanged += OnHPChanged;
+        // 현재 HP로 초기화 (플래시 없이)
+        Refresh(playerHealth.CurrentHp, playerHealth.maxHp, false);
+    }
+
+    /// <summary>HP 비율에 따라 슬라이더와 색상을 갱신. 선택적으로 피격 플래시 재생</summary>
     public void Refresh(int current, int max, bool showFlash = true)
     {
         if (hpSlider == null || fillImage == null) return;
+
         float ratio = (float)current / max;
         hpSlider.value = ratio;
         fillImage.color = ratio > 0.5f ? Color.green
                         : ratio > 0.25f ? Color.yellow
                         : Color.red;
+
         if (showFlash)
             StartCoroutine(FlashEffect());
     }
 
-    // 피격 플래시 오브젝트를 0.2초 표시 후 숨김
     IEnumerator FlashEffect()
     {
         if (damageFlash != null)
@@ -69,5 +73,14 @@ public class PlayerHPbar : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             damageFlash.SetActive(false);
         }
+    }
+
+    // Action<int,int> 델리게이트에 맞는 래퍼 메서드
+    private void OnHPChanged(int current, int max) => Refresh(current, max, true);
+
+    void OnDestroy()
+    {
+        if (playerHealth != null)
+            playerHealth.OnHPChanged -= OnHPChanged;
     }
 }

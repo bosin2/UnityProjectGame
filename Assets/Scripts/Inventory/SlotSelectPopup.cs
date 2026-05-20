@@ -2,24 +2,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// 인벤토리에서 "슬롯 장착" 선택 시 핫바 슬롯 번호를 고르는 팝업 싱글톤.
-// Show()에 아이템과 콜백을 넘기면 슬롯 버튼 클릭 시 해당 인덱스로 콜백이 호출된다.
+/// <summary>
+/// "슬롯 장착" 선택 시 핫바 슬롯 번호를 고르는 팝업.
+/// Show()에 아이템과 콜백을 넘기면 슬롯 버튼 클릭 시 콜백이 호출된다.
+/// </summary>
 public class SlotSelectPopup : MonoBehaviour
 {
-    public static SlotSelectPopup Instance;
+    // 소프트 참조
+    public static SlotSelectPopup Instance { get; private set; }
 
     [Header("UI 연결")]
-    public GameObject panel;
-    public Button[] slotButtons;
-    public Button closeButton;
+    public GameObject      panel;
+    public Button[]        slotButtons;
+    public Button          closeButton;
     public TextMeshProUGUI titleTxt;
+
+    [Header("핫바 참조 (Inspector에서 연결 또는 자동 탐색)")]
+    [SerializeField] private HotbarManager hotbarManager;
 
     private System.Action<int> onSlotSelect;
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        Instance = this;
     }
 
     void Start()
@@ -32,6 +37,9 @@ public class SlotSelectPopup : MonoBehaviour
             slotButtons[i].onClick.AddListener(() => OnClickSlot(idx));
         }
         closeButton.onClick.AddListener(Hide);
+
+        if (hotbarManager == null)
+            hotbarManager = FindFirstObjectByType<HotbarManager>();
     }
 
     public void Show(ItemData item, System.Action<int> onSelect)
@@ -39,12 +47,11 @@ public class SlotSelectPopup : MonoBehaviour
         onSlotSelect = onSelect;
         titleTxt.text = "몇 번 슬롯에 넣으시겠습니까?";
 
-        // 슬롯 사용중 표시냥
         for (int i = 0; i < slotButtons.Length; i++)
         {
-            TextMeshProUGUI txt = slotButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            bool occupied = HotbarManager.Instance.GetItem(i) != null;
-            txt.text = $"{i + 1}번 슬롯" + (occupied ? " (사용중)" : "");
+            var txt       = slotButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            bool occupied = hotbarManager != null && hotbarManager.GetItem(i) != null;
+            txt.text      = $"{i + 1}번 슬롯" + (occupied ? " (사용중)" : "");
         }
 
         panel.SetActive(true);
@@ -56,10 +63,7 @@ public class SlotSelectPopup : MonoBehaviour
         Hide();
     }
 
-    public void Hide()
-    {
-        panel.SetActive(false);
-    }
+    public void Hide() => panel.SetActive(false);
 
     public bool IsOpen => panel != null && panel.activeSelf;
 }

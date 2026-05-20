@@ -1,23 +1,21 @@
+#if UNITY_EDITOR
 using UnityEngine;
 
-// [에디터 전용] 씬을 단독 실행할 때 PlayerMovement가 없으면 playerPrefab을 자동 스폰하는 디버그 컴포넌트.
-// DefaultExecutionOrder(-1000)으로 다른 스크립트보다 먼저 실행되어 싱글톤 초기화 순서를 보장한다.
-#if UNITY_EDITOR
+/// <summary>
+/// [에디터 전용] 씬을 단독 실행할 때 플레이어가 없으면 playerPrefab을 자동 스폰.
+/// DefaultExecutionOrder(-1000) 으로 다른 스크립트보다 먼저 실행해 초기화 순서를 보장한다.
+/// </summary>
 [DefaultExecutionOrder(-1000)]
 public class DebugPlayerSpawner : MonoBehaviour
 {
-    [Header("Debug Spawn")]
+    [Header("스폰 설정")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Transform spawnPoint; // null이면 이 오브젝트 위치에 스폰
+    [SerializeField] private Transform  spawnPoint;   // null이면 이 오브젝트 위치에 스폰
 
-    // 이미 플레이어가 있으면 스킵. 없으면 spawnPoint 위치에 플레이어 프리팹을 생성하고
-    // CameraFollow 타겟도 함께 연결한다.
     void Awake()
     {
-        PlayerMovement existingPlayer = FindAnyObjectByType<PlayerMovement>();
-
-        if (existingPlayer != null)
-            return;
+        // 이미 플레이어가 있으면 스킵
+        if (FindAnyObjectByType<PlayerMovement>() != null) return;
 
         if (playerPrefab == null)
         {
@@ -25,20 +23,16 @@ public class DebugPlayerSpawner : MonoBehaviour
             return;
         }
 
-        Vector3 spawnPosition = spawnPoint != null
-            ? spawnPoint.position
-            : transform.position;
+        Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
 
-        GameObject player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        GameObject player = Instantiate(playerPrefab, pos, Quaternion.identity);
         player.tag = "Player";
 
-        CameraFollow cameraFollow = FindAnyObjectByType<CameraFollow>();
-        if (cameraFollow != null)
-        {
-            cameraFollow.player = player.transform;
-        }
+        // CameraFollow 타겟 자동 연결
+        CameraFollow cam = FindAnyObjectByType<CameraFollow>();
+        if (cam != null) cam.player = player.transform;
 
-        Debug.Log("[DebugPlayerSpawner] 디버그용 플레이어를 생성했습니다.");
+        Debug.Log("[DebugPlayerSpawner] 디버그용 플레이어 스폰 완료.");
     }
 }
 #endif

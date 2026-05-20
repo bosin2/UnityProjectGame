@@ -1,28 +1,32 @@
 using UnityEngine;
 
-// 몬스터의 피격 감지 히트박스 컴포넌트 (부모 MonsterAI에 데미지 전달)
+/// <summary>
+/// 몬스터의 피격 감지 히트박스.
+/// 부모(또는 조상) 오브젝트의 MonsterBase에 데미지를 전달한다.
+/// PlayerAttack 태그 콜라이더가 충돌했을 때만 반응.
+/// </summary>
 public class MonsterHitbox : MonoBehaviour
 {
-    private MonsterAI monster;
+    // GetComponentInParent로 부모 계층의 MonsterBase를 찾음
+    // (MonsterAI, RangedMonster 등 MonsterBase 상속 클래스 모두 호환)
+    private MonsterBase monster;
 
     void Start()
     {
-        // 부모 오브젝트에서 MonsterAI 컴포넌트 획득
-        monster = GetComponentInParent<MonsterAI>();
+        monster = GetComponentInParent<MonsterBase>();
+
+        if (monster == null)
+            Debug.LogWarning("[MonsterHitbox] 부모에서 MonsterBase를 찾을 수 없습니다.", this);
     }
 
-    // PlayerAttack 태그의 콜라이더에 닿으면 플레이어 근접 데미지를 MonsterAI에 전달
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Player")) return; // 플레이어 본체는 무시
+        if (!other.CompareTag("PlayerAttack")) return;
 
-        if (other.CompareTag("PlayerAttack"))
-        {
-            PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
-            if (player != null && monster != null)
-            {
-                monster.TakeDamage(player.melee_damage);
-            }
-        }
+        // 공격 콜라이더의 부모에서 PlayerCombat을 찾아 데미지 수치를 가져옴
+        PlayerCombat combat = other.GetComponentInParent<PlayerCombat>();
+        if (combat != null && monster != null)
+            monster.TakeDamage(combat.meleeDamage);
     }
 }
