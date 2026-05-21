@@ -96,15 +96,14 @@ public class PlayerHealth : MonoBehaviour
         var pm = GetComponent<PlayerMovement>();
         if (pm == null) yield break;
 
-        float speedBefore = pm.moveSpeed;   // 시작 시점의 속도를 기억
+        float speedBefore = pm.moveSpeed;   // 부스트 시작 시점의 속도를 기억
         pm.moveSpeed += amount;
 
         yield return new WaitForSeconds(duration);
 
-        // 씬이 바뀌어 moveSpeed가 이미 재설정됐을 수 있으므로
-        // "더했던 amount"를 빼는 대신, 기억해 둔 원래 값으로 복원
-        // (단, 씬 전환 후 base+equip이 speedBefore보다 크면 그냥 냅둠)
-        pm.moveSpeed = Mathf.Max(pm.BaseSpeed + 0f, pm.moveSpeed - amount);
+        // 씬 전환 후 moveSpeed가 base+equip으로 재설정됐을 수 있으므로
+        // 기억해 둔 speedBefore 값으로 복원하되, base 속도보다는 항상 높게 유지
+        pm.moveSpeed = Mathf.Max(pm.BaseSpeed, speedBefore);
     }
 
     // ── 내부 코루틴 ──────────────────────────────────────────────────
@@ -166,13 +165,23 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator DieRoutine()
     {
         yield return null; // IsDie 파라미터 반영 대기
+
+        // 사망 애니메이션 완료 대기 (최대 3초 타임아웃 — 루핑 애니메이션 방지)
+        float timeout = 3f;
+        float elapsed = 0f;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
-               && anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+               && anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
+               && elapsed < timeout)
+        {
+            elapsed += Time.deltaTime;
             yield return null;
+        }
 
         anim.enabled = false;
         GameManager.Instance?.ResetGame();
-        gameObject.SetActive(false);
+        // SetActive(false) 대신 Destroy: OnDestroy → PlayerMovement._exists 리셋
+        // → 재시작 시 새 씬의 플레이어가 정상 생성됨
+        Destroy(gameObject);
         SceneManager.LoadScene("MainMenu");
     }
 

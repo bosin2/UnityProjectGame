@@ -97,7 +97,6 @@ public class StalkerMonster : MonsterBase
             RecalculatePath();
         }
 
-        lineRenderer.positionCount = showPath ? 0 : 0; // 경로 그리기는 아래에서
         if (showPath) DrawPath();
         else          lineRenderer.positionCount = 0;
     }

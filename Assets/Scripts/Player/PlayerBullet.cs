@@ -5,8 +5,8 @@ using UnityEngine;
 /// PlayerCombat.FireBullet()이 Instantiate 직후 direction / speed / damage 를 설정한다.
 ///
 /// 이동 방식:
-///   - Rigidbody2D(Dynamic)가 있으면 → linearVelocity 로 이동 (물리 기반)
-///   - Kinematic 이거나 Rigidbody2D 가 없으면 → Transform.Translate 로 이동 (폴백)
+///   - Rigidbody2D가 있으면 → linearVelocity 로 이동 (물리 기반)
+///   - Rigidbody2D가 없으면  → Transform.Translate 로 이동 (폴백)
 /// 중력은 항상 0으로 강제해 위아래로 흘러내리지 않게 한다.
 /// </summary>
 public class PlayerBullet : MonoBehaviour
@@ -25,20 +25,15 @@ public class PlayerBullet : MonoBehaviour
 
         if (rb != null)
         {
-            rb.gravityScale = 0f;                      // 중력 제거
-
-            if (!rb.isKinematic)
-            {
-                // Dynamic Rigidbody2D → 속도로 이동
-                rb.linearVelocity = direction * speed;
-                usePhysics = true;
-            }
+            rb.gravityScale   = 0f;
+            rb.linearVelocity = direction * speed;
+            usePhysics        = true;
         }
     }
 
     void Update()
     {
-        // Kinematic이거나 Rigidbody2D가 없으면 Transform으로 직접 이동
+        // Rigidbody2D가 없는 폴백: Transform으로 직접 이동
         if (!usePhysics)
             transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }

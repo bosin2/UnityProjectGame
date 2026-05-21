@@ -19,7 +19,7 @@ public class PlayerCombat : MonoBehaviour
 {
     [Header("근접 공격")]
     public int   meleeDamage   = 20;
-    public float meleeDuration = 0.4f;   // 공격 상태 유지 시간
+    public float meleeDuration = 0.6f;   // 공격 상태 유지 시간
 
     [Header("원거리 공격")]
     public int        gunDamage    = 30;

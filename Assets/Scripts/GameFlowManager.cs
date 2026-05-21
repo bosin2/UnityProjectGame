@@ -55,6 +55,9 @@ public class GameFlowManager : MonoBehaviour
     private float lastSpaceTime  = -1f;
     private float spaceCooldown  = 0.3f;
 
+    // GunShotEvent 중복 실행 방지 락
+    private bool _gunShotPlaying = false;
+
     void Start()
     {
         // UI 참조가 없으면 씬에서 자동 탐색
@@ -121,8 +124,8 @@ public class GameFlowManager : MonoBehaviour
         UICanvas.Instance?.HideUI();
         AudioManager.Instance?.StopBGM();
 
-        cutscene.color = new Color(1, 1, 1, 0);
-        clickHint.SetActive(false);
+        if (cutscene != null) cutscene.color = new Color(1, 1, 1, 0);
+        if (clickHint != null) clickHint.SetActive(false);
         StartCoroutine(FadeIn());
     }
 
@@ -301,12 +304,14 @@ public class GameFlowManager : MonoBehaviour
 
     public void OnGunNPCHit()
     {
+        if (_gunShotPlaying) return;
         if (GameManager.Instance != null && GameManager.Instance.HasFlag("gunNPCDead")) return;
         StartCoroutine(GunShotEvent());
     }
 
     IEnumerator GunShotEvent()
     {
+        _gunShotPlaying = true;
         Time.timeScale = 1f;
 
         // 화면 붉어지기
@@ -347,6 +352,7 @@ public class GameFlowManager : MonoBehaviour
         }
 
         GameManager.Instance?.SetFlag("gunNPCDead");
+        _gunShotPlaying = false;
     }
 
     // ── 내부 유틸 ─────────────────────────────────────────────────────
