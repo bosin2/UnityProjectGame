@@ -227,7 +227,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -49900269
   m_SortingLayer: 9
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1731897221, guid: e78b2cd5f4d334e4a93902ec3981a325, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -277,6 +277,8 @@ MonoBehaviour:
   melee_damage: 20
   shoot_damage: 30
   shootBulletSpeed: 10
+  footstepInterval: 0.2
+  fadePanel: {fileID: 0}
   attack_Left: {fileID: 5090293506769769196}
   attack_Right: {fileID: 189020814371587784}
   attack_Front: {fileID: 6833284605566321867}

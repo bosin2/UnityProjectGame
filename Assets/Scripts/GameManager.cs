@@ -2,55 +2,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// 게임 전반의 상태를 관리하는 영구 싱글톤.
-// 씬이 바뀌어도 유지되며 무기, 열쇠, 이벤트 진행 여부 등을 저장한다.
+/// <summary>
+/// 게임 전반의 상태를 관리하는 영구 싱글톤.
+/// 씬이 바뀌어도 유지되며 무기 소지, 열쇠, 이벤트 플래그, NPC phase를 저장한다.
+///
+/// [다른 스크립트에서 접근법]
+/// GameManager.Instance.SetFlag("flagName") 처럼 직접 호출.
+/// GameManager는 전역 상태 전용이므로 싱글톤을 유지한다.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     [Header("무기 소지 여부")]
-    public bool hasGun = false;   // 권총 획득 여부
-    public bool hasPipe = false;  // 파이프 획득 여부
+    public bool hasGun  = false;
+    public bool hasPipe = false;
 
     [Header("게임 진행 상태")]
-    public int stage = 0;                  // 0=튜토리얼 전, 1=게임 진행 중
-    public string currentWeapon = "pipe";  // 현재 장착 무기 문자열 (참고용)
+    public int    stage         = 0;          // 0=튜토리얼 전, 1=게임 진행 중
+    public string currentWeapon = "pipe";     // 참고용 문자열
 
     [Header("열쇠 / 이벤트")]
-    public bool hasRightCorridorKey = false; // 오른쪽 복도 열쇠 보유 여부
-    public bool gunEventDone = false;        // 총 획득 NPC 이벤트 완료 여부
+    public bool hasRightCorridorKey = false;
+    public bool gunEventDone        = false;
 
-    // 이벤트 진행 여부를 문자열 키로 추적하는 플래그 집합
-    // 예: "introDone", "tutorialDone", "ClockEnd"
-    private HashSet<string> flags = new HashSet<string>();
-
-    // Interactable의 currentPhaseIndex를 씬 간에 유지하기 위한 저장소
-    private Dictionary<string, int> phaseIndices = new Dictionary<string, int>();
+    // 이벤트 진행 플래그 집합 ("introDone", "tutorialDone", "ClockEnd" 등)
+    private HashSet<string>        flags        = new HashSet<string>();
+    // Interactable phase 인덱스 씬 간 유지용
+    private Dictionary<string,int> phaseIndices = new Dictionary<string,int>();
 
     void Awake()
     {
-        // 싱글톤 보장: 이미 존재하면 새 인스턴스 제거
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    void OnEnable()  => SceneManager.sceneLoaded += OnSceneLoaded;
+    void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // 씬 전환 시 HUD 표시 여부 결정.
-    // 인트로/튜토리얼은 GameFlowManager.Start()가 직접 HideUI()를 처리하므로
-    // stage == 0일 때는 여기서 ShowUI를 호출하지 않는다.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "MainMenu")
@@ -59,23 +55,28 @@ public class GameManager : MonoBehaviour
             UICanvas.Instance?.ShowUI();
     }
 
-    // 플래그 등록 (중복 등록 무시)
-    public void SetFlag(string flag) => flags.Add(flag);
+    // ── 플래그 관리 ───────────────────────────────────────────────────
 
-    // 플래그 보유 여부 반환
-    public bool HasFlag(string flag) => flags.Contains(flag);
+    public void SetFlag(string flag)        => flags.Add(flag);
+    public bool HasFlag(string flag)        => flags.Contains(flag);
+
+    // ── Phase 인덱스 관리 ─────────────────────────────────────────────
+
+    public void SetPhaseIndex(string id, int index) => phaseIndices[id] = index;
+    public int  GetPhaseIndex(string id) =>
+        phaseIndices.TryGetValue(id, out int v) ? v : 0;
+
+    // ── 게임 리셋 ─────────────────────────────────────────────────────
+
     public void ResetGame()
     {
-        hasGun = false;
-        hasPipe = false;
+        hasGun              = false;
+        hasPipe             = false;
         hasRightCorridorKey = false;
-        gunEventDone = false;
-        stage = 0;
-        currentWeapon = "pipe";
+        gunEventDone        = false;
+        stage               = 0;
+        currentWeapon       = "pipe";
         flags.Clear();
         phaseIndices.Clear();
     }
-    // Interactable의 currentPhaseIndex 저장/복원
-    public void SetPhaseIndex(string id, int index) => phaseIndices[id] = index;
-    public int GetPhaseIndex(string id) => phaseIndices.TryGetValue(id, out int v) ? v : 0;
 }

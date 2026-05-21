@@ -3,11 +3,17 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-// 인벤토리 UI, 아이템 데이터, 카테고리 전환, 장비 착용/해제를 통합 관리하는 싱글톤.
-// E키로 열고 닫으며, 열리면 Time.timeScale=0f로 게임을 일시정지한다.
+/// <summary>
+/// 인벤토리 UI + 아이템 데이터 + 카테고리 전환 + 장비 착용/해제 통합 관리.
+/// E키로 열고 닫으며, 열리면 Time.timeScale=0 으로 게임 일시정지.
+///
+/// [의존성 — Inspector에서 연결]
+/// itemPopup, slotSelectPopup, hotbarManager 는 같은 씬의 UI 오브젝트를 드래그 연결.
+/// </summary>
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance;
+    // 씬 내에서 편리하게 접근하기 위한 소프트 참조 (강제 싱글톤 아님)
+    public static InventoryManager Instance { get; private set; }
 
     [Header("UI 연결")]
     public GameObject inventoryUI;
@@ -18,55 +24,63 @@ public class InventoryManager : MonoBehaviour
 
     [Header("아이템 목록")]
     public GameObject itemSlotPrefab;
-    public Transform itemGridGroup;
+    public Transform  itemGridGroup;
     public GameObject itemListPanel;
 
     [Header("설명창")]
     public TextMeshProUGUI descriptionTxt;
 
-    [Header("스탯")]
+    [Header("스탯 텍스트")]
     public TextMeshProUGUI txtHp;
     public TextMeshProUGUI txtSpeed;
     public TextMeshProUGUI txtDex;
 
     [Header("기본 아이템")]
     public ItemData[] defaultItems;
-    public int[] defaultItemCounts;
-    public ItemData defaultArmor;
-    public ItemData defaultShoes;
+    public int[]      defaultItemCounts;
+    public ItemData   defaultArmor;
+    public ItemData   defaultShoes;
 
+    [Header("UI 팝업 참조 (Inspector에서 연결)")]
+    [SerializeField] private ItemPopup       itemPopup;
+    [SerializeField] private SlotSelectPopup slotSelectPopup;
+    [SerializeField] private HotbarManager   hotbarManager;
+
+    // ── 내부 상태 ──────────────────────────────────────────────────────
     private enum Category { Key, Use, Equip }
     private Category currentCategory = Category.Key;
 
-    private List<ItemStack> inventory = new List<ItemStack>();
-    private List<InvenSlotUI> slotUIs = new List<InvenSlotUI>();
+    private List<ItemStack>    inventory = new List<ItemStack>();
+    private List<InvenSlotUI>  slotUIs   = new List<InvenSlotUI>();
 
     private int categoryIdx = 0;
-    private int itemIdx = 0;
+    private int itemIdx     = 0;
 
     private ItemData equippedArmor;
     private ItemData equippedShoes;
 
-    public bool isOpen = false;
+    public bool IsOpen { get; private set; } = false;
+
+    // ── 초기화 ──────────────────────────────────────────────────────
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        // 소프트 참조: 마지막에 생성된 인스턴스가 캐싱됨 (강제 제거 없음)
+        Instance = this;
         SetInventoryOpen(false);
     }
 
-    // 기본 아이템·방어구·신발을 인벤토리에 추가하고 장비 슬롯에 자동 착용
     void Start()
     {
         SetInventoryOpen(false);
         itemListPanel.SetActive(false);
 
+        // Inspector에서 연결되지 않은 팝업은 씬에서 탐색
+        if (itemPopup      == null) itemPopup      = FindFirstObjectByType<ItemPopup>();
+        if (slotSelectPopup == null) slotSelectPopup = FindFirstObjectByType<SlotSelectPopup>();
+        if (hotbarManager  == null) hotbarManager  = FindFirstObjectByType<HotbarManager>();
+
+        // 기본 아이템 지급
         if (defaultItems != null)
         {
             for (int i = 0; i < defaultItems.Length; i++)
@@ -79,28 +93,31 @@ public class InventoryManager : MonoBehaviour
         }
 
         if (defaultArmor != null) { AddItem(defaultArmor, 1); ToggleEquip(defaultArmor); }
-        if (defaultShoes != null) { AddItem(defaultShoes, 1); ToggleEquip(defaultShoes); }
-    }
-
-    // E키로 인벤토리 열기/닫기. 팝업이 열려 있으면 무시
-    void Update()
-    {
-        bool popupOpen = ItemPopup.Instance != null && ItemPopup.Instance.IsOpen;
-        if (Input.GetKeyDown(KeyCode.E) && !popupOpen)
+        if (defaultShoes != null)
         {
-            print(isOpen ? "인벤토리 닫음" : "인벤토리 열음");
-            ToggleInventory();
+            AddItem(defaultShoes, 1);
+            // ToggleEquip 대신 직접 적용 — SetEquipSpeedBonus는 절댓값이라 씬마다 호출해도 안전
+            equippedShoes = defaultShoes;
+            FindFirstObjectByType<PlayerMovement>()
+                ?.SetEquipSpeedBonus(defaultShoes.speedAmount);
         }
     }
 
-    // 아이템을 인벤토리에 추가. 열쇠는 중복 획득 무시, 그 외는 수량 누적
+    void Update()
+    {
+        bool popupOpen = itemPopup != null && itemPopup.IsOpen;
+        if (Input.GetKeyDown(KeyCode.E) && !popupOpen)
+            ToggleInventory();
+    }
+
+    // ── 아이템 CRUD ───────────────────────────────────────────────────
+
     public void AddItem(ItemData item, int count = 1)
     {
         ItemStack existing = inventory.Find(s => s.item == item);
         if (existing != null)
         {
-            // 열쇠면 중복 획득 무시
-            if (item.type == ItemType.Key) return;
+            if (item.type == ItemType.Key) return; // 열쇠 중복 무시
             existing.count += count;
         }
         else
@@ -109,57 +126,48 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // 지정 수량만큼 제거. 수량이 0 이하면 스택 삭제
     public void RemoveItem(ItemData item, int count = 1)
     {
         ItemStack stack = inventory.Find(s => s.item == item);
         if (stack == null) return;
         stack.count -= count;
-        if (stack.count <= 0)
-            inventory.Remove(stack);
+        if (stack.count <= 0) inventory.Remove(stack);
     }
 
-    // 수량과 무관하게 해당 아이템 스택 전체 삭제
-    public void RemoveItemCompletely(ItemData item)
-    {
+    public void RemoveItemCompletely(ItemData item) =>
         inventory.RemoveAll(s => s.item == item);
-    }
 
-    // 인벤토리에서 해당 아이템의 현재 보유 수량 반환
     public int GetItemCount(ItemData item)
     {
         ItemStack stack = inventory.Find(s => s.item == item);
         return stack != null ? stack.count : 0;
     }
 
-    // 아이템 1개 소모 (RemoveItem 래퍼)
-    public void ConsumeItemCount(ItemData item)
-    {
-        RemoveItem(item, 1);
-    }
+    public void ConsumeItemCount(ItemData item) => RemoveItem(item, 1);
 
-    // 카테고리 버튼 클릭 시 현재 카테고리 전환 및 아이템 목록 갱신
+    // ── 카테고리 ──────────────────────────────────────────────────────
+
     public void OnClickCategory(int idx)
     {
-        categoryIdx = idx;
-        currentCategory = (Category)idx;
+        categoryIdx      = idx;
+        currentCategory  = (Category)idx;
         RefreshCategoryCursor();
         itemListPanel.SetActive(true);
         RefreshItemList();
     }
 
-    // 선택된 카테고리 버튼 텍스트만 흰색, 나머지는 회색으로 강조 표시
     void RefreshCategoryCursor()
     {
         for (int i = 0; i < categoryObjects.Length; i++)
         {
-            TextMeshProUGUI txt = categoryObjects[i].GetComponentInChildren<TextMeshProUGUI>();
+            var txt = categoryObjects[i].GetComponentInChildren<TextMeshProUGUI>();
             if (txt != null)
                 txt.color = i == categoryIdx ? Color.white : Color.gray;
         }
     }
 
-    // 아이템 슬롯 클릭: 장비 카테고리면 착용/해제 팝업, 그 외에는 사용/슬롯 장착 팝업 표시
+    // ── 슬롯 클릭 ─────────────────────────────────────────────────────
+
     public void OnClickItem(int idx)
     {
         if (idx >= slotUIs.Count) return;
@@ -170,8 +178,8 @@ public class InventoryManager : MonoBehaviour
 
         if (currentCategory == Category.Equip)
         {
-            bool isEquipped = equippedArmor == item || equippedShoes == item;
-            ItemPopup.Instance.ShowEquipPopup(item, isEquipped, () =>
+            bool equipped = equippedArmor == item || equippedShoes == item;
+            itemPopup?.ShowEquipPopup(item, equipped, () =>
             {
                 ToggleEquip(item);
                 RefreshStats();
@@ -179,17 +187,14 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            ItemPopup.Instance.ShowUsePopup(item,
+            itemPopup?.ShowUsePopup(item,
+                () => UseItemDirectly(item),
                 () =>
                 {
-                    UseItemDirectly(item);
-                },
-                () =>
-                {
-                    SlotSelectPopup.Instance.Show(item, (slotIndex) =>
+                    slotSelectPopup?.Show(item, (slotIndex) =>
                     {
                         int count = GetItemCount(item);
-                        if (HotbarManager.Instance.AddItemToSlot(item, slotIndex, count))
+                        if (hotbarManager != null && hotbarManager.AddItemToSlot(item, slotIndex, count))
                         {
                             RemoveItemCompletely(item);
                             RefreshItemList();
@@ -200,17 +205,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // 인벤토리에서 아이템을 직접 사용 (핫바 거치지 않음). 사용 후 목록 갱신
     void UseItemDirectly(ItemData item)
     {
+        // 플레이어 컴포넌트를 씬에서 탐색
         switch (item.type)
         {
             case ItemType.Heal:
-                FindFirstObjectByType<PlayerMovement>()?.Heal(item.healAmount);
+                FindFirstObjectByType<PlayerHealth>()?.Heal(item.healAmount);
                 break;
             case ItemType.SpeedBoost:
-                PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
-                pm?.StartCoroutine(pm.SpeedBoostCoroutine(item.speedAmount, item.speedDuration));
+                PlayerHealth ph = FindFirstObjectByType<PlayerHealth>();
+                ph?.StartCoroutine(ph.SpeedBoostCoroutine(item.speedAmount, item.speedDuration));
                 break;
             case ItemType.Key:
                 break;
@@ -219,49 +224,48 @@ public class InventoryManager : MonoBehaviour
         RefreshItemList();
     }
 
-    // 방어구/신발 착용 토글. 신발은 이동속도에 즉시 반영
     void ToggleEquip(ItemData item)
     {
         PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
 
         if (item.type == ItemType.Armor)
         {
-            if (equippedArmor == item) equippedArmor = null;
-            else equippedArmor = item;
+            equippedArmor = equippedArmor == item ? null : item;
         }
         else if (item.type == ItemType.Shoes)
         {
             if (equippedShoes == item)
             {
+                // 해제: 보너스 0으로 (절댓값 설정이라 누적 없음)
                 equippedShoes = null;
-                if (pm != null) pm.moveSpeed -= item.speedAmount;
+                pm?.SetEquipSpeedBonus(0f);
             }
             else
             {
+                // 장착: 새 신발의 보너스로 교체 (절댓값이라 이전 값 덮어씀)
                 equippedShoes = item;
-                if (pm != null) pm.moveSpeed += item.speedAmount;
+                pm?.SetEquipSpeedBonus(item.speedAmount);
             }
         }
     }
 
-    // 현재 카테고리 아이템 슬롯 UI를 전부 재생성
+    // ── UI 갱신 ───────────────────────────────────────────────────────
+
     public void RefreshItemList()
     {
-        foreach (var slot in slotUIs)
-            Destroy(slot.gameObject);
+        foreach (var slot in slotUIs) Destroy(slot.gameObject);
         slotUIs.Clear();
 
         List<ItemStack> stacks = GetCategoryStacks();
         for (int i = 0; i < stacks.Count; i++)
         {
             int idx = i;
-            GameObject obj = Instantiate(itemSlotPrefab, itemGridGroup);
+            GameObject obj    = Instantiate(itemSlotPrefab, itemGridGroup);
             InvenSlotUI slotUI = obj.GetComponent<InvenSlotUI>();
             slotUI.Setup(stacks[i].item, stacks[i].count);
 
             Button btn = obj.GetComponent<Button>();
-            if (btn != null)
-                btn.onClick.AddListener(() => OnClickItem(idx));
+            if (btn != null) btn.onClick.AddListener(() => OnClickItem(idx));
             slotUIs.Add(slotUI);
         }
 
@@ -269,46 +273,37 @@ public class InventoryManager : MonoBehaviour
         RefreshDescription();
     }
 
-    // 선택된 슬롯의 아이템 설명을 하단 텍스트에 업데이트
     void RefreshDescription()
     {
         if (slotUIs.Count == 0 || itemIdx >= slotUIs.Count)
-        {
-            descriptionTxt.text = "";
-            return;
-        }
+        { descriptionTxt.text = ""; return; }
 
         ItemData item = slotUIs[itemIdx].GetItem();
-        string desc = item.itemName + "\n" + item.description + "\n";
+        string desc   = item.itemName + "\n" + item.description + "\n";
 
         switch (item.type)
         {
-            case ItemType.Heal:
-                desc += "HP +" + item.healAmount; break;
-            case ItemType.SpeedBoost:
-                desc += "속도 +" + item.speedAmount + " / " + item.speedDuration + "초"; break;
-            case ItemType.Armor:
-                desc += "방어력 +" + item.defenseAmount; break;
-            case ItemType.Shoes:
-                desc += "이동속도 +" + item.speedAmount; break;
-            case ItemType.Key:
-                desc += "어딘가에 쓸 수 있을 것 같다"; break;
+            case ItemType.Heal:       desc += "HP +" + item.healAmount; break;
+            case ItemType.SpeedBoost: desc += "속도 +" + item.speedAmount + " / " + item.speedDuration + "초"; break;
+            case ItemType.Armor:      desc += "방어력 +" + item.defenseAmount; break;
+            case ItemType.Shoes:      desc += "이동속도 +" + item.speedAmount; break;
+            case ItemType.Key:        desc += "어딘가에 쓸 수 있을 것 같다"; break;
         }
 
         descriptionTxt.text = desc;
     }
 
-    // 플레이어 현재 스탯(HP, 속도, 방어력)을 인벤토리 스탯 텍스트에 반영
     public void RefreshStats()
     {
+        PlayerHealth ph = FindFirstObjectByType<PlayerHealth>();
         PlayerMovement pm = FindFirstObjectByType<PlayerMovement>();
-        if (pm == null) return;
-        txtHp.text = "HP : " + pm.CurrentHp + " / " + pm.maxHp;
+        if (ph == null || pm == null) return;
+
+        txtHp.text    = "HP : " + ph.CurrentHp + " / " + ph.maxHp;
         txtSpeed.text = "SP : " + pm.moveSpeed;
-        txtDex.text = "DEX : " + (equippedArmor != null ? equippedArmor.defenseAmount : 0);
+        txtDex.text   = "DEX : " + (equippedArmor != null ? equippedArmor.defenseAmount : 0);
     }
 
-    // 현재 카테고리에 해당하는 ItemStack 목록 반환
     List<ItemStack> GetCategoryStacks()
     {
         switch (currentCategory)
@@ -316,25 +311,26 @@ public class InventoryManager : MonoBehaviour
             case Category.Key:
                 return inventory.FindAll(s => s.item.type == ItemType.Key);
             case Category.Use:
-                return inventory.FindAll(s => s.item.type == ItemType.Heal ||
-                                             s.item.type == ItemType.SpeedBoost);
+                return inventory.FindAll(s => s.item.type == ItemType.Heal
+                                           || s.item.type == ItemType.SpeedBoost);
             case Category.Equip:
-                return inventory.FindAll(s => s.item.type == ItemType.Armor ||
-                                             s.item.type == ItemType.Shoes);
+                return inventory.FindAll(s => s.item.type == ItemType.Armor
+                                           || s.item.type == ItemType.Shoes);
             default:
                 return new List<ItemStack>();
         }
     }
 
-    // 인벤토리 열기/닫기. 열리면 timeScale=0, 닫히면 슬롯 UI 정리 후 timeScale=1
+    // ── 열기/닫기 ─────────────────────────────────────────────────────
+
     public void ToggleInventory()
     {
-        SetInventoryOpen(!isOpen);
+        SetInventoryOpen(!IsOpen);
 
-        if (isOpen)
+        if (IsOpen)
         {
-            Time.timeScale = 0f;
-            categoryIdx = 0;
+            Time.timeScale  = 0f;
+            categoryIdx     = 0;
             currentCategory = Category.Key;
             itemListPanel.SetActive(false);
             RefreshCategoryCursor();
@@ -342,25 +338,17 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            foreach (var slot in slotUIs)
-                Destroy(slot.gameObject);
+            foreach (var slot in slotUIs) Destroy(slot.gameObject);
             slotUIs.Clear();
             Time.timeScale = 1f;
         }
     }
 
-    // 인벤토리 UI 표시/숨김 및 핫바 역전 처리
     void SetInventoryOpen(bool open)
     {
-        isOpen = open;
-
-        if (inventoryUI != null)
-            inventoryUI.SetActive(open);
-
-        if (hotbarUI != null)
-            hotbarUI.SetActive(!open);
-
-        if (!open)
-            Time.timeScale = 1f;
+        IsOpen = open;
+        if (inventoryUI != null) inventoryUI.SetActive(open);
+        if (hotbarUI    != null) hotbarUI.SetActive(!open);
+        if (!open) Time.timeScale = 1f;
     }
 }
