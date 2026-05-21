@@ -21,11 +21,14 @@ EditorBuildSettings:
     path: Assets/Scenes/RightCorrider.unity
     guid: 2466b95a5ecbffc45ab8565e6894254e
   - enabled: 1
-    path: Assets/Scenes/KimRap.unity
-    guid: 04eb2d377feb9244d8d5272ce4d3cc89
+    path: Assets/Scenes/g420.unity
+    guid: 46f122b492a8f0942864ebdd524a9c7e
   - enabled: 1
     path: Assets/Scenes/g421.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/KimRap.unity
+    guid: 04eb2d377feb9244d8d5272ce4d3cc89
   - enabled: 1
     path: Assets/Scenes/g418.unity
     guid: b1be8c9df5e707049926c8d50fac4fba

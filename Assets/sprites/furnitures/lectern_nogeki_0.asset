@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: blood_puddle_a_0
+  m_Name: lectern_nogeki_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -8802753840517471026, guid: 98dbcfd321e5a87489fabd62cf6e8bb0, type: 3}
-  m_Color: {r: 0.6226415, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 8009758969916711741, guid: 4b5f492e27a876b4baf71807590ac5b0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

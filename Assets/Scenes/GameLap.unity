@@ -1637,7 +1637,7 @@ MonoBehaviour:
   weaponSlotUI: {fileID: 1129757776}
   hotbarManager: {fileID: 1129757777}
   skipIntroTutorial: 1
-  skipWithGun: 0
+  skipWithGun: 1
 --- !u!4 &378217737
 Transform:
   m_ObjectHideFlags: 0

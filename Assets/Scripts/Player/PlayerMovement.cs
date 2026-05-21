@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float _equipSpeedBonus = 0f;
 
     [Header("발소리")]
-    public float footstepInterval = 0.2f;
+    public float footstepInterval = 0.7f;
 
     // ── 프로퍼티 ──────────────────────────────────────────────────────
     /// <summary>마지막 이동 방향 (공격/피격 방향 계산에 사용)</summary>
@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         footstepTimer += Time.deltaTime;
         if (footstepTimer >= footstepInterval)
         {
-            // AudioManager.Instance?.PlaySFX("walk");
+            AudioManager.Instance?.PlaySFX("walk");
             footstepTimer = 0f;
         }
     }

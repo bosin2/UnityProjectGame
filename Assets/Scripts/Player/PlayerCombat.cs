@@ -54,6 +54,12 @@ public class PlayerCombat : MonoBehaviour
         if (health.IsDead || health.IsHurt) return;
         if (inventory != null && inventory.IsOpen) return;
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (GameManager.Instance != null && GameManager.Instance.hasGun)
+                SwitchWeapon(currentWeapon == 0 ? 1 : 0);
+        }
+
         if (Input.GetMouseButtonDown(0))
             TryAttack();
     }
