@@ -38,8 +38,8 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Awake()
     {
         rb   = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        sr   = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>() ?? GetComponentInChildren<Animator>();
+        sr   = GetComponent<SpriteRenderer>() ?? GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Start()
@@ -83,7 +83,6 @@ public abstract class MonsterBase : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
 
-        // 콜라이더 비활성화 (죽은 뒤 충돌 방지)
         foreach (Collider2D col in GetComponents<Collider2D>())
             col.enabled = false;
         foreach (Collider2D col in GetComponentsInChildren<Collider2D>())
@@ -93,25 +92,29 @@ public abstract class MonsterBase : MonoBehaviour
             Destroy(hpBarInstance);
 
         anim?.SetBool("IsDie", true);
-        //AudioManager.Instance?.PlaySFX("monster_die");
 
-        // 사망 애니메이션 완료 대기 (최대 3초 타임아웃 — 루핑 애니메이션 방지)
-        yield return null;
+        // Die State에 진입할 때까지 대기
+        float waitTimeout = 1f;
+        float waited = 0f;
+        while (anim != null
+               && !anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
+               && waited < waitTimeout)
+        {
+            waited += Time.deltaTime;
+            yield return null;
+        }
+
+        // Die 애니메이션 재생 완료까지 대기
         if (anim != null)
         {
             float timeout = 3f;
             float elapsed = 0f;
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
-                   && anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
                    && elapsed < timeout)
             {
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.5f);
         }
 
         Destroy(gameObject);

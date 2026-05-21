@@ -46,6 +46,7 @@ public class GameFlowManager : MonoBehaviour
 
     [Header("개발용 - 인트로/튜토리얼 스킵")]
     [SerializeField] private bool skipIntroTutorial = false;
+    [SerializeField] private bool skipWithGun = false;
 
     // ── 인트로 상태 ──────────────────────────────────────────────────
     private int   currentLine  = 0;
@@ -111,8 +112,24 @@ public class GameFlowManager : MonoBehaviour
         if (skipIntroTutorial)
         {
             SwitchToGameplay();
-            GameManager.Instance.stage  = 1;
+            GameManager.Instance.stage = 1;
             GameManager.Instance.hasPipe = true;
+            GameManager.Instance.hasRightCorridorKey = true;
+
+            if (skipWithGun)
+            {
+                GameManager.Instance.hasGun = true;
+                GameObject player = GameObject.FindWithTag("Player");
+                player?.GetComponent<PlayerCombat>()?.SwitchWeapon(1);
+                gunNPC?.SetActive(false);
+                GameManager.Instance.SetFlag("gunNPCDead");
+            }
+            else
+            {
+                bool gunNPCAlive = !GameManager.Instance.HasFlag("gunNPCDead");
+                gunNPC?.SetActive(gunNPCAlive);
+            }
+
             AudioManager.Instance?.PlayBGM("prologue");
             return;
         }
