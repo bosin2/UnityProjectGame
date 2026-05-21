@@ -245,16 +245,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cadf3c35b3f304299b66e60450e448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 60
+  maxHp: 60
+  hpBarPrefab: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
+  hpBarOffset: {x: 0, y: 4.5}
   damage: 15
   speed: 5
   detectionRange: 20
   attackRange: 3.5
   attackCooldown: 0.9
   contactDamageInterval: 1.5
-  target: {fileID: 0}
-  hpBarPrefab: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
-  hpBarOffset: {x: 0, y: 4.5, z: 0}
   axisSwitchMargin: 1
 --- !u!61 &5429415106804261727
 BoxCollider2D:
@@ -309,7 +308,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7767786804021480497}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19b38d8fe51a3c04c833fa2bcca5531f, type: 3}
   m_Name: 

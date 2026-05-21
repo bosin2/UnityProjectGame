@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 모든 몬스터의 공통 기능을 제공하는 추상 기반 클래스.
@@ -17,6 +18,9 @@ public abstract class MonsterBase : MonoBehaviour
     public GameObject hpBarPrefab;     // 월드 공간 HP바 프리팹 (없으면 생략)
     public Vector2    hpBarOffset = new Vector2(0f, 1f);
 
+    [Header("넉백")]
+    public float knockbackForce = 5f;
+
     // ── 공용 필드 (자식 클래스에서 접근) ──────────────────────────────
     protected int            currentHp;
     protected bool           isDead = false;
@@ -27,15 +31,15 @@ public abstract class MonsterBase : MonoBehaviour
 
     // HP바 인스턴스 (월드 공간 슬라이더 등)
     private GameObject       hpBarInstance;
-    private UnityEngine.UI.Slider hpSlider;
+    private Image hpFillImage;
 
     // ── 초기화 ──────────────────────────────────────────────────────
 
     protected virtual void Awake()
     {
         rb   = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        sr   = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>() ?? GetComponentInChildren<Animator>();
+        sr   = GetComponent<SpriteRenderer>() ?? GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Start()
@@ -62,6 +66,15 @@ public abstract class MonsterBase : MonoBehaviour
         else
         {
             anim?.SetTrigger("IsHurt");
+
+            // 넉백: 플레이어 → 몬스터 방향으로 밀어냄
+            PlayerHealth player = FindPlayerHealth();
+            if (player != null)
+            {
+                Vector2 knockDir = ((Vector2)transform.position
+                                   - (Vector2)player.transform.position).normalized;
+                rb.linearVelocity = knockDir * knockbackForce;
+            }
         }
     }
 
@@ -70,7 +83,6 @@ public abstract class MonsterBase : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
 
-        // 콜라이더 비활성화 (죽은 뒤 충돌 방지)
         foreach (Collider2D col in GetComponents<Collider2D>())
             col.enabled = false;
         foreach (Collider2D col in GetComponentsInChildren<Collider2D>())
@@ -80,19 +92,29 @@ public abstract class MonsterBase : MonoBehaviour
             Destroy(hpBarInstance);
 
         anim?.SetBool("IsDie", true);
-        AudioManager.Instance?.PlaySFX("monster_die");
 
-        // 사망 애니메이션 완료 대기
-        yield return null;
+        // Die State에 진입할 때까지 대기
+        float waitTimeout = 1f;
+        float waited = 0f;
+        while (anim != null
+               && !anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
+               && waited < waitTimeout)
+        {
+            waited += Time.deltaTime;
+            yield return null;
+        }
+
+        // Die 애니메이션 재생 완료까지 대기
         if (anim != null)
         {
+            float timeout = 3f;
+            float elapsed = 0f;
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
-                   && anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+                   && elapsed < timeout)
+            {
+                elapsed += Time.deltaTime;
                 yield return null;
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.5f);
+            }
         }
 
         Destroy(gameObject);
@@ -108,21 +130,23 @@ public abstract class MonsterBase : MonoBehaviour
             (Vector2)transform.position + hpBarOffset,
             Quaternion.identity);
 
-        // 캔버스 월드스페이스 HP바 슬라이더를 찾아 연결
-        hpSlider = hpBarInstance.GetComponentInChildren<UnityEngine.UI.Slider>();
-        if (hpSlider != null)
-            hpSlider.value = 1f;
+        // "Fill" 이라는 이름의 자식 오브젝트에서 Image 찾기
+        Transform fillTr = hpBarInstance.transform.Find("Fill");
+        if (fillTr != null)
+            hpFillImage = fillTr.GetComponent<Image>();
+
+        if (hpFillImage != null)
+            hpFillImage.fillAmount = 1f;
     }
 
     void UpdateHPBar()
     {
         if (hpBarInstance == null) return;
 
-        // HP바를 몬스터 위치에 따라 이동
         hpBarInstance.transform.position = (Vector2)transform.position + hpBarOffset;
 
-        if (hpSlider != null)
-            hpSlider.value = (float)currentHp / maxHp;
+        if (hpFillImage != null)
+            hpFillImage.fillAmount = (float)currentHp / maxHp;
     }
 
     void LateUpdate()

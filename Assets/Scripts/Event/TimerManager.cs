@@ -30,6 +30,12 @@ public class TimerManager : MonoBehaviour
             return;
         }
 
+        // 중복 방지 (UICanvas 와 동일한 패턴)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
 
         // 루트 오브젝트일 때만 DontDestroyOnLoad 적용
@@ -40,6 +46,14 @@ public class TimerManager : MonoBehaviour
     void Start()
     {
         currentTime = totalTime;
+    }
+
+    /// <summary>게임 재시작 시 타이머를 처음 값으로 되돌린다. GameManager.ResetGame()에서 호출.</summary>
+    public void ResetTimer()
+    {
+        currentTime = totalTime;
+        isRunning   = true;
+        UpdateUI();
     }
 
     void Update()

@@ -1,32 +1,61 @@
 using UnityEngine;
 
-public class FogOfWarController : MonoBehaviour
+// 파일명(Fogeffect.cs)과 클래스명 일치 — 이전 클래스명 FogOfWarController에서 변경
+public class Fogeffect : MonoBehaviour
 {
     [SerializeField] private Material fogMaterial;
     [SerializeField] private Transform player;
 
     [Header("시야 범위 (타일 수 기준)")]
     [SerializeField] private float visibleTiles = 32f;
-    [SerializeField] private float gradientTiles = 8f; 
+    [SerializeField] private float gradientTiles = 8f;
 
     private Camera _cam;
 
-    void Start()
+    // 중복 방지 (CameraFollow, PlayerMovement 와 동일한 패턴)
+    private static bool _exists;
+    private bool _isOriginal = false;
+
+    void Awake()
     {
-        _cam = Camera.main;
+        if (_exists)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _exists     = true;
+        _isOriginal = true;
         DontDestroyOnLoad(transform.root.gameObject);
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void Start()
+    {
+        _cam = FindActiveCamera();
     }
 
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene,
                        UnityEngine.SceneManagement.LoadSceneMode mode)
     {
-        _cam = Camera.main;
+        // Camera.main은 씬 전환 후 DontDestroyOnLoad 카메라 태그 미설정 시 null일 수 있어
+        // 활성화된 카메라를 폴백으로 탐색
+        _cam = FindActiveCamera();
+    }
+
+    Camera FindActiveCamera()
+    {
+        Camera cam = Camera.main;
+        if (cam != null) return cam;
+        return FindFirstObjectByType<Camera>();
     }
 
     void OnDestroy()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (_isOriginal)
+        {
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+            _exists = false;
+        }
     }
 
     void Update()

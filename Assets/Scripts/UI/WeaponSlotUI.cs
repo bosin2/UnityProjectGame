@@ -16,7 +16,6 @@ public class WeaponSlotUI : MonoBehaviour
     public Sprite gunSprite;  // currentWeapon == 1
 
     private PlayerCombat  combat;
-    private GameManager   gm;
 
     void Awake()
     {

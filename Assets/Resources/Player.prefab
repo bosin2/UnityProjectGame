@@ -187,7 +187,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.093164, y: -0.13664508}
+  m_Offset: {x: -1.3045073, y: -0.13664508}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -197,7 +197,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.966853, y: 2.0476146}
+  m_Size: {x: 7.3895397, y: 2.0476146}
   m_EdgeRadius: 0
 --- !u!1 &255711182898368932
 GameObject:
@@ -624,6 +624,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2820384748763374845}
   - {fileID: 2109471032023757574}
   - {fileID: 1788918941507501639}
   - {fileID: 8759197042804147810}
@@ -631,7 +632,6 @@ RectTransform:
   - {fileID: 7808269476676123199}
   - {fileID: 2459170003308775884}
   - {fileID: 1770874082482654508}
-  - {fileID: 2820384748763374845}
   m_Father: {fileID: 8821211614590581675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1410,6 +1410,8 @@ GameObject:
   - component: {fileID: 1856593140393776470}
   - component: {fileID: 8818724430099618988}
   - component: {fileID: 4822461018451368976}
+  - component: {fileID: 7973613867525803162}
+  - component: {fileID: 3454590852406899425}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1533,22 +1535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  melee_damage: 20
-  shoot_damage: 30
-  shootBulletSpeed: 20
   footstepInterval: 0.2
-  fadePanel: {fileID: 5780078786623436598}
-  attack_Left: {fileID: 3977495722682436794}
-  attack_Right: {fileID: 4229457297383814932}
-  attack_Front: {fileID: 9128880139780554935}
-  attack_Back: {fileID: 6601754002984075542}
-  knockbackForce: 8
-  knockbackDuration: 0.2
-  hurtDuration: 0.4
-  maxHp: 100
-  bulletPrefab: {fileID: 9102856248879863631, guid: b7e2fa88eab4c994ea9a06a97715c620, type: 3}
-  hitEffectPrefab: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
-  currentWeapon: 0
 --- !u!50 &617694975061380424
 Rigidbody2D:
   serializedVersion: 5
@@ -1688,6 +1675,46 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.7372875, y: 3.3932953}
   m_EdgeRadius: 0
+--- !u!114 &7973613867525803162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085350012289364096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c81df26b6dd0248a2f98df1440d157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  hurtDuration: 0.4
+  fadePanel: {fileID: 5780078786623436598}
+--- !u!114 &3454590852406899425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085350012289364096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f05374b8c076744faf3992e7caede26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeDamage: 20
+  meleeDuration: 0.7
+  gunDamage: 30
+  gunDuration: 0.5
+  bulletPrefab: {fileID: 9102856248879863631, guid: b7e2fa88eab4c994ea9a06a97715c620, type: 3}
+  hitEffectPrefab: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
+  bulletSpeed: 12
+  hitboxUp: {fileID: 6601754002984075542}
+  hitboxDown: {fileID: 9128880139780554935}
+  hitboxLeft: {fileID: 3977495722682436794}
+  hitboxRight: {fileID: 4229457297383814932}
 --- !u!1 &2144376112131715237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3176,6 +3203,7 @@ MonoBehaviour:
   - {fileID: 114822162324209925}
   closeButton: {fileID: 2532747531953561675}
   titleTxt: {fileID: 5356993967087751022}
+  hotbarManager: {fileID: 77291859349492139}
 --- !u!1 &4965514458323381544
 GameObject:
   m_ObjectHideFlags: 0
@@ -4754,7 +4782,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.88819504, y: -0.022773981}
+  m_Offset: {x: 1.2148161, y: -0.022773981}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4764,7 +4792,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 7.057953, y: 1.8198724}
+  m_Size: {x: 7.711195, y: 1.8198724}
   m_EdgeRadius: 0
 --- !u!1 &8872974622238787325
 GameObject:
@@ -5854,6 +5882,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6328409262049133047}
   m_SourcePrefab: {fileID: 100100000, guid: b36e394317abe9344acbcc694170f7d0, type: 3}
+--- !u!114 &77291859349492139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5519214855442409173, guid: b36e394317abe9344acbcc694170f7d0, type: 3}
+  m_PrefabInstance: {fileID: 5587463152179246974}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 840c6ec9db1383947bb13725c4df187c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &583125037503094266 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5016171073846667908, guid: b36e394317abe9344acbcc694170f7d0, type: 3}
