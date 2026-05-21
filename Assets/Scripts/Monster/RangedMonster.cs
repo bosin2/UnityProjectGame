@@ -201,13 +201,6 @@ public class RangedMonster : MonsterBase
 
     // ── 유틸 ──────────────────────────────────────────────────────────
 
-    void SpawnEffect(GameObject prefab, Vector2 pos)
-    {
-        if (prefab == null) return;
-        GameObject fx = Instantiate(prefab, pos, Quaternion.identity);
-        Destroy(fx, 1f);
-    }
-
     void FindPlayerInScene()
     {
         PlayerHealth ph = FindPlayerHealth(); // MonsterBase 유틸

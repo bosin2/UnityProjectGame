@@ -1636,7 +1636,8 @@ MonoBehaviour:
   gunNPC: {fileID: 1870976545}
   weaponSlotUI: {fileID: 1129757776}
   hotbarManager: {fileID: 1129757777}
-  skipIntroTutorial: 0
+  skipIntroTutorial: 1
+  skipWithGun: 0
 --- !u!4 &378217737
 Transform:
   m_ObjectHideFlags: 0
@@ -8724,6 +8725,10 @@ PrefabInstance:
     - target: {fileID: 1273412361890241768, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273412361890241768, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 4856712315672833229, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: m_LocalPosition.x

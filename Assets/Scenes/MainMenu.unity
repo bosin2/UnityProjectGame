@@ -329,6 +329,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 567af1c3460bfb24aa32964829428534, type: 3}
   - name: room
     clip: {fileID: 8300000, guid: 74323d6c810f97e42889c06dbc4a084a, type: 3}
+  - name: stoker
+    clip: {fileID: 8300000, guid: 49628ef9fbf9590479692e2a477b95cc, type: 3}
   sfxClips:
   - name: click
     clip: {fileID: 8300000, guid: ea82a286792f8e34a972c6ca5d7d4051, type: 3}

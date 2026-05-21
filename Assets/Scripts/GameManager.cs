@@ -78,5 +78,6 @@ public class GameManager : MonoBehaviour
         currentWeapon       = "pipe";
         flags.Clear();
         phaseIndices.Clear();
+        TimerManager.Instance?.ResetTimer();
     }
 }
