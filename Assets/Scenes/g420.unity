@@ -344,8 +344,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.9, y: -4.2000003}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -15.1, y: -4.4}
+  m_SizeDelta: {x: 79.5099, y: 82.7382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &218681968
 CanvasRenderer:
@@ -374,6 +374,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -457,6 +465,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (13)
@@ -539,6 +555,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (22)
@@ -620,6 +644,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -871,8 +903,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -904,6 +936,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -1040,8 +1080,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1926484233
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 681492906305841114, guid: cead9cb3781e20446ae1b746f1087627, type: 3}
   m_Color: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
@@ -1398,6 +1438,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (9)
@@ -1533,8 +1581,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -1620,8 +1668,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -1653,6 +1701,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -1980,6 +2036,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (20)
@@ -2061,6 +2125,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -2197,8 +2269,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -2318,8 +2390,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -2351,6 +2423,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -2487,8 +2567,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4671004205695235206, guid: eb64ca861847e83488338f11e28bb6c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2520,6 +2600,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -2889,6 +2977,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (16)
@@ -3024,8 +3120,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -3111,8 +3207,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1747727573
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5007909458659316063, guid: d5cc6111c59d0404683ddc2c89bc5e67, type: 3}
   m_Color: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
@@ -3232,6 +3328,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (8)
@@ -3313,6 +3417,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
@@ -3396,6 +3508,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.78616345
       objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
+      objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name
       value: G420_chair_0 (19)
@@ -3477,6 +3597,14 @@ PrefabInstance:
     - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Color.r
       value: 0.78616345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405423989998986022, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1747727573
       objectReference: {fileID: 0}
     - target: {fileID: 7826932832488938167, guid: 44541eb2bbd39284cac5e28f06712fc1, type: 3}
       propertyPath: m_Name

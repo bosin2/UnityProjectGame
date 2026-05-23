@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d5cc6111c59d0404683ddc2c89bc5e67
+guid: 647ce56751fa60c45a5dc8a3ffc08201
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5007909458659316063
-    second: G420_chair_0
+      213: -8737267722336534887
+    second: computerdeskwhite2 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 36
+  spritePixelsToUnits: 76
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: G420_chair_0
+      name: computerdeskwhite2 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 147
-        height: 197
+        width: 263
+        height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f5115be9e1baf7540800000000000000
-      internalID: 5007909458659316063
+      spriteID: 99ef4ae6c4dfeb680800000000000000
+      internalID: -8737267722336534887
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      G420_chair_0: 5007909458659316063
+      computerdeskwhite2 1_0: -8737267722336534887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

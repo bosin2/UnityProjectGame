@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: computer_desk_S_0
+  m_Name: computerdeskwhite2_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -4612602232212114896, guid: b95e62b7a6cf154449a36e09123027a5, type: 3}
+  m_Sprite: {fileID: -6743589822881326190, guid: 23e310760e8e9c8478599b863efa8ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
