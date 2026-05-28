@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 173898297}
   - component: {fileID: 173898299}
   - component: {fileID: 173898298}
+  - component: {fileID: 173898300}
   m_Layer: 0
   m_Name: Door_Right_Corrider
   m_TagString: Untagged
@@ -414,7 +415,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173898296}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
   m_Name: 
@@ -474,6 +475,73 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 12.349913, y: 1.9291935}
   m_EdgeRadius: 0
+--- !u!114 &173898300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173898296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableId: 
+  phases:
+  - dialogueLines:
+    - "\uC5EC\uAE34 \uC7A0\uACA8 \uC788\uC73C\uB2C8 \uC6B0\uC9C4\uC774\uAC00 \uC5EC\uAE30\uB85C
+      \uAC00\uC9C0 \uBABB\uD588\uC744\uAC70\uC57C."
+    - "\uC77C\uB2E8 \uC6B0\uC9C4\uC774\uB97C \uCC3E\uC790."
+    requiredFlag: 
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueLines:
+    - "\uC6B0\uC9C4\uC774\uAC00 420 \uC5F4\uC1E0\uB3C4 \uC8FC\uC5C8\uC73C\uB2C8 420\uBD80\uD130
+      \uAC00\uBCF4\uC790. "
+    - "420\uC5D0 \uBB34\uC5B8\uAC00\uAC00 \uC788\uC744\uC9C0\uB3C4 \uBAB0\uB77C."
+    requiredFlag: GunNPCDead
+    hintMessage: 
+    onComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 173898298}
+          m_TargetAssemblyTypeName: DoorTrigger, Assembly-CSharp
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    setFlag: 
+    hasChoice: 0
+    choiceQuestion: 
+    yesLines: []
+    noLines: []
+    onChoiceYes:
+      m_PersistentCalls:
+        m_Calls: []
+    onChoiceNo:
+      m_PersistentCalls:
+        m_Calls: []
+  currentPhaseIndex: 0
 --- !u!1 &192706848
 GameObject:
   m_ObjectHideFlags: 0
