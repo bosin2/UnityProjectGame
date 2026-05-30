@@ -5017,7 +5017,7 @@ MonoBehaviour:
   targetSceneName: Stair
   spawnPosition: {x: 19, y: -14}
   spawnDirection: {x: 0, y: 1}
-  requiredKey: {fileID: 0}
+  requiredKey: {fileID: 11400000, guid: fda5f4204d0f8b7428824acb612dfa00, type: 2}
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: 
@@ -56575,11 +56575,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7442665677739967831, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -80.7
+      value: -81.7
       objectReference: {fileID: 0}
     - target: {fileID: 7442665677739967831, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -22.9
+      value: -21.9
       objectReference: {fileID: 0}
     - target: {fileID: 7442665677739967831, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: m_LocalPosition.z
