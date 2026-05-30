@@ -26,6 +26,16 @@ public class GameManager : MonoBehaviour
     public bool hasRightCorridorKey = false;
     public bool gunEventDone        = false;
 
+    [Header("===== Ending Branch Flags =====")]
+    [Tooltip("김우진이 죽었는지")]
+    public bool KKilled = false;
+
+    [Tooltip("정범석이 죽었는지")]
+    public bool JKilled = false;
+
+    [Tooltip("박윤하가 죽었는지")]
+    public bool PKilled = false;
+
     // 이벤트 진행 플래그 집합 ("introDone", "tutorialDone", "ClockEnd" 등)
     private HashSet<string>        flags        = new HashSet<string>();
     // Interactable phase 인덱스 씬 간 유지용
@@ -59,7 +69,37 @@ public class GameManager : MonoBehaviour
 
     public void SetFlag(string flag)        => flags.Add(flag);
     public bool HasFlag(string flag)        => flags.Contains(flag);
+    // ===== 엔딩 분기용 헬퍼 메서드 =====
 
+    /// <summary>살아있는 NPC/몹의 수 (0~3)</summary>
+    public int GetAliveCount()
+    {
+        int alive = 0;
+        if (!KKilled) alive++;
+        if (!JKilled) alive++;
+        if (!PKilled) alive++;
+        return alive;
+    }
+
+    /// <summary>true면 교수님 동행, false면 비동행</summary>
+    public bool IsCompanionEnding()
+    {
+        return GetAliveCount() <= 1;
+    }
+
+    /// <summary>
+    /// 8가지 대사 조합을 0~7 인덱스로 매핑.
+    /// 비트0=우진, 비트1=정범석, 비트2=박윤하 (1이면 죽음)
+    /// 0: 다 살음 / 7: 다 죽음
+    /// </summary>
+    public int GetDialogueIndex()
+    {
+        int code = 0;
+        if (KKilled) code |= 1;
+        if (JKilled) code |= 2;
+        if (PKilled) code |= 4;
+        return code;
+    }
     // ── Phase 인덱스 관리 ─────────────────────────────────────────────
 
     public void SetPhaseIndex(string id, int index) => phaseIndices[id] = index;
@@ -74,6 +114,9 @@ public class GameManager : MonoBehaviour
         hasPipe             = false;
         hasRightCorridorKey = false;
         gunEventDone        = false;
+        KKilled = false;
+        JKilled = false;
+        PKilled = false;
         stage               = 0;
         currentWeapon       = "pipe";
         flags.Clear();

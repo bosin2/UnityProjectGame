@@ -126,9 +126,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab5a4e8f8ca23442a4e5b5f02e8441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killFlag: 2
+  maxHp: 60
+  hpBarPrefab: {fileID: 0}
+  hpBarOffset: {x: 0, y: 1}
+  knockbackForce: 5
   speed: 5.5
-  recordDistance: 0.3
   arriveDistance: 0.05
+  gridCellSize: 0.5
+  obstacleCheckRadius: 0.2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  pathUpdateInterval: 0.3
+  showPath: 1
+  pathColor: {r: 0, g: 1, b: 1, a: 1}
+  nodeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  nodeRadius: 0.08
 --- !u!114 &7479171238278952070
 MonoBehaviour:
   m_ObjectHideFlags: 0

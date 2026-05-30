@@ -1,7 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+public enum EndingKillFlag
+{
+    None,
+    K,
+    J,
+    P
+}
 /// <summary>
 /// 모든 몬스터의 공통 기능을 제공하는 추상 기반 클래스.
 /// MonsterAI, RangedMonster, StalkerMonster 등이 이 클래스를 상속한다.
@@ -11,6 +17,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class MonsterBase : MonoBehaviour
 {
+    [Header("엔딩 분기")]
+    [Tooltip("이 몬스터가 죽으면 어떤 플래그를 켤지 선택. 일반 몹은 None")]
+    public EndingKillFlag killFlag = EndingKillFlag.None;
+
     [Header("HP 설정")]
     public int maxHp = 60;
 
@@ -81,6 +91,22 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual IEnumerator DieRoutine()
     {
         isDead = true;
+
+        // ── 엔딩 분기 플래그 설정 ──
+        if (GameManager.Instance != null)   // ← GameManager로 변경!
+        {
+            switch (killFlag)
+            {
+                case EndingKillFlag.J:
+                    GameManager.Instance.JKilled = true;   // ← GameManager로 변경!
+                    Debug.Log("[Ending] 정범석 사망 플래그 ON");
+                    break;
+                case EndingKillFlag.P:
+                    GameManager.Instance.PKilled = true;   // ← GameManager로 변경!
+                    Debug.Log("[Ending] 박윤하 사망 플래그 ON");
+                    break;
+            }
+        }
         rb.linearVelocity = Vector2.zero;
 
         foreach (Collider2D col in GetComponents<Collider2D>())

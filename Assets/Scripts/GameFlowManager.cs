@@ -370,6 +370,7 @@ public class GameFlowManager : MonoBehaviour
 
         GameManager.Instance?.SetFlag("gunNPCDead");
         _gunShotPlaying = false;
+        GameManager.Instance.KKilled = true;
     }
 
     // ── 내부 유틸 ─────────────────────────────────────────────────────

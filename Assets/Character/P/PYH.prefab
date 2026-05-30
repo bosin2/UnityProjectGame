@@ -152,11 +152,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1133eff7aa026e2458092d1dde78b4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  warningCirclePrefab: {fileID: 0}
-  impactPrefab: {fileID: 0}
+  killFlag: 3
+  maxHp: 60
+  hpBarPrefab: {fileID: 0}
+  hpBarOffset: {x: 0, y: 1}
+  knockbackForce: 5
   minCooldown: 2
   maxCooldown: 5
+  warningCirclePrefab: {fileID: 0}
   warningDuration: 1
   impactRadius: 1.2
   damage: 10
@@ -165,6 +168,11 @@ MonoBehaviour:
   fallDuration: 0.35
   fleeRange: 25
   fleeSpeed: 15
+  teleportEffectPrefab: {fileID: 0}
+  teleportMinDistance: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1024

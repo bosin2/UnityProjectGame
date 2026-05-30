@@ -56514,6 +56514,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: killFlag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: arriveDistance
       value: 0.2
       objectReference: {fileID: 0}

@@ -1763,6 +1763,9 @@ MonoBehaviour:
   currentWeapon: pipe
   hasRightCorridorKey: 0
   gunEventDone: 0
+  KKilled: 0
+  JKilled: 0
+  PKilled: 0
 --- !u!4 &536080792
 Transform:
   m_ObjectHideFlags: 0
@@ -9245,7 +9248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[0].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9262,7 +9265,7 @@ PrefabInstance:
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 378217736}
+      objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -9289,7 +9292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnGunNPCDone
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[0].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -9305,7 +9308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameFlowManager, Assembly-CSharp
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[1].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -9317,7 +9320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693126212917706384, guid: e687aeaa143f7a644a8eb5c2d83bf004, type: 3}
       propertyPath: phases.Array.data[2].onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
