@@ -12,6 +12,10 @@ public class StalkerMonster : MonsterBase
     public float speed          = 5.5f;
     public float arriveDistance = 0.2f;
 
+    [Header("접촉 데미지")]
+    public int   contactDamage         = 15;
+    public float contactDamageInterval = 1.5f;
+
     [Header("A* 경로탐색")]
     public float     gridCellSize        = 0.5f;
     public float     obstacleCheckRadius = 0.2f;
@@ -25,7 +29,9 @@ public class StalkerMonster : MonsterBase
     public float nodeRadius = 0.08f;
 
     // ── 내부 상태 ──────────────────────────────────────────────────────
+    private float        contactCooldown = 0f;
     private Transform    playerTransform;
+    private PlayerHealth playerHealth;
     private List<Vector2> currentPath  = new List<Vector2>();
     private int          pathIndex     = 0;
     private float        pathTimer     = 0f;
@@ -88,7 +94,20 @@ public class StalkerMonster : MonsterBase
 
     void Update()
     {
+        if (isDead) return;
+        if (contactCooldown > 0) contactCooldown -= Time.deltaTime;
+
         if (playerTransform == null) { FindPlayerInScene(); return; }
+
+        // 거리 기반 접촉 데미지 (MonsterAI attackRange 패턴 동일)
+        float dist = Vector2.Distance(transform.position, playerTransform.position);
+        if (dist <= arriveDistance + 0.3f && contactCooldown <= 0f && playerHealth != null)
+        {
+            Vector2 knockDir = (playerTransform.position - transform.position).normalized;
+            playerHealth.TakeHit(knockDir);
+            playerHealth.TakeDamage(contactDamage);
+            contactCooldown = contactDamageInterval;
+        }
 
         pathTimer -= Time.deltaTime;
         if (pathTimer <= 0f)
@@ -271,7 +290,9 @@ public class StalkerMonster : MonsterBase
         if (ph != null)
         {
             playerTransform = ph.transform;
+            playerHealth    = ph;
             currentPath.Clear();
         }
     }
+
 }
