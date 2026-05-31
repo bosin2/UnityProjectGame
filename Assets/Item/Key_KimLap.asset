@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e6ed20400687a429fe4b19f8e6cbc2, type: 3}
   m_Name: Key_KimLap
   m_EditorClassIdentifier: 
-  itemName: "G420\uC758 \uCE74\uB4DC\uD0A4"
-  description: "G420\uC744 \uC5F4 \uC218 \uC788\uB2E4"
+  itemName: "\uAE40\uAD50\uC218\uB2D8 \uC5F0\uAD6C\uC2E4\uC758 \uCE74\uB4DC\uD0A4"
+  description: "\uAE40\uAD50\uC218\uB2D8 \uC5F0\uAD6C\uC2E4\uC744 \uC5F4 \uC218 \uC788\uB2E4"
   icon: {fileID: 6237339891934673301, guid: cddc2dfb56f806b4ebad63219145d533, type: 3}
   type: 1
   healAmount: 0
   defenseAmount: 0
   speedAmount: 0
   speedDuration: 0
-  keyId: G420
+  keyId: KimLap

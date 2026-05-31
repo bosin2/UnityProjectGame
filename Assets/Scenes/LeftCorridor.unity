@@ -253,6 +253,7 @@ Transform:
   - {fileID: 880790671}
   - {fileID: 1127587477}
   - {fileID: 1669495288}
+  - {fileID: 1044724725}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
@@ -565,7 +566,6 @@ Transform:
   - {fileID: 756664322}
   - {fileID: 925173464}
   - {fileID: 616880988}
-  - {fileID: 1044724725}
   - {fileID: 1070006641}
   - {fileID: 1150203098}
   - {fileID: 793162672}
@@ -5294,12 +5294,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044724724}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: 4.4, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -13.826317, y: 9.404091, z: -9.606081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 563194903}
+  m_Father: {fileID: 417971046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1044724727
 BoxCollider2D:
@@ -5365,9 +5365,9 @@ MonoBehaviour:
   requiredKey: {fileID: 0}
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
-  unlockFlag: 
+  unlockFlag: G421Open
   isBlocked: 1
-  blockedMessage: "\uB9C9\uD600\uC788\uB294\uAC83 \uAC19\uB2E4."
+  blockedMessage: "\uB4B7\uBB38\uC740 \uB9C9\uD600\uC788\uB294 \uAC83 \uAC19\uB2E4."
 --- !u!1 &1045200604
 GameObject:
   m_ObjectHideFlags: 0
@@ -11471,8 +11471,8 @@ MonoBehaviour:
   targetSceneName: g421
   spawnPosition: {x: -9, y: 18}
   spawnDirection: {x: 1, y: 0}
-  requiredKey: {fileID: 11400000, guid: 0299024e5803eaf469564be09594da0c, type: 2}
-  consumeKey: 1
+  requiredKey: {fileID: 0}
+  consumeKey: 0
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: G421Open
   isBlocked: 0

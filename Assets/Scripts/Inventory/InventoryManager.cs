@@ -175,6 +175,7 @@ public class InventoryManager : MonoBehaviour
         RefreshDescription();
 
         ItemData item = slotUIs[idx].GetItem();
+        if (item.type == ItemType.Key) return;
 
         if (currentCategory == Category.Equip)
         {

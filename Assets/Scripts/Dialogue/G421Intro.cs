@@ -24,6 +24,10 @@ public class G421IntroManager : MonoBehaviour
     [Header("개발용 스킵")]
     [SerializeField] private bool skipIntro = false;
 
+    [Header("플레이 UI")]
+    [SerializeField] private WeaponSlotUI weaponSlotUI;
+    [SerializeField] private HotbarManager hotbarManager;
+
     private int currentLine = 0;
     private bool isTyping = false;
     private bool canClick = false;
@@ -33,6 +37,9 @@ public class G421IntroManager : MonoBehaviour
 
     void Start()
     {
+        if (weaponSlotUI == null) weaponSlotUI = FindFirstObjectByType<WeaponSlotUI>();
+        if (hotbarManager == null) hotbarManager = FindFirstObjectByType<HotbarManager>();
+
         // 이미 본 적 있으면 스킵
         if (GameManager.Instance != null && GameManager.Instance.HasFlag("g421IntroDone"))
         {
@@ -52,6 +59,8 @@ public class G421IntroManager : MonoBehaviour
         introRoot?.SetActive(true);
         SetPlayerControl(false);
         UICanvas.Instance?.HideUI();
+        weaponSlotUI?.Hide();
+        hotbarManager?.Hide();
 
         if (cutscene != null) cutscene.color = new Color(1, 1, 1, 0);
         if (clickHint != null) clickHint.SetActive(false);
@@ -71,10 +80,11 @@ public class G421IntroManager : MonoBehaviour
             if (isTyping)
             {
                 StopAllCoroutines();
+                ApplyLineImage(lines[currentLine]);
                 dialogueText.text = lines[currentLine].text;
                 isTyping = false;
                 canClick = true;
-                clickHint.SetActive(true);
+                clickHint?.SetActive(true);
             }
             else if (canClick)
             {
@@ -86,10 +96,8 @@ public class G421IntroManager : MonoBehaviour
     void SetPlayerControl(bool enabled)
     {
         GameObject player = GameObject.FindWithTag("Player");
-        player?.GetComponent<PlayerMovement>()?.enabled.Equals(enabled);
-        // 실제로는 아래처럼:
-        // var mov = player?.GetComponent<PlayerMovement>();
-        // if (mov != null) mov.enabled = enabled;
+        var movement = player?.GetComponent<PlayerMovement>();
+        if (movement != null) movement.enabled = enabled;
     }
 
     IEnumerator FadeIn()
@@ -105,12 +113,12 @@ public class G421IntroManager : MonoBehaviour
     {
         isTyping = true;
         canClick = false;
-        clickHint.SetActive(false);
+        clickHint?.SetActive(false);
         dialogueText.text = "";
 
-        if (line.clearImage)
+        if (line.clearImage && cutscene != null)
             yield return StartCoroutine(FadeImage(cutscene, 0f));
-        else if (line.image != null)
+        else if (line.image != null && cutscene != null)
         {
             yield return StartCoroutine(FadeImage(cutscene, 0f));
             cutscene.sprite = line.image;
@@ -125,11 +133,13 @@ public class G421IntroManager : MonoBehaviour
 
         isTyping = false;
         canClick = true;
-        clickHint.SetActive(true);
+        clickHint?.SetActive(true);
     }
 
     IEnumerator FadeImage(Image img, float targetAlpha)
     {
+        if (img == null) yield break;
+
         float start = img.color.a;
         float t = 0f;
         while (t < 1f)
@@ -138,6 +148,23 @@ public class G421IntroManager : MonoBehaviour
             img.color = new Color(1, 1, 1, Mathf.Lerp(start, targetAlpha, t));
             yield return null;
         }
+        img.color = new Color(1, 1, 1, targetAlpha);
+    }
+
+    void ApplyLineImage(DialogueLine line)
+    {
+        if (cutscene == null) return;
+
+        if (line.clearImage)
+        {
+            cutscene.color = new Color(1, 1, 1, 0);
+            return;
+        }
+
+        if (line.image == null) return;
+
+        cutscene.sprite = line.image;
+        cutscene.color = Color.white;
     }
 
     void NextLine()
@@ -155,7 +182,7 @@ public class G421IntroManager : MonoBehaviour
     {
         canClick = false;
         introActive = false;
-        clickHint.SetActive(false);
+        clickHint?.SetActive(false);
 
         // 페이드 아웃
         float t = 0f;
@@ -170,6 +197,8 @@ public class G421IntroManager : MonoBehaviour
 
         GameManager.Instance?.SetFlag("g421IntroDone");
         UICanvas.Instance?.ShowUI();
+        weaponSlotUI?.Show();
+        hotbarManager?.Show();
         SetPlayerControl(true);
     }
 }
