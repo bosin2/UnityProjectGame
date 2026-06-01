@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class StalkerMonster : MonsterBase
 {
+    protected override bool PersistsStateAcrossScenes => true;
+
     [Header("추적")]
     public float speed          = 5.5f;
     public float arriveDistance = 0.2f;
@@ -122,8 +124,13 @@ public class StalkerMonster : MonsterBase
 
     void FixedUpdate()
     {
-        if (isDead || playerTransform == null
-            || currentPath.Count == 0 || pathIndex >= currentPath.Count)
+        if (isDead)
+        {
+            anim.SetBool("IsWalking", false);
+            return;
+        }
+
+        if (playerTransform == null || currentPath.Count == 0 || pathIndex >= currentPath.Count)
         {
             rb.linearVelocity = Vector2.zero;
             anim.SetBool("IsWalking", false);

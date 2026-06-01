@@ -52064,21 +52064,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: hpBarPrefab
+      value: 
+      objectReference: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: impactPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: takesMeleeDamage
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: persistentMonsterId
+      value: PYH
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: warningCirclePrefab
       value: 
       objectReference: {fileID: 1779227377905096553, guid: 42005be410aa3344e8ff75f303e288ab, type: 3}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: corpseInteractableId
+      value: PYHDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: teleportEffectPrefab
       value: 
       objectReference: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: 'corpseDialogueLines.Array.data[0]'
+      value: "\uC724\uD558\uB2D8\uC758 \uC2DC\uCCB4\uB2E4.."
+      objectReference: {fileID: 0}
     - target: {fileID: 4738202255884024395, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: fleeRange
       value: 25

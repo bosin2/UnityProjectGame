@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class RangedMonster : MonsterBase
 {
+    protected override bool PersistsStateAcrossScenes => true;
+
     [Header("공격 주기")]
     public float minCooldown = 2f;
     public float maxCooldown = 5f;
@@ -125,9 +127,10 @@ public class RangedMonster : MonsterBase
 
     IEnumerator AttackLoop()
     {
-        while (true)
+        while (!isDead)
         {
             yield return new WaitForSeconds(Random.Range(minCooldown, maxCooldown));
+            if (isDead) yield break;
             if (playerTransform == null) continue;
             yield return StartCoroutine(DoAttack());
         }
@@ -135,6 +138,8 @@ public class RangedMonster : MonsterBase
 
     IEnumerator DoAttack()
     {
+        if (isDead) yield break;
+
         isAttacking = true;
         StopMoving();
 
@@ -158,6 +163,11 @@ public class RangedMonster : MonsterBase
         }
 
         yield return new WaitForSeconds(warningDuration);
+        if (isDead)
+        {
+            if (warning != null) Destroy(warning);
+            yield break;
+        }
         if (warning != null) Destroy(warning);
 
         // 낙하 연출
@@ -169,6 +179,11 @@ public class RangedMonster : MonsterBase
             float elapsed = 0f;
             while (elapsed < fallDuration)
             {
+                if (isDead)
+                {
+                    if (fallingObj != null) Destroy(fallingObj);
+                    yield break;
+                }
                 elapsed += Time.deltaTime;
                 if (fallingObj == null) break;
                 float t = elapsed / fallDuration;
@@ -188,6 +203,8 @@ public class RangedMonster : MonsterBase
         }
 
         // 피격 판정
+        if (isDead) yield break;
+
         Collider2D hit = Physics2D.OverlapCircle(targetPos, impactRadius, playerLayer);
         if (hit != null)
         {

@@ -26,36 +26,57 @@ public abstract class MonsterBase : MonoBehaviour
 
     [Header("HP바 (선택)")]
     public GameObject hpBarPrefab;     // 월드 공간 HP바 프리팹 (없으면 생략)
-    public Vector2    hpBarOffset = new Vector2(0f, 1f);
+    public Vector2 hpBarOffset = new Vector2(0f, 1f);
 
     [Header("넉백")]
     public float knockbackForce = 5f;
 
-    // ── 공용 필드 (자식 클래스에서 접근) ──────────────────────────────
-    protected int            currentHp;
-    protected bool           isDead = false;
+    [Header("Damage Filters")]
+    [SerializeField] private bool takesMeleeDamage = true;
 
-    protected Rigidbody2D    rb;
-    protected Animator       anim;
+    [Header("Corpse Interaction")]
+    [SerializeField] private bool leaveCorpse = true;
+    [SerializeField] private bool corpseInteractable = true;
+    [SerializeField] private string corpseInteractableId = "";
+    [SerializeField] private string[] corpseDialogueLines = { "..." };
+
+    [Header("Scene Persistence")]
+    [SerializeField] private string persistentMonsterId = "";
+
+    // ── 공용 필드 (자식 클래스에서 접근) ──────────────────────────────
+    protected int currentHp;
+    protected bool isDead = false;
+
+    protected Rigidbody2D rb;
+    protected Animator anim;
     protected SpriteRenderer sr;
 
     // HP바 인스턴스 (월드 공간 슬라이더 등)
-    private GameObject       hpBarInstance;
+    private GameObject hpBarInstance;
     private Image hpFillImage;
+
+    protected virtual bool PersistsStateAcrossScenes => false;
 
     // ── 초기화 ──────────────────────────────────────────────────────
 
     protected virtual void Awake()
     {
-        rb   = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>() ?? GetComponentInChildren<Animator>();
-        sr   = GetComponent<SpriteRenderer>() ?? GetComponentInChildren<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>() ?? GetComponentInChildren<SpriteRenderer>();
+        EnsureMonsterHitbox();
     }
 
     protected virtual void Start()
     {
         currentHp = maxHp;
         SpawnHPBar();
+        RestorePersistentState();
+    }
+
+    protected virtual void OnDisable()
+    {
+        SavePersistentState();
     }
 
     // ── 피격 / 사망 ───────────────────────────────────────────────────
@@ -67,10 +88,12 @@ public abstract class MonsterBase : MonoBehaviour
 
         currentHp -= amount;
         UpdateHPBar();
+        SavePersistentState();
 
         if (currentHp <= 0)
         {
             currentHp = 0;
+            SavePersistentState();
             StartCoroutine(DieRoutine());
         }
         else
@@ -88,9 +111,16 @@ public abstract class MonsterBase : MonoBehaviour
         }
     }
 
+    public virtual void TakeMeleeDamage(int amount)
+    {
+        if (!takesMeleeDamage) return;
+        TakeDamage(amount);
+    }
+
     protected virtual IEnumerator DieRoutine()
     {
         isDead = true;
+        SavePersistentState();
 
         // ── 엔딩 분기 플래그 설정 ──
         if (GameManager.Instance != null)   // ← GameManager로 변경!
@@ -107,12 +137,7 @@ public abstract class MonsterBase : MonoBehaviour
                     break;
             }
         }
-        rb.linearVelocity = Vector2.zero;
-
-        foreach (Collider2D col in GetComponents<Collider2D>())
-            col.enabled = false;
-        foreach (Collider2D col in GetComponentsInChildren<Collider2D>())
-            col.enabled = false;
+        PrepareForDeathAnimation();
 
         if (hpBarInstance != null)
             Destroy(hpBarInstance);
@@ -143,10 +168,163 @@ public abstract class MonsterBase : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        if (leaveCorpse)
+            BecomeCorpse();
+        else
+            Destroy(gameObject);
     }
 
     // ── HP바 ──────────────────────────────────────────────────────────
+
+    protected virtual void PrepareForDeathAnimation()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        foreach (Collider2D col in GetComponentsInChildren<Collider2D>())
+            col.enabled = false;
+
+        foreach (MonsterHitbox hitbox in GetComponentsInChildren<MonsterHitbox>())
+            hitbox.enabled = false;
+
+        foreach (LineRenderer line in GetComponentsInChildren<LineRenderer>())
+            line.enabled = false;
+    }
+
+    protected virtual void BecomeCorpse()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.simulated = true;
+
+        if (anim != null)
+            anim.speed = 0f;
+
+        if (corpseInteractable)
+            SetupCorpseInteractable();
+
+        SavePersistentState();
+    }
+
+    void RestorePersistentState()
+    {
+        if (!PersistsStateAcrossScenes || GameManager.Instance == null) return;
+        if (!GameManager.Instance.TryGetMonsterState(GetPersistentStateId(), out GameManager.MonsterState state)) return;
+
+        transform.position = state.position;
+        currentHp = Mathf.Clamp(state.hp, 0, maxHp);
+        UpdateHPBar();
+
+        if (state.isDead || currentHp <= 0)
+        {
+            currentHp = 0;
+            StartCoroutine(RestoreCorpseRoutine());
+        }
+    }
+
+    IEnumerator RestoreCorpseRoutine()
+    {
+        isDead = true;
+        SavePersistentState();
+        PrepareForDeathAnimation();
+
+        if (hpBarInstance != null)
+            Destroy(hpBarInstance);
+
+        if (anim != null)
+        {
+            anim.SetBool("IsDie", true);
+            yield return null;
+            anim.Play("Die", 0, 1f);
+            anim.Update(0f);
+        }
+
+        if (leaveCorpse)
+            BecomeCorpse();
+        else
+            gameObject.SetActive(false);
+    }
+
+    void SavePersistentState()
+    {
+        if (!PersistsStateAcrossScenes || GameManager.Instance == null) return;
+
+        GameManager.Instance.SaveMonsterState(
+            GetPersistentStateId(),
+            transform.position,
+            currentHp,
+            isDead);
+    }
+
+    string GetPersistentStateId()
+    {
+        if (!string.IsNullOrEmpty(persistentMonsterId))
+            return persistentMonsterId;
+
+        return $"{gameObject.scene.name}_{gameObject.name}";
+    }
+
+    void SetupCorpseInteractable()
+    {
+        Collider2D corpseCollider = GetComponent<Collider2D>();
+        if (corpseCollider == null)
+            corpseCollider = gameObject.AddComponent<CircleCollider2D>();
+
+        corpseCollider.enabled = true;
+        corpseCollider.isTrigger = false;
+
+        GameObject triggerObject = GetOrCreateCorpseInteractTrigger(corpseCollider);
+        Interactable interactable = triggerObject.GetComponent<Interactable>();
+        if (interactable == null)
+            interactable = triggerObject.AddComponent<Interactable>();
+
+        if (string.IsNullOrEmpty(interactable.interactableId))
+        {
+            interactable.interactableId = string.IsNullOrEmpty(corpseInteractableId)
+                ? $"{gameObject.scene.name}_{gameObject.name}_corpse"
+                : corpseInteractableId;
+        }
+
+        if (interactable.phases == null || interactable.phases.Length == 0)
+        {
+            interactable.phases = new DialoguePhase[]
+            {
+                new DialoguePhase
+                {
+                    dialogueLines = corpseDialogueLines
+                }
+            };
+        }
+    }
+
+    GameObject GetOrCreateCorpseInteractTrigger(Collider2D corpseCollider)
+    {
+        const string triggerName = "CorpseInteractTrigger";
+
+        Transform existing = transform.Find(triggerName);
+        GameObject triggerObject = existing != null
+            ? existing.gameObject
+            : new GameObject(triggerName);
+
+        triggerObject.transform.SetParent(transform, false);
+        triggerObject.layer = gameObject.layer;
+
+        CircleCollider2D trigger = triggerObject.GetComponent<CircleCollider2D>();
+        if (trigger == null)
+            trigger = triggerObject.AddComponent<CircleCollider2D>();
+
+        Bounds bounds = corpseCollider.bounds;
+        Vector3 localCenter = transform.InverseTransformPoint(bounds.center);
+        float radius = Mathf.Max(bounds.size.x, bounds.size.y) * 0.5f;
+
+        trigger.enabled = true;
+        trigger.isTrigger = true;
+        trigger.offset = localCenter;
+        trigger.radius = Mathf.Max(radius, 0.75f);
+
+        return triggerObject;
+    }
 
     void SpawnHPBar()
     {
@@ -203,6 +381,14 @@ public abstract class MonsterBase : MonoBehaviour
     }
 
     /// <summary>이펙트 프리팹을 지정 위치에 잠깐 스폰 (자동 제거)</summary>
+    void EnsureMonsterHitbox()
+    {
+        if (GetComponentInChildren<MonsterHitbox>() != null) return;
+        if (GetComponent<Collider2D>() == null) return;
+
+        gameObject.AddComponent<MonsterHitbox>();
+    }
+
     protected void SpawnEffect(GameObject prefab, Vector2 pos, float lifetime = 1f)
     {
         if (prefab == null) return;

@@ -56518,6 +56518,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: hpBarPrefab
+      value: 
+      objectReference: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: arriveDistance
       value: 0.2
       objectReference: {fileID: 0}
@@ -56526,12 +56530,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: takesMeleeDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: obstacleMask.m_Bits
       value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: persistentMonsterId
+      value: JBS
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: corpseInteractableId
+      value: JBSDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: obstacleLayer.m_Bits
       value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191324521995266822, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
+      propertyPath: 'corpseDialogueLines.Array.data[0]'
+      value: "\uBC94\uC11D\uC774\uC758 \uC2DC\uCCB4\uB2E4.."
       objectReference: {fileID: 0}
     - target: {fileID: 2531968298916266086, guid: 02b99e17d112d3944aa0737dca38b27e, type: 3}
       propertyPath: m_Size.x

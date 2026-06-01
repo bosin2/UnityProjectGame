@@ -27,6 +27,6 @@ public class MonsterHitbox : MonoBehaviour
         // 공격 콜라이더의 부모에서 PlayerCombat을 찾아 데미지 수치를 가져옴
         PlayerCombat combat = other.GetComponentInParent<PlayerCombat>();
         if (combat != null && monster != null)
-            monster.TakeDamage(combat.meleeDamage);
+            monster.TakeMeleeDamage(combat.meleeDamage);
     }
 }

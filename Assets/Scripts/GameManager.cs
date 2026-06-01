@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public struct MonsterState
+    {
+        public Vector3 position;
+        public int hp;
+        public bool isDead;
+    }
+
     [Header("무기 소지 여부")]
     public bool hasGun  = false;
     public bool hasPipe = false;
@@ -40,6 +47,7 @@ public class GameManager : MonoBehaviour
     private HashSet<string>        flags        = new HashSet<string>();
     // Interactable phase 인덱스 씬 간 유지용
     private Dictionary<string,int> phaseIndices = new Dictionary<string,int>();
+    private Dictionary<string,MonsterState> monsterStates = new Dictionary<string,MonsterState>();
 
     void Awake()
     {
@@ -108,6 +116,29 @@ public class GameManager : MonoBehaviour
 
     // ── 게임 리셋 ─────────────────────────────────────────────────────
 
+    public void SaveMonsterState(string id, Vector3 position, int hp, bool isDead)
+    {
+        if (string.IsNullOrEmpty(id)) return;
+
+        monsterStates[id] = new MonsterState
+        {
+            position = position,
+            hp = hp,
+            isDead = isDead
+        };
+    }
+
+    public bool TryGetMonsterState(string id, out MonsterState state)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            state = default;
+            return false;
+        }
+
+        return monsterStates.TryGetValue(id, out state);
+    }
+
     public void ResetGame()
     {
         hasGun              = false;
@@ -121,6 +152,7 @@ public class GameManager : MonoBehaviour
         currentWeapon       = "pipe";
         flags.Clear();
         phaseIndices.Clear();
+        monsterStates.Clear();
         TimerManager.Instance?.ResetTimer();
     }
 }
