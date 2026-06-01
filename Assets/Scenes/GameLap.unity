@@ -1667,8 +1667,8 @@ MonoBehaviour:
   gunNPC: {fileID: 1870976545}
   weaponSlotUI: {fileID: 1129757776}
   hotbarManager: {fileID: 1129757777}
-  skipIntroTutorial: 1
-  skipWithGun: 1
+  skipIntroTutorial: 0
+  skipWithGun: 0
 --- !u!4 &378217737
 Transform:
   m_ObjectHideFlags: 0
@@ -1792,8 +1792,8 @@ MonoBehaviour:
   hasPipe: 1
   stage: 0
   currentWeapon: pipe
-  hasRightCorridorKey: 1
-  gunEventDone: 1
+  hasRightCorridorKey: 0
+  gunEventDone: 0
   KKilled: 0
   JKilled: 0
   PKilled: 0
