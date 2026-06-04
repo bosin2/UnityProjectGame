@@ -347,7 +347,7 @@ MonoBehaviour:
   - name: click
     clip: {fileID: 8300000, guid: ea82a286792f8e34a972c6ca5d7d4051, type: 3}
   - name: walk
-    clip: {fileID: 8300000, guid: f1d1718bc771b554a97d4f8649381654, type: 3}
+    clip: {fileID: 8300000, guid: 656963cdd1361e14a8e0eac268e3ae28, type: 3}
   - name: swing
     clip: {fileID: 8300000, guid: 58be249f491a83149a725dd307370548, type: 3}
   - name: gunhit

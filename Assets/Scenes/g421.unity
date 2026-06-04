@@ -1498,7 +1498,7 @@ MonoBehaviour:
   consumeKey: 0
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: G421Open
-  isBlocked: 0
+  isBlocked: 1
   blockedMessage: "\uBB38\uC774 \uCC0C\uADF8\uB7EC\uC838 \uB098\uAC08\uC218\uC5C6\uB2E4
     \uC55E\uBB38\uC744 \uC774\uC6A9\uD558\uC790"
 --- !u!1 &162711258
