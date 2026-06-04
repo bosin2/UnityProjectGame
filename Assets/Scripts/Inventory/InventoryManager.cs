@@ -79,7 +79,9 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        SetInventoryOpen(false);
+        // SetInventoryOpen은 Awake에서 이미 호출됨.
+        // 여기서 다시 호출하면 hotbarUI.SetActive(true)가 실행되어
+        // GameFlowManager.Start()에서 Hide()한 핫바가 다시 켜지는 버그가 발생함.
         itemListPanel.SetActive(false);
 
         // Inspector에서 연결되지 않은 팝업은 씬에서 탐색

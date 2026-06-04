@@ -6343,7 +6343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 367847574124644831, guid: 434854959116d6b48b900ea0d8c0f8b5, type: 3}
       propertyPath: visibleTiles
-      value: 26
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 367847574124644831, guid: 434854959116d6b48b900ea0d8c0f8b5, type: 3}
       propertyPath: gradientTiles
@@ -6352,6 +6352,10 @@ PrefabInstance:
     - target: {fileID: 650558692436534257, guid: 434854959116d6b48b900ea0d8c0f8b5, type: 3}
       propertyPath: m_Name
       value: FogCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285942438169267479, guid: 434854959116d6b48b900ea0d8c0f8b5, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5601572714415689113, guid: 434854959116d6b48b900ea0d8c0f8b5, type: 3}
       propertyPath: m_SortingOrder

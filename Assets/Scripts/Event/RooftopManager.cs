@@ -206,6 +206,7 @@ public class RooftopManager : MonoBehaviour
         TimerManager.Instance?.PauseTimer();
         SetPlayerControl(false); // 이동·전투 불가
         UICanvas.Instance?.HideUI();
+        Fogeffect.Instance?.SetFogActive(false); // 옥상 컷씬 중 포그 비활성화
         WeaponSlotUI.Instance?.Hide();
         HotbarManager.Instance?.Hide();
         // InventoryManager의 UI는 씬 전환 시 파괴된 오브젝트일 수 있으므로

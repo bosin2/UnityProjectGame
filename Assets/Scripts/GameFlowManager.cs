@@ -173,6 +173,7 @@ public class GameFlowManager : MonoBehaviour
         gameplayRoot?.SetActive(false);
         UICanvas.Instance?.HideUI();
         AudioManager.Instance?.StopBGM();
+        Fogeffect.Instance?.SetFogActive(false); // 인트로 컷씬 중 포그 비활성화
 
         if (cutscene != null) cutscene.color = new Color(1, 1, 1, 0); // 컷씬 이미지를 투명하게 초기화
         if (clickHint != null) clickHint.SetActive(false);
@@ -336,6 +337,7 @@ public class GameFlowManager : MonoBehaviour
 
         // 인트로 완료 플래그 저장 (씬 재진입 시 인트로를 건너뜀)
         GameManager.Instance?.SetFlag("introDone");
+        Fogeffect.Instance?.SetFogActive(true); // 인트로 종료 → 포그 복원
         AudioManager.Instance?.PlayBGM("prologue");
         hotbarManager?.Show();
         weaponSlotUI?.Show();

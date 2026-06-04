@@ -507,6 +507,81 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.9931583, y: 7.6514587}
   m_EdgeRadius: 0
+--- !u!1 &71360991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 71360992}
+  - component: {fileID: 71360994}
+  - component: {fileID: 71360993}
+  m_Layer: 0
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &71360992
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71360991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 617542356}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &71360993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71360991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.11764706}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &71360994
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71360991}
+  m_CullTransparentMesh: 1
 --- !u!1 &91948471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,6 +2626,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 71360992}
   - {fileID: 393109356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9673,11 +9749,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5264307574598891528, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 606
+      value: 834
       objectReference: {fileID: 0}
     - target: {fileID: 5264307574598891528, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -143.85
+      value: -134
       objectReference: {fileID: 0}
     - target: {fileID: 5710396874372784521, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -9720,6 +9796,10 @@ PrefabInstance:
       value: SPACE
       objectReference: {fileID: 0}
     - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_margin.x
       value: 11.20874
       objectReference: {fileID: 0}
@@ -9731,6 +9811,10 @@ PrefabInstance:
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: c8468891e3ea6ec499c1565e09157352, type: 2}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 48
+      objectReference: {fileID: 0}
     - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_sharedMaterial
       value: 
