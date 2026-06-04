@@ -226,7 +226,6 @@ public class InventoryManager : MonoBehaviour
                         if (hotbarManager != null && hotbarManager.AddItemToSlot(item, slotIndex, count))
                         {
                             RemoveItemCompletely(item);
-                            RefreshItemList();
                         }
                     });
                 }
@@ -250,7 +249,6 @@ public class InventoryManager : MonoBehaviour
                 break;
         }
         RemoveItem(item, 1);
-        RefreshItemList();
     }
 
     void ToggleEquip(ItemData item)

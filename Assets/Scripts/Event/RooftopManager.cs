@@ -126,7 +126,8 @@ public class RooftopManager : MonoBehaviour
 
     IEnumerator CutsceneSequence()
     {
-        // 1. 플레이어 잠금 + HUD 숨김
+        // 1. 플레이어 잠금 + HUD 숨김 + 타이머 정지
+        TimerManager.Instance?.PauseTimer();
         SetPlayerControl(false);
         UICanvas.Instance?.HideUI();
         yield return new WaitForSeconds(0.3f);
@@ -247,6 +248,7 @@ public class RooftopManager : MonoBehaviour
         // ── 1. 페이드아웃 (검정 동안 헬기 활성화) ──
         yield return StartCoroutine(FadeTo(1f));
         helicopterObject?.SetActive(true);
+        AudioManager.Instance?.PlaySFX("helicopter1");
         yield return new WaitForSeconds(0.3f);
 
         // ── 2. 페이드인 (헬기가 옥상에 짠!) ──

@@ -23,6 +23,8 @@ public class PlayerHealth : MonoBehaviour
     [Header("사망 연출")]
     public Image fadePanel;                // Inspector에서 연결
     public TextMeshProUGUI gameOverText;   // Inspector에서 연결 (NEO 폰트)
+    [Range(0.1f, 1f)]
+    public float deathAnimSpeed = 0.35f;    // 죽는 애니메이션 재생 속도
 
     // ── 이벤트 (PlayerHPbar 같은 UI가 Subscribe) ──────────────────────
     /// <summary>HP가 바뀔 때마다 발생. 인수: (현재HP, 최대HP)</summary>
@@ -116,17 +118,26 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         isDead    = true;
         currentHp = 0;
+        isHurt    = false;
+        StopAllCoroutines();   // HurtRoutine 등 방해 코루틴 즉시 중단
         OnHPChanged?.Invoke(0, maxHp);
         StartCoroutine(GameOverRoutine());
     }
 
     IEnumerator GameOverRoutine()
     {
-        // ── 1. 시간 멈춤 + 이동 중지 ──────────────────────────────────
+        // ── 1. 시간 멈춤 + 이동 중지 + UI 숨김 ───────────────────────
         rb.linearVelocity  = Vector2.zero;
         rb.angularVelocity = 0f;
         combat?.CancelAttack();
         Time.timeScale = 0f;
+
+        // 인벤토리가 열려있으면 즉시 닫기
+        if (InventoryManager.Instance != null && InventoryManager.Instance.IsOpen)
+        {
+            InventoryManager.Instance.inventoryUI?.SetActive(false);
+            InventoryManager.Instance.hotbarUI?.SetActive(false);
+        }
 
         // ── 오버레이 확보 (fadePanel 미연결 시 자동 생성) ─────────────
         Image overlay = fadePanel;
@@ -153,27 +164,24 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // ── 2. 빨간 점멸 2회 (빠르게 켰다 끔) ───────────────────────
+        // ── 2. 빨간 점멸 1회 (페이드인 → 페이드아웃) ────────────────
         if (overlay != null)
         {
-            for (int i = 0; i < 2; i++)
+            float t = 0f;
+            while (t < 1f)
             {
-                float t = 0f;
-                while (t < 1f)
-                {
-                    t += Time.unscaledDeltaTime / 0.1f;
-                    overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0f, 0.6f, t));
-                    yield return null;
-                }
-                t = 0f;
-                while (t < 1f)
-                {
-                    t += Time.unscaledDeltaTime / 0.1f;
-                    overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0.6f, 0f, t));
-                    yield return null;
-                }
+                t += Time.unscaledDeltaTime / 0.15f;
+                overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0f, 0.7f, t));
+                yield return null;
             }
-            overlay.color = new Color(0f, 0f, 0f, 0f); // 완전 투명
+            t = 0f;
+            while (t < 1f)
+            {
+                t += Time.unscaledDeltaTime / 0.15f;
+                overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0.7f, 0f, t));
+                yield return null;
+            }
+            overlay.color = new Color(0f, 0f, 0f, 0f);
         }
 
         // ── 3. 죽는 애니메이션 (투명 상태에서 완전히 보이게, UnscaledTime) ──
@@ -183,6 +191,7 @@ public class PlayerHealth : MonoBehaviour
         if (anim != null)
         {
             anim.updateMode = AnimatorUpdateMode.UnscaledTime;
+            anim.speed = deathAnimSpeed;
 
             float dirX = anim.GetFloat("DirX");
             float dirY = anim.GetFloat("DirY");
@@ -196,23 +205,18 @@ public class PlayerHealth : MonoBehaviour
             anim.SetBool("IsHurt",      false);
             anim.SetBool("IsDie",       true);
 
-            // Die 스테이트 진입 대기
-            float waitTimeout = 1f, waited = 0f;
-            while (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die") && waited < waitTimeout)
-            {
-                waited += Time.unscaledDeltaTime;
-                yield return null;
-            }
+            // 트랜지션 없어도 Death 스테이트 강제 재생
+            anim.Play("Death", 0, 0f);
+            yield return null;
 
-            // 죽는 애니메이션 끝까지 대기
-            float timeout = 5f, elapsed = 0f;
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
-                   && anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
-                   && elapsed < timeout)
+            // normalizedTime >= 1 대기 (Loop Time OFF 시 마지막 프레임 고정)
+            float elapsed = 0f;
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f && elapsed < 10f)
             {
                 elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
+
             anim.enabled = false;
         }
 
@@ -229,7 +233,12 @@ public class PlayerHealth : MonoBehaviour
             overlay.color = Color.black;
         }
 
-        // ── 5. "죽었습니다." 텍스트 표시 ─────────────────────────────
+        // ── 5. "죽었습니다." 텍스트만 표시 (나머지 UI 전부 끔) ───────
+        UICanvas.Instance?.HideUI();
+        WeaponSlotUI.Instance?.Hide();
+        HotbarManager.Instance?.Hide();
+        InventoryManager.Instance?.inventoryUI?.SetActive(false);
+        InventoryManager.Instance?.hotbarUI?.SetActive(false);
         if (gameOverText != null)
         {
             gameOverText.gameObject.SetActive(true);
@@ -237,6 +246,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(2.5f);
+        Time.timeScale = 1f;
         GameManager.Instance?.ResetGame();
         Destroy(gameObject);
         SceneManager.LoadScene("MainMenu");
@@ -248,6 +258,7 @@ public class PlayerHealth : MonoBehaviour
     {
         isHurt = true;
         anim.SetBool("IsHurt", true);
+        AudioManager.Instance?.PlaySFX("hurt");
 
         // 공격 중이면 즉시 취소
         combat?.CancelAttack();

@@ -1649,21 +1649,31 @@ MonoBehaviour:
   - text: "\uC751..."
     image: {fileID: 787950930809835884, guid: 6ea4d2c92bb1e424488815690a27a35d, type: 3}
     clearImage: 0
+    sfx: {fileID: 0}
   - text: "\uC73C\uC74C..."
     image: {fileID: 787950930809835884, guid: 6ea4d2c92bb1e424488815690a27a35d, type: 3}
     clearImage: 0
-  - text: "(\uBE44\uBA85\uC18C\uB9AC\uAC00 \uB4E4\uB9B0\uB2E4."
+    sfx: {fileID: 0}
+  - text: "(\uBE44\uBA85\uC18C\uB9AC\uAC00 \uB4E4\uB9B0\uB2E4)"
     image: {fileID: 787950930809835884, guid: 6ea4d2c92bb1e424488815690a27a35d, type: 3}
     clearImage: 0
+    sfx: {fileID: 8300000, guid: d0ce67819bbf46540a79da85b1dd45e0, type: 3}
+  - text: "! \uAE5C\uC9DD\uC544..."
+    image: {fileID: 787950930809835884, guid: 6ea4d2c92bb1e424488815690a27a35d, type: 3}
+    clearImage: 0
+    sfx: {fileID: 0}
   - text: "\uC5EC\uAE30\uAC00... \uC5B4\uB514\uC9C0?"
     image: {fileID: 787950930809835884, guid: 6ea4d2c92bb1e424488815690a27a35d, type: 3}
     clearImage: 0
+    sfx: {fileID: 0}
   - text: "\uC544... "
     image: {fileID: 21300000, guid: 63b492ef1066df14e9490db0e5ce5a37, type: 3}
     clearImage: 0
+    sfx: {fileID: 0}
   - text: "\uACFC\uBC29\uC5D0\uC11C \uC7A0\uB4E4\uC5C8\uB098 \uBCF4\uB124..."
     image: {fileID: 21300000, guid: 63b492ef1066df14e9490db0e5ce5a37, type: 3}
     clearImage: 0
+    sfx: {fileID: 0}
   gunNPC: {fileID: 1870976545}
   weaponSlotUI: {fileID: 1129757776}
   hotbarManager: {fileID: 1129757777}

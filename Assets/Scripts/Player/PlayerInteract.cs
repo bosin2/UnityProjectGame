@@ -40,6 +40,9 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
+        var ph = GetComponent<PlayerHealth>();
+        if (ph != null && ph.IsDead) return;
+
         // Q키: 범위 안 Interactable과 대화 시작
         if (!isDialogueActive && currentTarget != null && Input.GetKeyDown(KeyCode.Q))
         {

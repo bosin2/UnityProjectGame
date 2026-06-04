@@ -70,7 +70,10 @@ public class DoorTrigger : MonoBehaviour
                 }
 
                 if (consumeKey)
+                {
                     inventory.RemoveItem(requiredKey, 1);
+                    AudioManager.Instance?.PlaySFX("door_unlock");
+                }
 
                 if (effectiveUnlockFlag != "")
                     GameManager.Instance?.SetFlag(effectiveUnlockFlag);
@@ -78,6 +81,7 @@ public class DoorTrigger : MonoBehaviour
         }
 
         // SceneLoader를 통해 씬 전환 (PlayerPrefs 대신 메모리 전달)
+        AudioManager.Instance?.PlaySFX("door");
         SceneLoader.LoadScene(targetSceneName, spawnPosition, spawnDirection);
     }
 

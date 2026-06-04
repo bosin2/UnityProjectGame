@@ -25,7 +25,7 @@ public class StalkerMonster : MonsterBase
     public float     pathUpdateInterval  = 0.3f;
 
     [Header("경로 시각화")]
-    public bool  showPath  = true;
+    public bool  showPath  = false;
     public Color pathColor = Color.cyan;
     public Color nodeColor = Color.yellow;
     public float nodeRadius = 0.08f;

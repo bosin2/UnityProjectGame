@@ -31,9 +31,10 @@ public class GameFlowManager : MonoBehaviour
     [System.Serializable]
     public class DialogueLine
     {
-        public string text;
-        public Sprite image;
-        public bool   clearImage;
+        public string    text;
+        public Sprite    image;
+        public bool      clearImage;
+        public AudioClip sfx;        // 이 줄 시작 시 재생할 효과음 (없으면 무음)
     }
     public DialogueLine[] lines;
 
@@ -197,6 +198,9 @@ public class GameFlowManager : MonoBehaviour
         canClick = false;
         clickHint.SetActive(false);
         dialogueText.text = "";
+
+        if (line.sfx != null)
+            AudioManager.Instance?.PlaySFX(line.sfx);
 
         if (line.clearImage)
             yield return StartCoroutine(FadeImage(cutscene, 0f));

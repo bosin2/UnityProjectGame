@@ -157,6 +157,13 @@ MonoBehaviour:
   hpBarPrefab: {fileID: 0}
   hpBarOffset: {x: 0, y: 1}
   knockbackForce: 5
+  takesMeleeDamage: 1
+  leaveCorpse: 1
+  corpseInteractable: 1
+  corpseInteractableId: 
+  corpseDialogueLines:
+  - ...
+  persistentMonsterId: 
   minCooldown: 2
   maxCooldown: 5
   warningCirclePrefab: {fileID: 0}

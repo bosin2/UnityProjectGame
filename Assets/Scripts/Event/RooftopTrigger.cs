@@ -18,6 +18,7 @@ public class RooftopTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         triggered = true;
+        AudioManager.Instance?.PlayBGM("rooftop");
         manager?.StartCutscene();
     }
 }

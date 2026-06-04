@@ -80,6 +80,13 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(sfxDict[name], sfxVolume * masterVolume);
     }
 
+    /// <summary>AudioClip을 직접 재생 (AudioManager 라이브러리 등록 불필요)</summary>
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip == null) return;
+        sfxSource.PlayOneShot(clip, sfxVolume * masterVolume);
+    }
+
     // 위치 기반 SFX (몬스터 거리감 표현용)
     public void PlaySFXAtPoint(string name, Vector3 position)
     {

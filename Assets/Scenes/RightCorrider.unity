@@ -52662,12 +52662,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: hpBarPrefab
       value: 
       objectReference: {fileID: 408347264055661340, guid: 35d824cd3ac74024dba78104793e4263, type: 3}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: fallDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: impactPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: impactRadius
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
+      propertyPath: warningDuration
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: takesMeleeDamage
@@ -52692,7 +52708,7 @@ PrefabInstance:
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: teleportEffectPrefab
       value: 
-      objectReference: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
+      objectReference: {fileID: 8896378727576903153, guid: f90b4a74f85413f4fbb562599e00a74b, type: 3}
     - target: {fileID: 3466375570738839201, guid: d1019a2b0ffb1f9409a6ff012d0c1e30, type: 3}
       propertyPath: 'corpseDialogueLines.Array.data[0]'
       value: "\uC724\uD558\uB2D8\uC758 \uC2DC\uCCB4\uB2E4.."
