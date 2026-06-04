@@ -2067,6 +2067,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 553270120}
     - target: {fileID: 3454590852406899425, guid: b381ee44e0f25664ba55d4553873df07, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3454590852406899425, guid: b381ee44e0f25664ba55d4553873df07, type: 3}
       propertyPath: hitboxRight
       value: 
       objectReference: {fileID: 553270120}

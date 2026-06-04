@@ -16,6 +16,9 @@ public class AudioManager : MonoBehaviour
     // 빠른 조회용 딕셔너리
     private Dictionary<string, AudioClip> bgmDict = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioClip> sfxDict = new Dictionary<string, AudioClip>();
+    private Dictionary<string, float>     bgmVolumeScales = new Dictionary<string, float>();
+
+    private float currentBgmScale = 1f;
 
     [Header("Volume Settings")]
     [Range(0f, 1f)] public float masterVolume = 1f;
@@ -46,7 +49,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // === BGM 제어 ===
-    public void PlayBGM(string name, bool fadeIn = false)
+    public void PlayBGM(string name, bool fadeIn = false, float volumeScale = 1f)
     {
         if (!bgmDict.ContainsKey(name))
         {
@@ -56,6 +59,9 @@ public class AudioManager : MonoBehaviour
 
         if (bgmSource.clip == bgmDict[name] && bgmSource.isPlaying) return; // 같은 곡이면 무시
 
+        bgmVolumeScales[name] = volumeScale;
+        currentBgmScale = volumeScale;
+        bgmSource.volume = bgmVolume * masterVolume * currentBgmScale;
         bgmSource.clip = bgmDict[name];
         bgmSource.loop = true;
         bgmSource.Play();
@@ -70,21 +76,21 @@ public class AudioManager : MonoBehaviour
     public void ResumeBGM() => bgmSource.UnPause();
 
     // === SFX 제어 ===
-    public void PlaySFX(string name)
+    public void PlaySFX(string name, float volumeScale = 1f)
     {
         if (!sfxDict.ContainsKey(name))
         {
             Debug.LogWarning($"[AudioManager] SFX '{name}' 없냥!");
             return;
         }
-        sfxSource.PlayOneShot(sfxDict[name], sfxVolume * masterVolume);
+        sfxSource.PlayOneShot(sfxDict[name], sfxVolume * masterVolume * volumeScale);
     }
 
     /// <summary>AudioClip을 직접 재생 (AudioManager 라이브러리 등록 불필요)</summary>
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip, float volumeScale = 1f)
     {
         if (clip == null) return;
-        sfxSource.PlayOneShot(clip, sfxVolume * masterVolume);
+        sfxSource.PlayOneShot(clip, sfxVolume * masterVolume * volumeScale);
     }
 
     // 위치 기반 SFX (몬스터 거리감 표현용)
@@ -101,7 +107,7 @@ public class AudioManager : MonoBehaviour
 
     private void ApplyVolumes()
     {
-        bgmSource.volume = bgmVolume * masterVolume;
+        bgmSource.volume = bgmVolume * masterVolume * currentBgmScale;
         // sfxSource는 PlayOneShot 볼륨에서 직접 곱함
     }
 }

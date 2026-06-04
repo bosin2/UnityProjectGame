@@ -7,6 +7,9 @@ public class SceneBGMPlayer : MonoBehaviour
     [Header("이 씬에서 재생할 BGM 이름")]
     [SerializeField] private string bgmName;
 
+    [Range(0f, 1f)]
+    [SerializeField] private float volumeScale = 1f;
+
     [Header("옵션")]
     [Tooltip("씬 시작 시 자동 재생 여부")]
     [SerializeField] private bool playOnStart = true;
@@ -27,6 +30,6 @@ public class SceneBGMPlayer : MonoBehaviour
             return;
         }
 
-        AudioManager.Instance.PlayBGM(bgmName);
+        AudioManager.Instance.PlayBGM(bgmName, volumeScale: volumeScale);
     }
 }

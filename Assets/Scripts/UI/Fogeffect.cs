@@ -3,6 +3,8 @@ using UnityEngine;
 // 파일명(Fogeffect.cs)과 클래스명 일치 — 이전 클래스명 FogOfWarController에서 변경
 public class Fogeffect : MonoBehaviour
 {
+    public static Fogeffect Instance { get; private set; }
+
     [SerializeField] private Material fogMaterial;
     [SerializeField] private Transform player;
 
@@ -25,6 +27,7 @@ public class Fogeffect : MonoBehaviour
         }
         _exists     = true;
         _isOriginal = true;
+        Instance    = this;
         DontDestroyOnLoad(transform.root.gameObject);
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -49,14 +52,28 @@ public class Fogeffect : MonoBehaviour
         return FindFirstObjectByType<Camera>();
     }
 
+    void OnDisable()
+    {
+        // 포그 비활성화 시 반경을 크게 설정 → 전체 화면이 밝아짐
+        if (fogMaterial == null) return;
+        fogMaterial.SetFloat("_InnerRadius", 10f);
+        fogMaterial.SetFloat("_OuterRadius", 10f);
+    }
+
     void OnDestroy()
     {
         if (_isOriginal)
         {
             UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-            _exists = false;
+            _exists   = false;
+            Instance  = null;
         }
     }
+
+    // ── 외부 호출용 ──────────────────────────────────────────────────
+
+    /// <summary>포그 효과를 켜거나 끈다. false면 전체 화면이 밝아짐.</summary>
+    public void SetFogActive(bool active) => enabled = active;
 
     void Update()
     {

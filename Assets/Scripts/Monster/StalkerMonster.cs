@@ -77,11 +77,19 @@ public class StalkerMonster : MonsterBase
 
     void SetupLineRenderer()
     {
+        if (!showPath) return; // 경로 시각화 비활성 시 LineRenderer 자체를 추가하지 않음
+
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.startWidth  = 0.1f;
         lineRenderer.endWidth    = 0.1f;
-        lineRenderer.material    = new Material(Shader.Find("Unlit/Color"));
-        lineRenderer.material.color = pathColor;
+
+        Shader shader = Shader.Find("Unlit/Color");
+        if (shader != null)
+        {
+            lineRenderer.material = new Material(shader);
+            lineRenderer.material.color = pathColor;
+        }
+
         lineRenderer.useWorldSpace  = true;
         lineRenderer.positionCount  = 0;
 
@@ -118,8 +126,11 @@ public class StalkerMonster : MonsterBase
             RecalculatePath();
         }
 
-        if (showPath) DrawPath();
-        else          lineRenderer.positionCount = 0;
+        if (lineRenderer != null)
+        {
+            if (showPath) DrawPath();
+            else          lineRenderer.positionCount = 0;
+        }
     }
 
     void FixedUpdate()

@@ -334,6 +334,7 @@ public class GameFlowManager : MonoBehaviour
     {
         _gunShotPlaying = true;
         Time.timeScale = 1f;
+        SetPlayerControl(false);
 
         // 화면 붉어지기
         float t = 0f;
@@ -375,6 +376,7 @@ public class GameFlowManager : MonoBehaviour
         GameManager.Instance?.SetFlag("gunNPCDead");
         _gunShotPlaying = false;
         GameManager.Instance.KKilled = true;
+        SetPlayerControl(true);
     }
 
     // ── 내부 유틸 ─────────────────────────────────────────────────────

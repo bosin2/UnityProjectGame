@@ -12,7 +12,13 @@
       "Bash(exit:*)",
       "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\fix_canvas.ps1\")",
       "Bash(Remove-Item \"C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\fix_canvas.ps1\")",
-      "Bash(grep -rn \"RightCorridor\\\\|RightCorrider\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.cs)"
+      "Bash(grep -rn \"RightCorridor\\\\|RightCorrider\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.cs)",
+      "Bash(xargs grep:*)",
+      "Bash(grep -rn \"JBS\\\\|jbs\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.cs)",
+      "Bash(grep -rn \"9ab5a4e8f8ca23442a4e5b5f02e8441a\\\\|19b38d8fe51a3c04c833fa2bcca5531f\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.meta)",
+      "Bash(find C:UserswhghkUnityProjectGameAssetsScripts -name *.meta)",
+      "Bash(powershell -Command \"Get-ChildItem 'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\*.unity' | ForEach-Object { $content = Get-Content $_.FullName -Raw; if \\($content -match '9ab5a4e8f8ca23442a4e5b5f02e8441a|1133eff7aa026e2458092d1dde78b4c4'\\) { Write-Host $_.Name } }\")",
+      "Bash(find C:UserswhghkUnityProjectGameAssets -name *.prefab.meta)"
     ]
   }
 }

@@ -8,6 +8,9 @@ public class BGMTrigger : MonoBehaviour
     [Header("교체할 BGM 이름")]
     [SerializeField] private string bgmName;
 
+    [Range(0f, 1f)]
+    [SerializeField] private float volumeScale = 1f;
+
     [Header("옵션")]
     [Tooltip("한 번만 작동할지")]
     [SerializeField] private bool triggerOnce = true;
@@ -32,7 +35,7 @@ public class BGMTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (triggerOnce && triggered) return;
 
-        AudioManager.Instance?.PlayBGM(bgmName);
+        AudioManager.Instance?.PlayBGM(bgmName, volumeScale: volumeScale);
         triggered = true;
 
         Debug.Log($"[BGMTrigger] '{bgmName}' BGM으로 전환");

@@ -12762,6 +12762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmName: corridor
+  volumeScale: 0.7
   playOnStart: 1
 --- !u!4 &1850230014
 Transform:
@@ -52835,6 +52836,6 @@ SceneRoots:
   - {fileID: 417971046}
   - {fileID: 2125948132}
   - {fileID: 1093970183}
-  - {fileID: 1850230014}
   - {fileID: 1684805851}
   - {fileID: 677697388}
+  - {fileID: 1850230014}

@@ -1770,6 +1770,7 @@ MonoBehaviour:
   hurtDuration: 0.4
   fadePanel: {fileID: 1347273302441630079}
   gameOverText: {fileID: 4598862328757676093}
+  deathAnimSpeed: 0.35
 --- !u!114 &3454590852406899425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1788,7 +1789,7 @@ MonoBehaviour:
   gunDuration: 0.5
   bulletPrefab: {fileID: 9102856248879863631, guid: b7e2fa88eab4c994ea9a06a97715c620, type: 3}
   hitEffectPrefab: {fileID: 2390760186807658159, guid: f33a896e16a339f4c8d61bb71f482059, type: 3}
-  bulletSpeed: 5
+  bulletSpeed: 20
   hitboxUp: {fileID: 6601754002984075542}
   hitboxDown: {fileID: 9128880139780554935}
   hitboxLeft: {fileID: 3977495722682436794}
