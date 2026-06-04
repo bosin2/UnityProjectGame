@@ -138,6 +138,7 @@ MonoBehaviour:
   corpseDialogueLines:
   - ...
   persistentMonsterId: 
+  ignoreMonsterCollision: 1
   speed: 5.5
   arriveDistance: 0.05
   contactDamage: 15
@@ -152,6 +153,8 @@ MonoBehaviour:
   pathColor: {r: 0, g: 1, b: 1, a: 1}
   nodeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   nodeRadius: 0.08
+  activeBgm: stoker
+  revertBgm: corridor
 --- !u!114 &7479171238278952070
 MonoBehaviour:
   m_ObjectHideFlags: 0

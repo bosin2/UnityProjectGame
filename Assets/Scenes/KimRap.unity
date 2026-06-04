@@ -3790,7 +3790,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ba197f08b929b146bd83d332f2237ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmName: room
+  bgmName: kimlap
+  volumeScale: 1
   playOnStart: 1
 --- !u!4 &1863120762
 Transform:

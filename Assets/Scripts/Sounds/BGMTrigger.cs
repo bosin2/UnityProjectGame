@@ -44,10 +44,22 @@ public class BGMTrigger : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        RevertBGM();
+    }
+
+    void OnDisable()
+    {
+        // 씬 전환 시 OnTriggerExit2D가 호출되지 않으므로 OnDisable에서 복귀
+        if (triggered) RevertBGM();
+    }
+
+    void RevertBGM()
+    {
         if (!revertOnExit) return;
         if (string.IsNullOrEmpty(revertBgmName)) return;
 
         AudioManager.Instance?.PlayBGM(revertBgmName);
+        triggered = false;
         Debug.Log($"[BGMTrigger] '{revertBgmName}'로 복귀");
     }
 }

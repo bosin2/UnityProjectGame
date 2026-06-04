@@ -30,6 +30,11 @@ public class StalkerMonster : MonsterBase
     public Color nodeColor = Color.yellow;
     public float nodeRadius = 0.08f;
 
+    [Header("BGM")]
+    [SerializeField] private string activeBgm = "stoker";
+    [SerializeField] private string revertBgm = "corridor";
+    private bool bgmStarted = false;
+
     // ── 내부 상태 ──────────────────────────────────────────────────────
     private float        contactCooldown = 0f;
     private Transform    playerTransform;
@@ -48,7 +53,32 @@ public class StalkerMonster : MonsterBase
         public Node       parent;
         public float      fCost => gCost + hCost;
 
+        public Node() { }
         public Node(Vector2Int g, Vector2 w) { gridPos = g; worldPos = w; }
+    }
+
+    // ── A* 컬렉션 재사용 (GC 방지) ────────────────────────────────────
+    private readonly List<Node>                   _openList    = new List<Node>(128);
+    private readonly HashSet<Vector2Int>           _openSet     = new HashSet<Vector2Int>();
+    private readonly HashSet<Vector2Int>           _closedSet   = new HashSet<Vector2Int>();
+    private readonly Dictionary<Vector2Int, Node>  _nodeMap     = new Dictionary<Vector2Int, Node>(256);
+    private readonly Stack<Node>                   _nodePool    = new Stack<Node>(256);
+    private readonly List<Vector2>                 _retraceBuf  = new List<Vector2>(64);
+
+    private static readonly Vector2Int[] _dirs =
+        { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+    Node RentNode(Vector2Int g, Vector2 w)
+    {
+        var n = _nodePool.Count > 0 ? _nodePool.Pop() : new Node();
+        n.gridPos = g; n.worldPos = w;
+        n.gCost = float.MaxValue; n.hCost = 0f; n.parent = null;
+        return n;
+    }
+
+    void ReturnAllNodes()
+    {
+        foreach (var kvp in _nodeMap) _nodePool.Push(kvp.Value);
     }
 
     // ── 초기화 ──────────────────────────────────────────────────────
@@ -73,6 +103,12 @@ public class StalkerMonster : MonsterBase
     {
         base.Start();
         FindPlayerInScene();
+
+        if (!isDead && !string.IsNullOrEmpty(activeBgm))
+        {
+            AudioManager.Instance?.PlayBGM(activeBgm);
+            bgmStarted = true;
+        }
     }
 
     void SetupLineRenderer()
@@ -179,56 +215,63 @@ public class StalkerMonster : MonsterBase
     void RecalculatePath()
     {
         if (playerTransform == null) return;
-        List<Vector2> newPath = FindPath(rb.position, playerTransform.position);
-        if (newPath != null && newPath.Count > 0)
-        { currentPath = newPath; pathIndex = 0; }
-        else
-        { currentPath.Clear(); pathIndex = 0; }
+        FindPath(rb.position, playerTransform.position);
+        pathIndex = 0;
     }
 
-    List<Vector2> FindPath(Vector2 startWorld, Vector2 goalWorld)
+    void FindPath(Vector2 startWorld, Vector2 goalWorld)
     {
+        // 노드 풀 반환 후 컬렉션 초기화
+        ReturnAllNodes();
+        _openList.Clear(); _openSet.Clear(); _closedSet.Clear(); _nodeMap.Clear();
+        currentPath.Clear();
+
         Vector2Int startGrid = WorldToGrid(startWorld);
         Vector2Int goalGrid  = WorldToGrid(goalWorld);
-        if (startGrid == goalGrid) return null;
+        if (startGrid == goalGrid) return;
 
-        var openSet   = new List<Node>();
-        var closedSet = new HashSet<Vector2Int>();
-        var nodeMap   = new Dictionary<Vector2Int, Node>();
-
-        Node startNode = new Node(startGrid, GridToWorld(startGrid));
+        Node startNode = RentNode(startGrid, GridToWorld(startGrid));
         startNode.gCost = 0;
         startNode.hCost = Heuristic(startGrid, goalGrid);
-        openSet.Add(startNode);
-        nodeMap[startGrid] = startNode;
+        _openList.Add(startNode);
+        _openSet.Add(startGrid);
+        _nodeMap[startGrid] = startNode;
 
         int maxIter = 500;
-        while (openSet.Count > 0 && maxIter-- > 0)
+        while (_openList.Count > 0 && maxIter-- > 0)
         {
-            Node current = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
-                if (openSet[i].fCost < current.fCost ||
-                   (openSet[i].fCost == current.fCost && openSet[i].hCost < current.hCost))
-                    current = openSet[i];
+            // O(n) 최솟값 탐색 (인덱스 추적 → swap-remove)
+            int bestIdx = 0;
+            for (int i = 1; i < _openList.Count; i++)
+                if (_openList[i].fCost < _openList[bestIdx].fCost ||
+                   (_openList[i].fCost == _openList[bestIdx].fCost &&
+                    _openList[i].hCost  < _openList[bestIdx].hCost))
+                    bestIdx = i;
 
-            openSet.Remove(current);
-            closedSet.Add(current.gridPos);
+            Node current = _openList[bestIdx];
 
-            if (current.gridPos == goalGrid) return RetracePath(current);
+            // swap-remove: O(1)
+            int last = _openList.Count - 1;
+            _openList[bestIdx] = _openList[last];
+            _openList.RemoveAt(last);
+            _openSet.Remove(current.gridPos);
+            _closedSet.Add(current.gridPos);
 
-            foreach (Vector2Int dir in new[] {
-                Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+            if (current.gridPos == goalGrid) { RetracePath(current); return; }
+
+            foreach (Vector2Int dir in _dirs)
             {
                 Vector2Int neighborGrid = current.gridPos + dir;
-                if (closedSet.Contains(neighborGrid)) continue;
-                if (IsObstacle(GridToWorld(neighborGrid))) continue;
+                if (_closedSet.Contains(neighborGrid)) continue;
+
+                Vector2 neighborWorld = GridToWorld(neighborGrid);
+                if (IsObstacle(neighborWorld)) continue;
 
                 float newG = current.gCost + 1f;
-                if (!nodeMap.TryGetValue(neighborGrid, out Node neighbor))
+                if (!_nodeMap.TryGetValue(neighborGrid, out Node neighbor))
                 {
-                    neighbor = new Node(neighborGrid, GridToWorld(neighborGrid));
-                    nodeMap[neighborGrid] = neighbor;
-                    neighbor.gCost = float.MaxValue;
+                    neighbor = RentNode(neighborGrid, neighborWorld);
+                    _nodeMap[neighborGrid] = neighbor;
                 }
 
                 if (newG < neighbor.gCost)
@@ -236,22 +279,28 @@ public class StalkerMonster : MonsterBase
                     neighbor.gCost  = newG;
                     neighbor.hCost  = Heuristic(neighborGrid, goalGrid);
                     neighbor.parent = current;
-                    if (!openSet.Contains(neighbor)) openSet.Add(neighbor);
+                    if (!_openSet.Contains(neighborGrid))
+                    {
+                        _openList.Add(neighbor);
+                        _openSet.Add(neighborGrid);
+                    }
                 }
             }
         }
 
         // 경로 없으면 목표 직진
-        return new List<Vector2> { goalWorld };
+        currentPath.Add(goalWorld);
     }
 
-    List<Vector2> RetracePath(Node endNode)
+    void RetracePath(Node endNode)
     {
-        var path    = new List<Vector2>();
+        _retraceBuf.Clear();
         Node current = endNode;
-        while (current != null) { path.Add(current.worldPos); current = current.parent; }
-        path.Reverse();
-        return path;
+        while (current != null) { _retraceBuf.Add(current.worldPos); current = current.parent; }
+
+        // 역순으로 currentPath에 직접 기록
+        for (int i = _retraceBuf.Count - 1; i >= 0; i--)
+            currentPath.Add(_retraceBuf[i]);
     }
 
     // ── 좌표 변환 유틸 ────────────────────────────────────────────────
@@ -298,6 +347,28 @@ public class StalkerMonster : MonsterBase
         Gizmos.color = pathColor;
         for (int i = 0; i < currentPath.Count - 1; i++)
             Gizmos.DrawLine(currentPath[i], currentPath[i + 1]);
+    }
+
+    // ── BGM 복귀 ──────────────────────────────────────────────────────
+
+    void RevertBGM()
+    {
+        if (!bgmStarted) return;
+        if (!string.IsNullOrEmpty(revertBgm))
+            AudioManager.Instance?.PlayBGM(revertBgm);
+        bgmStarted = false;
+    }
+
+    protected override System.Collections.IEnumerator DieRoutine()
+    {
+        RevertBGM();
+        yield return StartCoroutine(base.DieRoutine());
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable(); // SavePersistentState 호출
+        RevertBGM();      // 씬 전환 시 BGM 복귀
     }
 
     // ── 플레이어 탐색 ─────────────────────────────────────────────────

@@ -333,11 +333,19 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 49628ef9fbf9590479692e2a477b95cc, type: 3}
   - name: rooftop
     clip: {fileID: 8300000, guid: cf1276a860e41c2468bba98150196ca0, type: 3}
+  - name: 420
+    clip: {fileID: 8300000, guid: e428c0ff3580a42449482d1fd89cf362, type: 3}
+  - name: right
+    clip: {fileID: 8300000, guid: e3229f2b5ee7fb54d9fa147c56cdc8fa, type: 3}
+  - name: 421
+    clip: {fileID: 8300000, guid: 1ba360f1874f2ea42b1f53a97e5a1ad0, type: 3}
+  - name: kimlab
+    clip: {fileID: 8300000, guid: e66b331603eeaa14c9202a2233e137e0, type: 3}
   sfxClips:
   - name: click
     clip: {fileID: 8300000, guid: ea82a286792f8e34a972c6ca5d7d4051, type: 3}
   - name: walk
-    clip: {fileID: 8300000, guid: 3f082f337b5e31441b300866aff1370a, type: 3}
+    clip: {fileID: 8300000, guid: f1d1718bc771b554a97d4f8649381654, type: 3}
   - name: swing
     clip: {fileID: 8300000, guid: 58be249f491a83149a725dd307370548, type: 3}
   - name: gunhit
@@ -358,8 +366,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 941ad0e13deeb964789b6e5ffbd4e3b2, type: 3}
   - name: helicopter1
     clip: {fileID: 8300000, guid: 200a22ebc1464434d8f52d36007601ef, type: 3}
+  - name: explosion
+    clip: {fileID: 8300000, guid: ecab5bf972d69ce4db1f1f30a3e08026, type: 3}
   masterVolume: 1
-  bgmVolume: 0.61
+  bgmVolume: 0.719
   sfxVolume: 1
 --- !u!4 &184440080
 Transform:
@@ -783,6 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmName: mainmenu
+  volumeScale: 1
   playOnStart: 1
 --- !u!1 &744953246
 GameObject:

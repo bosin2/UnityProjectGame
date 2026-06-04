@@ -5,12 +5,12 @@ using System.Collections;
 
 public class G421IntroManager : MonoBehaviour
 {
-    [Header("ÀÎÆ®·Î UI")]
-    public GameObject introRoot;     // ÀÎÆ®·Î ÀüÃ¼¸¦ °¨½Î´Â ·çÆ® ¿ÀºêÁ§Æ®
+    [Header("ï¿½ï¿½Æ®ï¿½ï¿½ UI")]
+    public GameObject introRoot;     // ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public TextMeshProUGUI dialogueText;
-    public GameObject clickHint;     // "Space¸¦ ´­·¯ °è¼Ó" ÈùÆ®
-    public Image fadePanel;     // È­¸é ÆäÀÌµå¿ë °ËÁ¤ ÆÐ³Î
-    public Image cutscene;      // ÄÆ¾À ÀÌ¹ÌÁö (¾øÀ¸¸é null)
+    public GameObject clickHint;     // "Spaceï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½" ï¿½ï¿½Æ®
+    public Image fadePanel;     // È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+    public Image cutscene;      // ï¿½Æ¾ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ null)
 
     [System.Serializable]
     public class DialogueLine
@@ -21,33 +21,32 @@ public class G421IntroManager : MonoBehaviour
     }
     public DialogueLine[] lines;
 
-    [Header("°³¹ß¿ë ½ºÅµ")]
+    [Header("ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½Åµ")]
     [SerializeField] private bool skipIntro = false;
 
-    [Header("ÇÃ·¹ÀÌ UI")]
+    [Header("ï¿½Ã·ï¿½ï¿½ï¿½ UI")]
     [SerializeField] private WeaponSlotUI weaponSlotUI;
     [SerializeField] private HotbarManager hotbarManager;
 
     private int currentLine = 0;
-    private bool isTyping = false;
-    private bool canClick = false;
+    private bool isTyping    = false;
+    private bool skipTyping  = false;
+    private bool canClick    = false;
     private bool introActive = true;
-    private float lastSpaceTime = -1f;
-    private const float spaceCooldown = 0.3f;
 
     void Start()
     {
         if (weaponSlotUI == null) weaponSlotUI = FindFirstObjectByType<WeaponSlotUI>();
         if (hotbarManager == null) hotbarManager = FindFirstObjectByType<HotbarManager>();
 
-        // ÀÌ¹Ì º» Àû ÀÖÀ¸¸é ½ºÅµ
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åµ
         if (GameManager.Instance != null && GameManager.Instance.HasFlag("g421IntroDone"))
         {
             introRoot?.SetActive(false);
             return;
         }
 
-        // ¿¡µðÅÍ ½ºÅµ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åµ
         if (skipIntro)
         {
             introRoot?.SetActive(false);
@@ -55,7 +54,7 @@ public class G421IntroManager : MonoBehaviour
             return;
         }
 
-        // ÀÎÆ®·Î ½ÃÀÛ
+        // ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         introRoot?.SetActive(true);
         SetPlayerControl(false);
         UICanvas.Instance?.HideUI();
@@ -72,25 +71,12 @@ public class G421IntroManager : MonoBehaviour
     {
         if (!introActive) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (Time.unscaledTime - lastSpaceTime < spaceCooldown) return;
-            lastSpaceTime = Time.unscaledTime;
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
 
-            if (isTyping)
-            {
-                StopAllCoroutines();
-                ApplyLineImage(lines[currentLine]);
-                dialogueText.text = lines[currentLine].text;
-                isTyping = false;
-                canClick = true;
-                clickHint?.SetActive(true);
-            }
-            else if (canClick)
-            {
-                NextLine();
-            }
-        }
+        if (isTyping)
+            skipTyping = true;
+        else if (canClick)
+            NextLine();
     }
 
     void SetPlayerControl(bool enabled)
@@ -111,8 +97,9 @@ public class G421IntroManager : MonoBehaviour
 
     IEnumerator TypeLine(DialogueLine line)
     {
-        isTyping = true;
-        canClick = false;
+        isTyping   = true;
+        skipTyping = false;
+        canClick   = false;
         clickHint?.SetActive(false);
         dialogueText.text = "";
 
@@ -127,10 +114,13 @@ public class G421IntroManager : MonoBehaviour
 
         foreach (char c in line.text)
         {
+            if (skipTyping) break;
             dialogueText.text += c;
             yield return new WaitForSeconds(0.07f);
         }
+        dialogueText.text = line.text; // ìŠ¤í‚µ ì‹œì—ë„ ì „ì²´ í…ìŠ¤íŠ¸ ë³´ìž¥
 
+        ApplyLineImage(line); // ì´ë¯¸ì§€ë„ ì¦‰ì‹œ ë°˜ì˜
         isTyping = false;
         canClick = true;
         clickHint?.SetActive(true);
@@ -184,13 +174,13 @@ public class G421IntroManager : MonoBehaviour
         introActive = false;
         clickHint?.SetActive(false);
 
-        // ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         float t = 0f;
         while (t < 1f) { t += Time.deltaTime; fadePanel.color = new Color(0, 0, 0, t); yield return null; }
 
         introRoot?.SetActive(false);
 
-        // ÆäÀÌµå ÀÎ
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½
         t = 1f;
         while (t > 0f) { t -= Time.deltaTime; fadePanel.color = new Color(0, 0, 0, t); yield return null; }
         fadePanel.color = new Color(0, 0, 0, 0);

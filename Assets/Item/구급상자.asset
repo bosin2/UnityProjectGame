@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "\uAD6C\uAE09 \uC0C1\uC790"
   description: "\uC815\uB9D0 \uC704\uAE09 \uD560 \uB54C \uC0AC\uC6A9\uD574\uC57C
     \uD560 \uAC83 \uAC19\uB2E4."
-  icon: {fileID: 0}
+  icon: {fileID: 1422877958643658586, guid: c22b070f676be444a971d4efc3519d74, type: 3}
   type: 0
   healAmount: 50
   defenseAmount: 0

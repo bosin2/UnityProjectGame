@@ -34,9 +34,6 @@ public class CorridorIntroManager : MonoBehaviour
     [Tooltip("타이핑 속도 (초/글자)")]
     public float typingSpeed = 0.05f;
 
-    [Tooltip("한 줄 표시 후 자동 진행까지 대기 시간 (Space로 즉시 넘길 수 있음)")]
-    public float readDelay = 2f;
-
     [Header("UI 참조")]
     public Image           fadePanel;
     public GameObject      monologuePanel;
@@ -50,6 +47,12 @@ public class CorridorIntroManager : MonoBehaviour
     private CameraFollow cameraFollow;
     private bool introRunning;
     private bool introFinished;
+
+    // 대화 입력 상태 (Update ↔ PlayMonologue 코루틴 공유)
+    private bool dialogueActive = false;
+    private bool isTyping       = false;
+    private bool skipTyping     = false;
+    private bool advanceLine    = false;
     private readonly List<MonsterPauseState> pausedMonsters = new List<MonsterPauseState>();
 
     private struct MonsterPauseState
@@ -61,6 +64,17 @@ public class CorridorIntroManager : MonoBehaviour
         public Vector2 rbVelocity;
         public Animator animator;
         public float animatorSpeed;
+    }
+
+    void Update()
+    {
+        if (!dialogueActive) return;
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+
+        if (isTyping)
+            skipTyping = true;
+        else
+            advanceLine = true;
     }
 
     void Start()
@@ -198,41 +212,34 @@ public class CorridorIntroManager : MonoBehaviour
 
         monologuePanel.SetActive(true);
         clickHint?.SetActive(false);
+        dialogueActive = true;
 
         foreach (string line in monologueLines)
         {
             monologueText.text = "";
+            isTyping   = true;
+            skipTyping = false;
 
-            // 이전 줄 진행 시 Space가 눌려 있을 수 있으므로 떼기를 먼저 기다림
-
-            // 타이핑 (Space 누르고 있으면 즉시 완성)
             foreach (char c in line)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    monologueText.text = line;
-                    break;
-                }
+                if (skipTyping) break;
                 monologueText.text += c;
                 yield return new WaitForSeconds(typingSpeed);
             }
+            monologueText.text = line; // 스킵 시에도 전체 텍스트 보장
 
+            isTyping = false;
             clickHint?.SetActive(true);
 
-            // Space 홀드 중이면 떼기를 기다림 (중복 스킵 방지)
-
-            // readDelay 동안 대기, 또는 Space 로 즉시 진행
-            float elapsed = 0f;
-            while (elapsed < readDelay)
-            {
-                if (Input.GetKeyDown(KeyCode.Space)) break;
-                elapsed += Time.deltaTime;
+            // Update()에서 Space 입력을 받을 때까지 대기
+            advanceLine = false;
+            while (!advanceLine)
                 yield return null;
-            }
 
             clickHint?.SetActive(false);
         }
 
+        dialogueActive = false;
         monologuePanel.SetActive(false);
     }
 
@@ -366,6 +373,7 @@ public class CorridorIntroManager : MonoBehaviour
         WeaponSlotUI.Instance?.Show();
         HotbarManager.Instance?.Show();
         TimerManager.Instance?.ResumeTimer();
+        dialogueActive = false;
         ResetIntroUI();
         introRunning = false;
     }

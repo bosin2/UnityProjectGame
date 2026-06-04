@@ -91,10 +91,27 @@ public class RooftopManager : MonoBehaviour
     private bool cutsceneStarted = false;
     private GameObject playerRef;
 
+    // 대화 입력 상태 (Update ↔ 코루틴 공유)
+    private bool dialogueActive = false;
+    private bool isTyping       = false;
+    private bool skipTyping     = false;
+    private bool advanceLine    = false;
+
 
     // ===================================================================
     // 초기화
     // ===================================================================
+
+    void Update()
+    {
+        if (!dialogueActive) return;
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+
+        if (isTyping)
+            skipTyping = true;
+        else
+            advanceLine = true;
+    }
 
     void Start()
     {
@@ -313,11 +330,13 @@ public class RooftopManager : MonoBehaviour
         if (set == null || set.lines == null) yield break;
 
         dialogueBox.SetActive(true);
+        dialogueActive = true;
         foreach (string line in set.lines)
         {
             yield return StartCoroutine(TypeLine(line));
-            yield return StartCoroutine(WaitForSpace());
+            yield return StartCoroutine(WaitForAdvance());
         }
+        dialogueActive = false;
         dialogueBox.SetActive(false);
     }
 
@@ -327,11 +346,13 @@ public class RooftopManager : MonoBehaviour
         if (lines == null || lines.Length == 0) yield break;
 
         dialogueBox.SetActive(true);
+        dialogueActive = true;
         foreach (string line in lines)
         {
             yield return StartCoroutine(TypeLine(line));
-            yield return StartCoroutine(WaitForSpace());
+            yield return StartCoroutine(WaitForAdvance());
         }
+        dialogueActive = false;
         dialogueBox.SetActive(false);
     }
 
@@ -381,24 +402,26 @@ public class RooftopManager : MonoBehaviour
     {
         clickHint?.SetActive(false);
         dialogueText.text = "";
+        isTyping   = true;
+        skipTyping = false;
 
         foreach (char c in text)
         {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                dialogueText.text = text;
-                break;
-            }
+            if (skipTyping) break;
             dialogueText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
+        dialogueText.text = text; // 스킵 시에도 전체 텍스트 보장
+
+        isTyping = false;
         clickHint?.SetActive(true);
     }
 
-    IEnumerator WaitForSpace()
+    IEnumerator WaitForAdvance()
     {
-        yield return new WaitUntil(() => !Input.GetKey(KeyCode.Space));
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+        advanceLine = false;
+        while (!advanceLine)
+            yield return null;
     }
 
     IEnumerator FadeTo(float targetAlpha)

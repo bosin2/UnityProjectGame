@@ -1612,7 +1612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  footstepInterval: 0.2
+  footstepInterval: 0.09
 --- !u!50 &617694975061380424
 Rigidbody2D:
   serializedVersion: 5

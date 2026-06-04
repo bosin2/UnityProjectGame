@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uCEE4\uD53C"
   description: "\uC544\uC8FC \uC4F4 \uCEE4\uD53C\uB2E4. \uB9DB\uC5C6\uB2E4."
-  icon: {fileID: 0}
+  icon: {fileID: -1850988681521255122, guid: 88f85f29c1f0f734bba4782990617b2e, type: 3}
   type: 4
   healAmount: 0
   defenseAmount: 0

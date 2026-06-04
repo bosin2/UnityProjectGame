@@ -22,6 +22,11 @@ public class WeaponSlotUI : MonoBehaviour
         Instance = this;
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     void Start()
     {
         // 플레이어 오브젝트에서 PlayerCombat을 탐색

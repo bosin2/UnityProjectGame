@@ -205,6 +205,8 @@ public class RangedMonster : MonsterBase
         // 피격 판정
         if (isDead) yield break;
 
+        AudioManager.Instance?.PlaySFX("explosion");
+
         Collider2D hit = Physics2D.OverlapCircle(targetPos, impactRadius, playerLayer);
         if (hit != null)
         {

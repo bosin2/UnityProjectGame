@@ -31,6 +31,11 @@ public class HotbarManager : MonoBehaviour
         Instance = this;
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     void Start()
     {
         highlight.gameObject.SetActive(false);

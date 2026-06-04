@@ -52,10 +52,9 @@ public class GameFlowManager : MonoBehaviour
     // ── 인트로 상태 ──────────────────────────────────────────────────
     private int   currentLine  = 0;
     private bool  isTyping     = false;
+    private bool  skipTyping   = false;
     private bool  canClick     = false;
     private bool  introActive  = true;
-    private float lastSpaceTime  = -1f;
-    private float spaceCooldown  = 0.3f;
 
     // GunShotEvent 중복 실행 방지 락
     private bool _gunShotPlaying = false;
@@ -153,21 +152,10 @@ public class GameFlowManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Time.unscaledTime - lastSpaceTime < spaceCooldown) return;
-            lastSpaceTime = Time.unscaledTime;
-
             if (isTyping)
-            {
-                StopAllCoroutines();
-                dialogueText.text = lines[currentLine].text;
-                isTyping = false;
-                canClick = true;
-                clickHint.SetActive(true);
-            }
+                skipTyping = true;
             else if (canClick)
-            {
                 NextLine();
-            }
         }
     }
 
@@ -194,8 +182,9 @@ public class GameFlowManager : MonoBehaviour
 
     IEnumerator TypeLine(DialogueLine line)
     {
-        isTyping = true;
-        canClick = false;
+        isTyping   = true;
+        skipTyping = false;
+        canClick   = false;
         clickHint.SetActive(false);
         dialogueText.text = "";
 
@@ -213,9 +202,11 @@ public class GameFlowManager : MonoBehaviour
 
         foreach (char c in line.text)
         {
+            if (skipTyping) break;
             dialogueText.text += c;
             yield return new WaitForSeconds(0.07f);
         }
+        dialogueText.text = line.text; // 스킵 시에도 전체 텍스트 보장
 
         isTyping = false;
         canClick = true;

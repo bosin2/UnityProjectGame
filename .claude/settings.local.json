@@ -18,7 +18,14 @@
       "Bash(grep -rn \"9ab5a4e8f8ca23442a4e5b5f02e8441a\\\\|19b38d8fe51a3c04c833fa2bcca5531f\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.meta)",
       "Bash(find C:UserswhghkUnityProjectGameAssetsScripts -name *.meta)",
       "Bash(powershell -Command \"Get-ChildItem 'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\*.unity' | ForEach-Object { $content = Get-Content $_.FullName -Raw; if \\($content -match '9ab5a4e8f8ca23442a4e5b5f02e8441a|1133eff7aa026e2458092d1dde78b4c4'\\) { Write-Host $_.Name } }\")",
-      "Bash(find C:UserswhghkUnityProjectGameAssets -name *.prefab.meta)"
+      "Bash(find C:UserswhghkUnityProjectGameAssets -name *.prefab.meta)",
+      "mcp__UnityMCP__manage_scene",
+      "mcp__UnityMCP__batch_execute",
+      "mcp__UnityMCP__manage_gameobject",
+      "mcp__UnityMCP__find_gameobjects",
+      "mcp__UnityMCP__execute_code",
+      "mcp__UnityMCP__validate_script",
+      "mcp__UnityMCP__read_console"
     ]
   }
 }

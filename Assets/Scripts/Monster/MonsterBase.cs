@@ -43,6 +43,10 @@ public abstract class MonsterBase : MonoBehaviour
     [Header("Scene Persistence")]
     [SerializeField] private string persistentMonsterId = "";
 
+    [Header("Monster Pass-Through")]
+    [Tooltip("true면 씬의 MonsterAI와 물리 충돌을 무시 (JBS·PYH 전용)")]
+    [SerializeField] private bool ignoreMonsterCollision = false;
+
     // ── 공용 필드 (자식 클래스에서 접근) ──────────────────────────────
     protected int currentHp;
     protected bool isDead = false;
@@ -74,6 +78,9 @@ public abstract class MonsterBase : MonoBehaviour
         currentHp = maxHp;
         SpawnHPBar();
         RestorePersistentState();
+
+        if (ignoreMonsterCollision)
+            SetupMonsterPassThrough();
     }
 
     protected virtual void OnDisable()
@@ -89,17 +96,17 @@ public abstract class MonsterBase : MonoBehaviour
         if (isDead) return;
 
         currentHp -= amount;
+        currentHp = Mathf.Max(0, currentHp); // hp는 항상 0 이상 유지
         UpdateHPBar();
-        SavePersistentState();
 
         if (currentHp <= 0)
         {
-            currentHp = 0;
-            SavePersistentState();
+            // isDead=true 설정 후 SavePersistentState가 DieRoutine 내부에서 호출됨
             StartCoroutine(DieRoutine());
         }
         else
         {
+            SavePersistentState();
             anim?.SetTrigger("IsHurt");
 
             // 넉백: 플레이어 → 몬스터 방향으로 밀어냄
@@ -217,11 +224,14 @@ public abstract class MonsterBase : MonoBehaviour
         if (!PersistsStateAcrossScenes || GameManager.Instance == null) return;
         if (!GameManager.Instance.TryGetMonsterState(GetPersistentStateId(), out GameManager.MonsterState state)) return;
 
+        // hp=0이고 isDead=false인 것은 이전 버그로 인한 스테일 상태 — 무시
+        if (state.hp <= 0 && !state.isDead) return;
+
         transform.position = state.position;
         currentHp = Mathf.Clamp(state.hp, 0, maxHp);
         UpdateHPBar();
 
-        if (state.isDead || currentHp <= 0)
+        if (state.isDead)
         {
             currentHp = 0;
             restoredCorpsePosition = state.position;
@@ -393,6 +403,19 @@ public abstract class MonsterBase : MonoBehaviour
                 return ph;
         }
         return null;
+    }
+
+    void SetupMonsterPassThrough()
+    {
+        Collider2D[] myCols = GetComponentsInChildren<Collider2D>();
+        MonsterAI[] ais = FindObjectsByType<MonsterAI>(FindObjectsSortMode.None);
+        foreach (MonsterAI ai in ais)
+        {
+            if (ai.gameObject == gameObject) continue;
+            foreach (Collider2D aiCol in ai.GetComponentsInChildren<Collider2D>())
+                foreach (Collider2D myCol in myCols)
+                    Physics2D.IgnoreCollision(myCol, aiCol, true);
+        }
     }
 
     /// <summary>이펙트 프리팹을 지정 위치에 잠깐 스폰 (자동 제거)</summary>
