@@ -45,8 +45,6 @@ public class ItemGiver : MonoBehaviour
                 GameManager.Instance.hasRightCorridorKey = true;
         }
 
-        // ── UI 갱신 (인벤토리가 열려 있을 때만) ──────────────────────
-        if (inventory != null && inventory.IsOpen)
-            inventory.RefreshItemList();
+        // UI 갱신은 AddItem() 내부에서 자동 처리
     }
 }

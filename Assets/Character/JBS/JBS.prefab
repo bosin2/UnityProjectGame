@@ -131,15 +131,24 @@ MonoBehaviour:
   hpBarPrefab: {fileID: 0}
   hpBarOffset: {x: 0, y: 1}
   knockbackForce: 5
+  takesMeleeDamage: 1
+  leaveCorpse: 1
+  corpseInteractable: 1
+  corpseInteractableId: 
+  corpseDialogueLines:
+  - ...
+  persistentMonsterId: 
   speed: 5.5
   arriveDistance: 0.05
+  contactDamage: 15
+  contactDamageInterval: 1.5
   gridCellSize: 0.5
   obstacleCheckRadius: 0.2
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
   pathUpdateInterval: 0.3
-  showPath: 1
+  showPath: 0
   pathColor: {r: 0, g: 1, b: 1, a: 1}
   nodeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   nodeRadius: 0.08

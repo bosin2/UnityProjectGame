@@ -5017,12 +5017,12 @@ MonoBehaviour:
   targetSceneName: Stair
   spawnPosition: {x: 19, y: -14}
   spawnDirection: {x: 0, y: 1}
-  requiredKey: {fileID: 11400000, guid: 914363454bbed404ba65581f22e71ff7, type: 2}
-  consumeKey: 1
-  noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+  requiredKey: {fileID: 0}
+  consumeKey: 0
+  noKeyMessage: 
   unlockFlag: 
   isBlocked: 0
-  blockedMessage: "\uC774\uCABD\uC740 \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+  blockedMessage: 
 --- !u!61 &880790673
 BoxCollider2D:
   m_ObjectHideFlags: 0

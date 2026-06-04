@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +14,7 @@ public class PlayerHPbar : MonoBehaviour
     public GameObject damageFlash; // 피격 시 깜빡이는 오브젝트
 
     private PlayerHealth playerHealth;
+    private Coroutine flashRoutine;
 
     void Awake()
     {
@@ -30,42 +30,67 @@ public class PlayerHPbar : MonoBehaviour
             DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    void OnEnable()
     {
-        // 플레이어를 찾아 이벤트 구독 (아직 없으면 코루틴으로 재시도)
-        StartCoroutine(SubscribeToPlayer());
+        TryBindToCurrentPlayer();
     }
 
-    // 플레이어가 생성될 때까지 매 프레임 탐색 후 이벤트 구독
-    IEnumerator SubscribeToPlayer()
+    void Update()
     {
-        while (playerHealth == null)
-        {
-            playerHealth = FindAnyObjectByType<PlayerHealth>();
-            yield return null;
-        }
+        if (playerHealth == null || !playerHealth.gameObject.activeInHierarchy)
+            TryBindToCurrentPlayer();
+    }
 
+    void OnDisable()
+    {
+        UnsubscribeFromPlayer();
+    }
+
+    void TryBindToCurrentPlayer()
+    {
+        PlayerHealth current = FindCurrentPlayerHealth();
+        if (current == null || current == playerHealth) return;
+
+        UnsubscribeFromPlayer();
+        playerHealth = current;
         playerHealth.OnHPChanged += OnHPChanged;
-        // 현재 HP로 초기화 (플래시 없이)
         Refresh(playerHealth.CurrentHp, playerHealth.maxHp, false);
+    }
+
+    PlayerHealth FindCurrentPlayerHealth()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null && player.activeInHierarchy)
+            return player.GetComponent<PlayerHealth>();
+
+        return FindFirstObjectByType<PlayerHealth>();
+    }
+
+    void UnsubscribeFromPlayer()
+    {
+        if (playerHealth != null)
+            playerHealth.OnHPChanged -= OnHPChanged;
+        playerHealth = null;
     }
 
     /// <summary>HP 비율에 따라 슬라이더와 색상을 갱신. 선택적으로 피격 플래시 재생</summary>
     public void Refresh(int current, int max, bool showFlash = true)
     {
-        if (hpSlider == null || fillImage == null) return;
+        if (hpSlider == null || fillImage == null || max <= 0) return;
 
-        float ratio = (float)current / max;
+        float ratio = Mathf.Clamp01((float)current / max);
         hpSlider.value = ratio;
-        fillImage.color = ratio > 0.5f ? Color.green
-                        : ratio > 0.25f ? Color.yellow
-                        : Color.red;
+        fillImage.color = Color.red;
 
-        if (showFlash)
-            StartCoroutine(FlashEffect());
+        if (showFlash && gameObject.activeInHierarchy)
+        {
+            if (flashRoutine != null)
+                StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashEffect());
+        }
     }
 
-    IEnumerator FlashEffect()
+    System.Collections.IEnumerator FlashEffect()
     {
         if (damageFlash != null)
         {
@@ -73,14 +98,13 @@ public class PlayerHPbar : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             damageFlash.SetActive(false);
         }
+        flashRoutine = null;
     }
 
-    // Action<int,int> 델리게이트에 맞는 래퍼 메서드
     private void OnHPChanged(int current, int max) => Refresh(current, max, true);
 
     void OnDestroy()
     {
-        if (playerHealth != null)
-            playerHealth.OnHPChanged -= OnHPChanged;
+        UnsubscribeFromPlayer();
     }
 }

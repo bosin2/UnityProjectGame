@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerHealth))]
@@ -60,7 +61,8 @@ public class PlayerCombat : MonoBehaviour
                 SwitchWeapon(currentWeapon == 0 ? 1 : 0);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) &&
+            (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject()))
             TryAttack();
     }
 

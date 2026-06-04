@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// 플레이어 HP 관리 (피격, 회복, 사망).
@@ -21,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("사망 연출")]
     public Image fadePanel;                // Inspector에서 연결
+    public TextMeshProUGUI gameOverText;   // Inspector에서 연결 (NEO 폰트)
 
     // ── 이벤트 (PlayerHPbar 같은 UI가 Subscribe) ──────────────────────
     /// <summary>HP가 바뀔 때마다 발생. 인수: (현재HP, 최대HP)</summary>
@@ -76,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
         OnHPChanged?.Invoke(currentHp, maxHp);
 
         if (currentHp <= 0)
-            StartCoroutine(DeathFadeRoutine());
+            TriggerGameOver();
     }
 
     /// <summary>HP 회복 (최대 HP 초과 불가)</summary>
@@ -106,6 +108,140 @@ public class PlayerHealth : MonoBehaviour
         pm.moveSpeed = Mathf.Max(pm.BaseSpeed, speedBefore);
     }
 
+    // ── 게임오버 ──────────────────────────────────────────────────────
+
+    /// <summary>HP=0 또는 타이머 만료 시 호출. 빨간 점멸 → 죽는 애니메이션 → 검정화면 → 메인메뉴</summary>
+    public void TriggerGameOver()
+    {
+        if (isDead) return;
+        isDead    = true;
+        currentHp = 0;
+        OnHPChanged?.Invoke(0, maxHp);
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        // ── 1. 시간 멈춤 + 이동 중지 ──────────────────────────────────
+        rb.linearVelocity  = Vector2.zero;
+        rb.angularVelocity = 0f;
+        combat?.CancelAttack();
+        Time.timeScale = 0f;
+
+        // ── 오버레이 확보 (fadePanel 미연결 시 자동 생성) ─────────────
+        Image overlay = fadePanel;
+        if (overlay == null && gameOverText != null)
+        {
+            Canvas canvas = gameOverText.GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                var go = new GameObject("_GameOverOverlay");
+                go.transform.SetParent(canvas.transform, false);
+                var rt = go.AddComponent<RectTransform>();
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                overlay = go.AddComponent<Image>();
+                overlay.color = new Color(0f, 0f, 0f, 0f);
+                overlay.raycastTarget = false;
+                // 오버레이는 텍스트 바로 아래에 렌더링
+                Transform textRoot = gameOverText.transform;
+                while (textRoot.parent != null && textRoot.parent != canvas.transform)
+                    textRoot = textRoot.parent;
+                go.transform.SetSiblingIndex(textRoot.GetSiblingIndex());
+            }
+        }
+
+        // ── 2. 빨간 점멸 2회 (빠르게 켰다 끔) ───────────────────────
+        if (overlay != null)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                float t = 0f;
+                while (t < 1f)
+                {
+                    t += Time.unscaledDeltaTime / 0.1f;
+                    overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0f, 0.6f, t));
+                    yield return null;
+                }
+                t = 0f;
+                while (t < 1f)
+                {
+                    t += Time.unscaledDeltaTime / 0.1f;
+                    overlay.color = new Color(1f, 0f, 0f, Mathf.Lerp(0.6f, 0f, t));
+                    yield return null;
+                }
+            }
+            overlay.color = new Color(0f, 0f, 0f, 0f); // 완전 투명
+        }
+
+        // ── 3. 죽는 애니메이션 (투명 상태에서 완전히 보이게, UnscaledTime) ──
+        AudioManager.Instance?.PlaySFX("death");
+        OnDied?.Invoke();
+
+        if (anim != null)
+        {
+            anim.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+            float dirX = anim.GetFloat("DirX");
+            float dirY = anim.GetFloat("DirY");
+            if (Mathf.Abs(dirX) >= Mathf.Abs(dirY))
+                sr.flipX = dirX > 0;
+            else
+                sr.flipX = false;
+
+            anim.SetBool("IsWalking",   false);
+            anim.SetBool("IsAttacking", false);
+            anim.SetBool("IsHurt",      false);
+            anim.SetBool("IsDie",       true);
+
+            // Die 스테이트 진입 대기
+            float waitTimeout = 1f, waited = 0f;
+            while (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die") && waited < waitTimeout)
+            {
+                waited += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            // 죽는 애니메이션 끝까지 대기
+            float timeout = 5f, elapsed = 0f;
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
+                   && anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
+                   && elapsed < timeout)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            anim.enabled = false;
+        }
+
+        // ── 4. 검정 페이드인 (애니메이션 완전히 끝난 후) ─────────────
+        if (overlay != null)
+        {
+            float t = 0f;
+            while (t < 1f)
+            {
+                t += Time.unscaledDeltaTime * 1.5f;
+                overlay.color = new Color(0f, 0f, 0f, Mathf.Clamp01(t));
+                yield return null;
+            }
+            overlay.color = Color.black;
+        }
+
+        // ── 5. "죽었습니다." 텍스트 표시 ─────────────────────────────
+        if (gameOverText != null)
+        {
+            gameOverText.gameObject.SetActive(true);
+            gameOverText.text = "죽었습니다.";
+        }
+
+        yield return new WaitForSecondsRealtime(2.5f);
+        GameManager.Instance?.ResetGame();
+        Destroy(gameObject);
+        SceneManager.LoadScene("MainMenu");
+    }
+
     // ── 내부 코루틴 ──────────────────────────────────────────────────
 
     IEnumerator HurtRoutine(Vector2 knockbackDir)
@@ -127,62 +263,6 @@ public class PlayerHealth : MonoBehaviour
 
         anim.SetBool("IsHurt", false);
         isHurt = false;
-    }
-
-    IEnumerator DeathFadeRoutine()
-    {
-        float t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime * 3f;
-            if (fadePanel != null)
-                fadePanel.color = new Color(1, 0, 0, Mathf.Lerp(0, 0.6f, t));
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.3f);
-        Die();
-    }
-
-    void Die()
-    {
-        isDead = true;
-        rb.linearVelocity = Vector2.zero;
-        AudioManager.Instance?.PlaySFX("death");
-
-        // 사망 방향에 맞게 스프라이트 플립
-        float dirX = anim.GetFloat("DirX");
-        float dirY = anim.GetFloat("DirY");
-        if (Mathf.Abs(dirX) >= Mathf.Abs(dirY))
-            sr.flipX = dirX > 0;
-        else
-            sr.flipX = false;
-
-        anim.SetBool("IsDie", true);
-        OnDied?.Invoke();
-        StartCoroutine(DieRoutine());
-    }
-
-    IEnumerator DieRoutine()
-    {
-        yield return null; // IsDie 파라미터 반영 대기
-
-        // 사망 애니메이션 완료 대기 (최대 3초 타임아웃 — 루핑 애니메이션 방지)
-        float timeout = 3f;
-        float elapsed = 0f;
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
-               && anim.GetCurrentAnimatorStateInfo(0).IsName("Die")
-               && elapsed < timeout)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        anim.enabled = false;
-        GameManager.Instance?.ResetGame();
-        // SetActive(false) 대신 Destroy: OnDestroy → PlayerMovement._exists 리셋
-        // → 재시작 시 새 씬의 플레이어가 정상 생성됨
-        Destroy(gameObject);
-        SceneManager.LoadScene("MainMenu");
     }
 
     // 대각선 벡터를 4방향(상/하/좌/우) 중 하나로 스냅

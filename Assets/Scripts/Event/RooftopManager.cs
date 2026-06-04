@@ -30,6 +30,9 @@ public class RooftopManager : MonoBehaviour
     //  6  |  살음   |   죽음    |   죽음    |   1명    | 굿  (동행)
     //  7  |  죽음   |   죽음    |   죽음    |   0명    | 굿  (동행)
     // ───────────────────────────────────────────────────────────────
+    [Header("공통 기본 대사")]
+    [TextArea(2, 5)] public string[] commonDialogueLines;
+
     [Header("8가지 대사 세트 (0~7)")]
     public DialogueSet[] dialogueSets = new DialogueSet[8];
 
@@ -143,7 +146,8 @@ public class RooftopManager : MonoBehaviour
             idx = GameManager.Instance.GetDialogueIndex();
         Debug.Log($"[Rooftop] 대사 인덱스: {idx}");
 
-        // 5. 분기 대사 표시
+        // 5. 공통 기본 대사 + 분기 대사 표시
+        yield return StartCoroutine(PlayDialogueLines(commonDialogueLines));
         yield return StartCoroutine(PlayDialogueSet(dialogueSets[idx]));
 
         // 6. 엔딩 시퀀스

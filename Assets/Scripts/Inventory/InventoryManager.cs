@@ -59,6 +59,8 @@ public class InventoryManager : MonoBehaviour
     private ItemData equippedArmor;
     private ItemData equippedShoes;
 
+    private PlayerHealth playerHealth;
+
     public bool IsOpen { get; private set; } = false;
 
     // ── 초기화 ──────────────────────────────────────────────────────
@@ -101,6 +103,27 @@ public class InventoryManager : MonoBehaviour
             FindFirstObjectByType<PlayerMovement>()
                 ?.SetEquipSpeedBonus(defaultShoes.speedAmount);
         }
+
+        BindPlayerHealth();
+    }
+
+    void BindPlayerHealth()
+    {
+        var ph = FindFirstObjectByType<PlayerHealth>();
+        if (ph == null || ph == playerHealth) return;
+        if (playerHealth != null) playerHealth.OnHPChanged -= OnPlayerHPChanged;
+        playerHealth = ph;
+        playerHealth.OnHPChanged += OnPlayerHPChanged;
+    }
+
+    void OnPlayerHPChanged(int current, int max)
+    {
+        if (IsOpen) RefreshStats();
+    }
+
+    void OnDestroy()
+    {
+        if (playerHealth != null) playerHealth.OnHPChanged -= OnPlayerHPChanged;
     }
 
     void Update()
@@ -124,6 +147,7 @@ public class InventoryManager : MonoBehaviour
         {
             inventory.Add(new ItemStack(item, count));
         }
+        if (IsOpen) RefreshItemList();
     }
 
     public void RemoveItem(ItemData item, int count = 1)
@@ -132,10 +156,14 @@ public class InventoryManager : MonoBehaviour
         if (stack == null) return;
         stack.count -= count;
         if (stack.count <= 0) inventory.Remove(stack);
+        if (IsOpen) RefreshItemList();
     }
 
-    public void RemoveItemCompletely(ItemData item) =>
+    public void RemoveItemCompletely(ItemData item)
+    {
         inventory.RemoveAll(s => s.item == item);
+        if (IsOpen) RefreshItemList();
+    }
 
     public int GetItemCount(ItemData item)
     {
@@ -330,12 +358,10 @@ public class InventoryManager : MonoBehaviour
 
         if (IsOpen)
         {
-            Time.timeScale  = 0f;
-            categoryIdx     = 0;
-            currentCategory = Category.Key;
-            itemListPanel.SetActive(false);
-            RefreshCategoryCursor();
+            Time.timeScale = 0f;
+            BindPlayerHealth();
             RefreshStats();
+            OnClickCategory(0);
         }
         else
         {

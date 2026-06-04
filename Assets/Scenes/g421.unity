@@ -1499,7 +1499,8 @@ MonoBehaviour:
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: G421Open
   isBlocked: 0
-  blockedMessage: ' '
+  blockedMessage: "\uBB38\uC774 \uCC0C\uADF8\uB7EC\uC838 \uB098\uAC08\uC218\uC5C6\uB2E4
+    \uC55E\uBB38\uC744 \uC774\uC6A9\uD558\uC790"
 --- !u!1 &162711258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,8 +2631,8 @@ Tilemap:
   - first: {x: 8, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2649,21 +2650,21 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 19
+  - m_RefCount: 18
     m_Data: {fileID: 11400000, guid: e8a2ef310fbcee749ab8bbac56da2d70, type: 2}
   - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: 1d961faed79187a4c9df44bd275cfeb2, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: e89356414a0cb83438cbd0e02a2f317c, type: 2}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 631508f2e5f41994dad288aa6f06e900, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 19
+  - m_RefCount: 18
     m_Data: {fileID: 5625398515742926777, guid: 5817e37b838cea54986ee55b690cdaf8, type: 3}
   - m_RefCount: 7
     m_Data: {fileID: 21300000, guid: 60e5db66ee72b5c4fb931daff43e06a3, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 4404905234282257119, guid: da918b31377f07d41b7c2d78208f3129, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2862160426618537553, guid: 3f3bd19bba937d141a8c6c13a70fbe71, type: 3}
   m_TileMatrixArray:

@@ -167,7 +167,7 @@ MonoBehaviour:
   targetSceneName: Rooftop
   spawnPosition: {x: 10, y: -16}
   spawnDirection: {x: 0, y: 1}
-  requiredKey: {fileID: 0}
+  requiredKey: {fileID: 11400000, guid: 914363454bbed404ba65581f22e71ff7, type: 2}
   consumeKey: 1
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: 

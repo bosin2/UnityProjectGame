@@ -20,7 +20,7 @@ public class DoorTrigger : MonoBehaviour
     [SerializeField] private string   noKeyMessage = "열쇠가 필요합니다.";
 
     [Header("공유 잠금 해제 플래그")]
-    [Tooltip("같은 플래그를 공유하는 문들은 하나만 열면 모두 개방됩니다.")]
+    [Tooltip("같은 플래그를 공유하는 문들은 하나만 열면 모두 개방됩니다. 비워두면 이 문 전용 플래그가 자동 생성됩니다.")]
     [SerializeField] private string unlockFlag = "";
 
     [Header("진입 차단")]
@@ -49,9 +49,10 @@ public class DoorTrigger : MonoBehaviour
         // 열쇠 조건 확인
         if (requiredKey != null)
         {
-            bool alreadyUnlocked = unlockFlag != ""
+            string effectiveUnlockFlag = GetEffectiveUnlockFlag();
+            bool alreadyUnlocked = effectiveUnlockFlag != ""
                 && GameManager.Instance != null
-                && GameManager.Instance.HasFlag(unlockFlag);
+                && GameManager.Instance.HasFlag(effectiveUnlockFlag);
 
             if (!alreadyUnlocked)
             {
@@ -71,12 +72,27 @@ public class DoorTrigger : MonoBehaviour
                 if (consumeKey)
                     inventory.RemoveItem(requiredKey, 1);
 
-                if (unlockFlag != "")
-                    GameManager.Instance?.SetFlag(unlockFlag);
+                if (effectiveUnlockFlag != "")
+                    GameManager.Instance?.SetFlag(effectiveUnlockFlag);
             }
         }
 
         // SceneLoader를 통해 씬 전환 (PlayerPrefs 대신 메모리 전달)
         SceneLoader.LoadScene(targetSceneName, spawnPosition, spawnDirection);
+    }
+
+    string GetEffectiveUnlockFlag()
+    {
+        if (!string.IsNullOrEmpty(unlockFlag))
+            return unlockFlag;
+
+        if (requiredKey == null)
+            return "";
+
+        string sceneName = gameObject.scene.name;
+        string targetName = !string.IsNullOrEmpty(targetSceneName) ? targetSceneName : gameObject.name;
+        string keyName = requiredKey != null ? requiredKey.name : "NoKey";
+
+        return $"DoorUnlocked_{sceneName}_{targetName}_{keyName}";
     }
 }

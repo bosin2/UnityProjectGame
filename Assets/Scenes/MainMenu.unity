@@ -1574,6 +1574,9 @@ MonoBehaviour:
   currentWeapon: pipe
   hasRightCorridorKey: 0
   gunEventDone: 0
+  KKilled: 0
+  JKilled: 0
+  PKilled: 0
 --- !u!4 &1082564782
 Transform:
   m_ObjectHideFlags: 0
@@ -2300,6 +2303,18 @@ PrefabInstance:
     - target: {fileID: 6007515532171217832, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146190133359722040, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.72955966
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146190133359722040, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.72955966
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146190133359722040, guid: 9db9e21913814fa4db62c964a6464ec7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.72955966
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

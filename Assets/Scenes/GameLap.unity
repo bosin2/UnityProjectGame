@@ -1667,8 +1667,8 @@ MonoBehaviour:
   gunNPC: {fileID: 1870976545}
   weaponSlotUI: {fileID: 1129757776}
   hotbarManager: {fileID: 1129757777}
-  skipIntroTutorial: 0
-  skipWithGun: 0
+  skipIntroTutorial: 1
+  skipWithGun: 1
 --- !u!4 &378217737
 Transform:
   m_ObjectHideFlags: 0
@@ -9643,6 +9643,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5264307574598891528, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 205.7339
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264307574598891528, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 606
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264307574598891528, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -143.85
+      objectReference: {fileID: 0}
     - target: {fileID: 5710396874372784521, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -9678,6 +9690,30 @@ PrefabInstance:
     - target: {fileID: 7710250375241558156, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
       propertyPath: m_Name
       value: DiaCanvers
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_text
+      value: SPACE
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_margin.x
+      value: 11.20874
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_margin.z
+      value: 22.777344
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c8468891e3ea6ec499c1565e09157352, type: 2}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2318977371700076602, guid: c8468891e3ea6ec499c1565e09157352, type: 2}
+    - target: {fileID: 8045454381951199186, guid: 269c8d9d1d7f747418fdc519c8ee56e2, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

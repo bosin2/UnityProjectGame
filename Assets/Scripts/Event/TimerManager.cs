@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 게임 제한 시간을 카운트다운하고 UI에 표시하는 컴포넌트.
-/// 시간이 0 이 되면 BadEnding 씬으로 전환.
+/// 시간이 0 이 되면 PlayerHealth.TriggerGameOver()를 호출한다.
 /// UICanvas의 일부로 씬 전환 후에도 유지된다.
 /// </summary>
 public class TimerManager : MonoBehaviour
@@ -67,7 +67,11 @@ public class TimerManager : MonoBehaviour
             currentTime = 0f;
             isRunning   = false;
             UpdateUI();
-            SceneManager.LoadScene("BadEnding");
+            PlayerHealth player = FindFirstObjectByType<PlayerHealth>();
+            if (player != null)
+                player.TriggerGameOver();
+            else
+                SceneManager.LoadScene("MainMenu");
             return;
         }
 

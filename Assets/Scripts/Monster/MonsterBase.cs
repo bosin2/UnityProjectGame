@@ -54,6 +54,8 @@ public abstract class MonsterBase : MonoBehaviour
     // HP바 인스턴스 (월드 공간 슬라이더 등)
     private GameObject hpBarInstance;
     private Image hpFillImage;
+    private bool restoringPersistentCorpse = false;
+    private Vector3 restoredCorpsePosition;
 
     protected virtual bool PersistsStateAcrossScenes => false;
 
@@ -201,6 +203,9 @@ public abstract class MonsterBase : MonoBehaviour
         if (anim != null)
             anim.speed = 0f;
 
+        if (restoringPersistentCorpse)
+            transform.position = restoredCorpsePosition;
+
         if (corpseInteractable)
             SetupCorpseInteractable();
 
@@ -219,6 +224,8 @@ public abstract class MonsterBase : MonoBehaviour
         if (state.isDead || currentHp <= 0)
         {
             currentHp = 0;
+            restoredCorpsePosition = state.position;
+            restoringPersistentCorpse = true;
             StartCoroutine(RestoreCorpseRoutine());
         }
     }
@@ -226,6 +233,7 @@ public abstract class MonsterBase : MonoBehaviour
     IEnumerator RestoreCorpseRoutine()
     {
         isDead = true;
+        transform.position = restoredCorpsePosition;
         SavePersistentState();
         PrepareForDeathAnimation();
 
@@ -244,25 +252,32 @@ public abstract class MonsterBase : MonoBehaviour
             BecomeCorpse();
         else
             gameObject.SetActive(false);
+
+        restoringPersistentCorpse = false;
     }
 
     void SavePersistentState()
     {
         if (!PersistsStateAcrossScenes || GameManager.Instance == null) return;
 
+        Vector3 positionToSave = restoringPersistentCorpse && isDead
+            ? restoredCorpsePosition
+            : transform.position;
+
         GameManager.Instance.SaveMonsterState(
             GetPersistentStateId(),
-            transform.position,
+            positionToSave,
             currentHp,
             isDead);
     }
 
     string GetPersistentStateId()
     {
-        if (!string.IsNullOrEmpty(persistentMonsterId))
-            return persistentMonsterId;
+        string localId = !string.IsNullOrEmpty(persistentMonsterId)
+            ? persistentMonsterId
+            : gameObject.name;
 
-        return $"{gameObject.scene.name}_{gameObject.name}";
+        return $"{gameObject.scene.name}_{localId}";
     }
 
     void SetupCorpseInteractable()
