@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 게임 전반의 상태를 관리하는 영구 싱글톤.
@@ -71,6 +72,14 @@ public class GameManager : MonoBehaviour
             UICanvas.Instance?.HideUI();
         else if (stage > 0)
             UICanvas.Instance?.ShowUI();
+
+        // EventSystem이 없는 씬(RightCorrider, Stair 등)에서 자동 생성
+        if (FindFirstObjectByType<EventSystem>() == null)
+        {
+            var es = new GameObject("EventSystem");
+            es.AddComponent<EventSystem>();
+            es.AddComponent<StandaloneInputModule>();
+        }
     }
 
     // ── 플래그 관리 ───────────────────────────────────────────────────

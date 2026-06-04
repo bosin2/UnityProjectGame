@@ -3,7 +3,16 @@
     "allow": [
       "Bash(claude mcp:*)",
       "Bash(netstat -ano)",
-      "Bash(find /c/Users/whghk/UnityProjectGame/Assets -name *.ttf -o -name *.otf)"
+      "Bash(find /c/Users/whghk/UnityProjectGame/Assets -name *.ttf -o -name *.otf)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/whghk/UnityProjectGame/**)",
+      "Bash(done)",
+      "Bash(powershell -Command \"\n$scenes = @\\(\n  'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\MainMenu.unity',\n  'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\GameLap.unity',\n  'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\Rooftop.unity',\n  'C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\Assets\\\\Scenes\\\\g421.unity'\n\\)\nforeach \\(\\\\$f in \\\\$scenes\\) {\n  \\\\$c = Get-Content \\\\$f -Raw\n  \\\\$c = \\\\$c -replace 'm_UiScaleMode: 0', 'm_UiScaleMode: 1'\n  \\\\$c = \\\\$c -replace 'm_ReferenceResolution: \\\\{x: 800, y: 600\\\\}', 'm_ReferenceResolution: {x: 1920, y: 1080}'\n  \\\\$c = \\\\$c -replace 'm_MatchWidthOrHeight: 0', 'm_MatchWidthOrHeight: 0.5'\n  Set-Content \\\\$f \\\\$c -NoNewline\n  Write-Host \\\\\"Fixed: \\\\$f\\\\\"\n}\n\")",
+      "Bash(exit:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\fix_canvas.ps1\")",
+      "Bash(Remove-Item \"C:\\\\Users\\\\whghk\\\\UnityProjectGame\\\\fix_canvas.ps1\")",
+      "Bash(grep -rn \"RightCorridor\\\\|RightCorrider\" C:UserswhghkUnityProjectGameAssetsScripts --include=*.cs)"
     ]
   }
 }

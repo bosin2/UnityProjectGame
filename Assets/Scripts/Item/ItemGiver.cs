@@ -33,6 +33,8 @@ public class ItemGiver : MonoBehaviour
         else
             Debug.LogWarning("[ItemGiver] InventoryManager를 찾을 수 없습니다!", this);
 
+        AudioManager.Instance?.PlaySFX("pickup");
+
         Debug.Log($"[ItemGiver] {item.itemName} x{count} 지급");
 
         // ── 열쇠 플래그 설정 (RefreshItemList 이전에 처리 — 예외로 인한 누락 방지) ──

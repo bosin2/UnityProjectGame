@@ -130,6 +130,10 @@ public class RooftopManager : MonoBehaviour
         TimerManager.Instance?.PauseTimer();
         SetPlayerControl(false);
         UICanvas.Instance?.HideUI();
+        WeaponSlotUI.Instance?.Hide();
+        HotbarManager.Instance?.Hide();
+        InventoryManager.Instance?.inventoryUI?.SetActive(false);
+        InventoryManager.Instance?.hotbarUI?.SetActive(false);
         yield return new WaitForSeconds(0.3f);
 
         // 2. 시네마틱 바 + 카메라 팬업 (병렬)
