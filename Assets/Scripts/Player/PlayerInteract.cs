@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 플레이어가 Interactable 오브젝트와 대화하는 시스템.
@@ -29,6 +30,16 @@ public class PlayerInteract : MonoBehaviour
     private int    currentIndex     = 0;
     private System.Action onComplete;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     void Start()
     {
         dialogueBox.SetActive(false);
@@ -36,6 +47,11 @@ public class PlayerInteract : MonoBehaviour
 
         yesButton.onClick.AddListener(OnChoiceYes);
         noButton.onClick.AddListener(OnChoiceNo);
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetDialogueState();
     }
 
     void Update()
@@ -128,6 +144,25 @@ public class PlayerInteract : MonoBehaviour
         Time.timeScale = 0f;
         if (hotbar != null) hotbar.SetActive(false);
         StartCoroutine(TypeLine(lines[0]));
+    }
+
+    void ResetDialogueState()
+    {
+        StopAllCoroutines();
+        isDialogueActive = false;
+        isTyping = false;
+        currentLines = null;
+        currentIndex = 0;
+        onComplete = null;
+        currentTarget = null;
+
+        if (dialogueText != null) dialogueText.text = "";
+        if (dialogueBox != null) dialogueBox.SetActive(false);
+        if (choiceBox != null) choiceBox.SetActive(false);
+        if (clickHint != null) clickHint.SetActive(false);
+        if (hotbar != null) hotbar.SetActive(true);
+
+        Time.timeScale = 1f;
     }
 
     // 한 글자씩 타이핑 (unscaledTime: timeScale=0에서도 동작)

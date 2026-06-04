@@ -151,6 +151,8 @@ public class PlayerMovement : MonoBehaviour
     // 씬 로드 후 SceneLoader에 저장된 스폰 데이터를 읽어 위치와 방향 적용
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        enabled = true;
+
         // ① 이전 씬의 잔여 속도 초기화
         movement = Vector2.zero;
         rb.linearVelocity = Vector2.zero;

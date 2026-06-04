@@ -10987,7 +10987,7 @@ MonoBehaviour:
   monologueLines:
   - "\uBB50\uC57C...? \uC218\uBB49..\uC774?"
   - "\uC5B4\uB5BB\uAC8C \uC9C0\uB098\uAC00\uC9C0..."
-  typingSpeed: 0.8
+  typingSpeed: 0.05
   readDelay: 2
   fadePanel: {fileID: 1509007196}
   monologuePanel: {fileID: 541563547}
@@ -38828,7 +38828,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2080739491}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -38931,7 +38931,7 @@ MonoBehaviour:
   spawnPosition: {x: -65, y: -1}
   spawnDirection: {x: -1, y: 0}
   requiredKey: {fileID: 0}
-  consumeKey: 1
+  consumeKey: 0
   noKeyMessage: "\uC5F4\uC1E0\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
   unlockFlag: 
   isBlocked: 0
@@ -38970,7 +38970,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.2901039, y: -3.9164014}
+  m_Offset: {x: 0.42215157, y: -3.9164014}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -38980,7 +38980,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.5802078, y: 10.13827}
+  m_Size: {x: 1.8443031, y: 10.13827}
   m_EdgeRadius: 0
 --- !u!1001 &7642172461259262927
 PrefabInstance:

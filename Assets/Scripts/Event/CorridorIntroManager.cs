@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -47,9 +48,25 @@ public class CorridorIntroManager : MonoBehaviour
 
     // ── 내부 ──────────────────────────────────────────────────────────
     private CameraFollow cameraFollow;
+    private bool introRunning;
+    private bool introFinished;
+    private readonly List<MonsterPauseState> pausedMonsters = new List<MonsterPauseState>();
+
+    private struct MonsterPauseState
+    {
+        public MonsterBase monster;
+        public bool monsterEnabled;
+        public Rigidbody2D rb;
+        public bool rbSimulated;
+        public Vector2 rbVelocity;
+        public Animator animator;
+        public float animatorSpeed;
+    }
 
     void Start()
     {
+        ResetIntroUI();
+
         if (GameManager.Instance == null)
         {
             Debug.LogWarning("[CorridorIntro] GameManager가 없어서 스킵됨");
@@ -72,16 +89,19 @@ public class CorridorIntroManager : MonoBehaviour
 
     IEnumerator IntroSequence(string flag)
     {
+        introRunning = true;
+        introFinished = false;
+
         // 한 프레임 대기 — PlayerMovement 스폰 위치 설정 완료 보장
         yield return null;
 
         // 대사창 미리 숨김 (씬에서 활성화 상태여도 카메라 팬 중엔 보이지 않게)
-        monologuePanel?.SetActive(false);
-        clickHint?.SetActive(false);
+        ResetIntroUI();
 
         // ── 1. 플레이어 잠금 + HUD 숨김 + 타이머 정지 ──
         TimerManager.Instance?.PauseTimer();
         SetPlayerControl(false);
+        SetMonstersPaused(true);
         UICanvas.Instance?.HideUI();
         WeaponSlotUI.Instance?.Hide();
         HotbarManager.Instance?.Hide();
@@ -145,6 +165,7 @@ public class CorridorIntroManager : MonoBehaviour
         yield return StartCoroutine(FadeTo(0f));
 
         // ── 10. 잠금 해제 + HUD 복원 ──
+        SetMonstersPaused(false);
         SetPlayerControl(true);
         UICanvas.Instance?.ShowUI();
         WeaponSlotUI.Instance?.Show();
@@ -153,6 +174,8 @@ public class CorridorIntroManager : MonoBehaviour
 
         // 방문 완료 플래그
         GameManager.Instance.SetFlag(flag);
+        introFinished = true;
+        introRunning = false;
     }
 
     // ===================================================================
@@ -181,12 +204,11 @@ public class CorridorIntroManager : MonoBehaviour
             monologueText.text = "";
 
             // 이전 줄 진행 시 Space가 눌려 있을 수 있으므로 떼기를 먼저 기다림
-            yield return new WaitUntil(() => !Input.GetKey(KeyCode.Space));
 
             // 타이핑 (Space 누르고 있으면 즉시 완성)
             foreach (char c in line)
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     monologueText.text = line;
                     break;
@@ -198,7 +220,6 @@ public class CorridorIntroManager : MonoBehaviour
             clickHint?.SetActive(true);
 
             // Space 홀드 중이면 떼기를 기다림 (중복 스킵 방지)
-            yield return new WaitUntil(() => !Input.GetKey(KeyCode.Space));
 
             // readDelay 동안 대기, 또는 Space 로 즉시 진행
             float elapsed = 0f;
@@ -235,6 +256,14 @@ public class CorridorIntroManager : MonoBehaviour
         fadePanel.color = new Color(0, 0, 0, targetAlpha);
     }
 
+    void ResetIntroUI()
+    {
+        monologuePanel?.SetActive(false);
+        clickHint?.SetActive(false);
+        if (monologueText != null) monologueText.text = "";
+        if (fadePanel != null) fadePanel.color = new Color(0, 0, 0, 0f);
+    }
+
     // ===================================================================
     // 플레이어 제어 잠금/해제
     // ===================================================================
@@ -261,5 +290,83 @@ public class CorridorIntroManager : MonoBehaviour
                 anim.SetFloat("DirY", -1f);
             }
         }
+    }
+
+    void SetMonstersPaused(bool paused)
+    {
+        if (paused)
+        {
+            pausedMonsters.Clear();
+
+            MonsterBase[] monsters = FindObjectsByType<MonsterBase>(FindObjectsSortMode.None);
+            foreach (MonsterBase monster in monsters)
+            {
+                if (monster == null || monster.gameObject.scene != gameObject.scene)
+                    continue;
+
+                Rigidbody2D monsterRb = monster.GetComponent<Rigidbody2D>();
+                Animator monsterAnimator = monster.GetComponent<Animator>()
+                    ?? monster.GetComponentInChildren<Animator>();
+
+                pausedMonsters.Add(new MonsterPauseState
+                {
+                    monster = monster,
+                    monsterEnabled = monster.enabled,
+                    rb = monsterRb,
+                    rbSimulated = monsterRb == null || monsterRb.simulated,
+                    rbVelocity = monsterRb != null ? monsterRb.linearVelocity : Vector2.zero,
+                    animator = monsterAnimator,
+                    animatorSpeed = monsterAnimator != null ? monsterAnimator.speed : 1f
+                });
+
+                if (monsterRb != null)
+                {
+                    monsterRb.linearVelocity = Vector2.zero;
+                    monsterRb.angularVelocity = 0f;
+                    monsterRb.simulated = false;
+                }
+
+                if (monsterAnimator != null)
+                    monsterAnimator.speed = 0f;
+
+                monster.enabled = false;
+            }
+
+            return;
+        }
+
+        foreach (MonsterPauseState state in pausedMonsters)
+        {
+            if (state.monster != null)
+                state.monster.enabled = state.monsterEnabled;
+
+            if (state.animator != null)
+                state.animator.speed = state.animatorSpeed;
+
+            if (state.rb != null)
+            {
+                state.rb.simulated = state.rbSimulated;
+                if (state.rbSimulated)
+                    state.rb.linearVelocity = state.rbVelocity;
+            }
+        }
+
+        pausedMonsters.Clear();
+    }
+
+    void OnDisable()
+    {
+        if (!introRunning || introFinished) return;
+
+        SetPlayerControl(true);
+        SetMonstersPaused(false);
+        if (cameraFollow != null) cameraFollow.enabled = true;
+        Fogeffect.Instance?.SetFogActive(true);
+        UICanvas.Instance?.ShowUI();
+        WeaponSlotUI.Instance?.Show();
+        HotbarManager.Instance?.Show();
+        TimerManager.Instance?.ResumeTimer();
+        ResetIntroUI();
+        introRunning = false;
     }
 }
