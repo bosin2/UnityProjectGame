@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * PlayerHPbar.cs
+ * 역할: PlayerHealth.OnHPChanged 이벤트를 구독해 플레이어 HP 슬라이더와 피격 플래시를 갱신합니다.
+ * 연결: 씬 전환 후 새 UI/플레이어 참조가 바뀔 수 있어 현재 활성 PlayerHealth를 계속 재바인딩합니다.
+ * 주의: 오래된 PlayerHealth 이벤트 구독을 해제하지 않으면 HP바가 갱신되지 않거나 중복 호출될 수 있습니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -108,3 +113,5 @@ public class PlayerHPbar : MonoBehaviour
         UnsubscribeFromPlayer();
     }
 }
+
+

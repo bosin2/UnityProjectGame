@@ -1,3 +1,9 @@
+/*
+ * DebugPlayerSpawner.cs
+ * 역할: 개발/디버그용으로 플레이어가 없는 씬에서 플레이어 프리팹을 임시 생성합니다.
+ * 연결: 개별 씬을 에디터에서 바로 실행할 때 PlayerMovement, PlayerHealth, PlayerCombat 테스트를 돕습니다.
+ * 주의: 실제 빌드 흐름에서는 중복 플레이어가 생기지 않도록 PlayerMovement의 DontDestroyOnLoad 중복 방지와 함께 동작해야 합니다.
+ */
 #if UNITY_EDITOR
 using UnityEngine;
 
@@ -36,3 +42,5 @@ public class DebugPlayerSpawner : MonoBehaviour
     }
 }
 #endif
+
+

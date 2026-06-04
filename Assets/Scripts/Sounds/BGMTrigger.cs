@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * BGMTrigger.cs
+ * 역할: 플레이어가 특정 구역에 들어왔을 때 BGM을 바꾸는 트리거 스크립트입니다.
+ * 연결: AudioManager의 BGM 라이브러리 이름을 문자열로 호출합니다.
+ * 주의: 호출 이름이 AudioManager의 bgmClips 이름과 다르면 경고만 출력되고 음악은 바뀌지 않습니다.
+ */using UnityEngine;
 
 // 플레이어가 트리거 영역 진입 시 BGM 교체.
 // 보스방 입구, 특정 이벤트 구역 등에 배치.
@@ -63,3 +68,5 @@ public class BGMTrigger : MonoBehaviour
         Debug.Log($"[BGMTrigger] '{revertBgmName}'로 복귀");
     }
 }
+
+

@@ -1,4 +1,9 @@
-using System.Collections.Generic;
+/*
+ * GameManager.cs
+ * 역할: 씬이 바뀌어도 유지되는 전역 게임 상태 저장소입니다.
+ * 연결: 문 해금 플래그, 상호작용 phase, 몬스터 사망/위치, 엔딩 분기(K/J/P 사망), 튜토리얼 진행 상태를 모두 저장합니다.
+ * 주의: SetFlag/HasFlag는 문자열 대소문자를 구분하므로 씬 YAML과 코드의 플래그명을 반드시 동일하게 유지해야 합니다.
+ */using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
@@ -34,7 +39,7 @@ public class GameManager : MonoBehaviour
     public bool hasRightCorridorKey = false;
     public bool gunEventDone        = false;
 
-    [Header("===== Ending Branch Flags =====")]
+    [Header("엔딩 분기 플래그")]
     [Tooltip("김우진이 죽었는지")]
     public bool KKilled = false;
 
@@ -165,3 +170,5 @@ public class GameManager : MonoBehaviour
         TimerManager.Instance?.ResetTimer();
     }
 }
+
+

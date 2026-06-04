@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * DoorTrigger.cs
+ * 역할: 플레이어가 문 트리거에 닿았을 때 열쇠/차단 조건을 검사하고 목표 씬으로 이동시킵니다.
+ * 연결: InventoryManager의 열쇠 수량, GameManager의 해금 플래그, SceneLoader의 스폰 전달, AudioManager의 문 효과음을 사용합니다.
+ * 주의: unlockFlag가 비어 있어도 열쇠 문은 자동 문 전용 플래그를 만들어 재잠김을 방지합니다.
+ */using UnityEngine;
 
 /// <summary>
 /// 플레이어가 문 트리거에 진입하면 지정 씬으로 전환하는 컴포넌트.
@@ -14,7 +19,7 @@ public class DoorTrigger : MonoBehaviour
     [SerializeField] private Vector2 spawnPosition;
     [SerializeField] private Vector2 spawnDirection = Vector2.down;
 
-    [Header("열쇠 조건 (null이면 자유 진입)")]
+    [Header("열쇠 조건 (없으면 자유 진입)")]
     [SerializeField] private ItemData requiredKey;
     [SerializeField] private bool     consumeKey   = true;
     [SerializeField] private string   noKeyMessage = "열쇠가 필요합니다.";
@@ -100,3 +105,5 @@ public class DoorTrigger : MonoBehaviour
         return $"DoorUnlocked_{sceneName}_{targetName}_{keyName}";
     }
 }
+
+

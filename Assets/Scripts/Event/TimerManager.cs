@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * TimerManager.cs
+ * 역할: 제한 시간 UI와 타이머 종료 시 게임오버 흐름을 관리하는 전역 타이머입니다.
+ * 연결: CorridorIntroManager/RooftopManager가 컷씬 중 타이머를 멈추고, PlayerHealth가 타이머 만료 게임오버와 연결됩니다.
+ * 주의: Time.timeScale이 0인 대화/인벤토리 상황과 별도로 의도한 일시정지 상태를 유지해야 합니다.
+ */using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -91,3 +96,6 @@ public class TimerManager : MonoBehaviour
     public void PauseTimer()  => isRunning = false;
     public void ResumeTimer() => isRunning = true;
 }
+
+
+

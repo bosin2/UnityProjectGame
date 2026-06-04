@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * UICanvas.cs
+ * 역할: 게임 HUD 전체를 대표하는 Canvas 싱글톤이며, 플레이 중 UI 표시/숨김을 중앙에서 관리합니다.
+ * 연결: GameManager의 씬 로드 처리, GameFlowManager, CorridorIntroManager, RooftopManager, PlayerHealth 사망 연출에서 호출됩니다.
+ * 주의: MainMenu에서는 HUD가 숨겨져야 하고, 게임 진행 중(stage > 0)에는 다시 표시되어야 합니다.
+ */using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -38,3 +43,6 @@ public class UICanvas : MonoBehaviour
         if (hpUI    != null) hpUI.SetActive(false);
     }
 }
+
+
+

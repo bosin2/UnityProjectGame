@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * CatagoryButton.cs
+ * 역할: 인벤토리 카테고리 버튼 클릭을 InventoryManager에 전달하는 UI 연결 스크립트입니다.
+ * 연결: Unity UI Button 이벤트에서 호출되어 키/소비/장비 카테고리 전환을 수행합니다.
+ * 주의: 파일명은 Catagory로 되어 있지만 코드 참조와 메타 파일이 연결되어 있으므로 이름 변경은 신중해야 합니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -29,3 +34,4 @@ public class CategoryButton : MonoBehaviour
             inv.OnClickCategory(categoryIndex));
     }
 }
+

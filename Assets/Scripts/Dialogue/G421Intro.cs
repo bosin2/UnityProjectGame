@@ -1,11 +1,16 @@
-using UnityEngine;
+/*
+ * G421Intro.cs
+ * 역할: G421 씬의 특정 인트로 대사나 이벤트 흐름을 담당하는 씬 전용 대화 스크립트입니다.
+ * 연결: GameManager 플래그와 씬 안의 UI/대화 오브젝트를 통해 G421의 첫 방문 또는 이벤트 상태를 제어합니다.
+ * 주의: 범용 Interactable과 함께 쓰일 때 같은 플래그를 중복으로 사용하면 대사 단계가 예상보다 빨리 넘어갈 수 있습니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
 public class G421IntroManager : MonoBehaviour
 {
-    [Header("��Ʈ�� UI")]
+    [Header("인트로 UI")]
     public GameObject introRoot;     // ��Ʈ�� ��ü�� ���δ� ��Ʈ ������Ʈ
     public TextMeshProUGUI dialogueText;
     public GameObject clickHint;     // "Space�� ���� ���" ��Ʈ
@@ -21,10 +26,10 @@ public class G421IntroManager : MonoBehaviour
     }
     public DialogueLine[] lines;
 
-    [Header("���߿� ��ŵ")]
+    [Header("개발용 건너뛰기")]
     [SerializeField] private bool skipIntro = false;
 
-    [Header("�÷��� UI")]
+    [Header("플레이 UI")]
     [SerializeField] private WeaponSlotUI weaponSlotUI;
     [SerializeField] private HotbarManager hotbarManager;
 
@@ -192,3 +197,5 @@ public class G421IntroManager : MonoBehaviour
         SetPlayerControl(true);
     }
 }
+
+

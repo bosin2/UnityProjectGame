@@ -1,4 +1,9 @@
-using System.Collections;
+/*
+ * CorridorIntroManager.cs
+ * 역할: 복도 씬 최초 진입 시 카메라 팬, 독백, 페이드, HUD 숨김, 몬스터 정지를 순서대로 실행합니다.
+ * 연결: GameManager의 씬별 introDone 플래그, CameraFollow, Fogeffect, TimerManager, UICanvas, MonsterBase와 연결됩니다.
+ * 주의: 인트로 도중 오브젝트가 비활성화되면 OnDisable에서 플레이어/몬스터/UI/타이머를 복구하도록 설계되어 있습니다.
+ */using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -378,3 +383,6 @@ public class CorridorIntroManager : MonoBehaviour
         introRunning = false;
     }
 }
+
+
+

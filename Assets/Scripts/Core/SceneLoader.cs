@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * SceneLoader.cs
+ * 역할: 씬 전환 직전에 플레이어 스폰 위치와 바라볼 방향을 임시 저장하는 정적 유틸리티입니다.
+ * 연결: DoorTrigger가 LoadScene을 호출하고, PlayerMovement.OnSceneLoaded가 TryConsumePendingSpawn으로 값을 꺼냅니다.
+ * 주의: SpawnData는 한 번 소비되면 지워지므로, 같은 씬 로드에서 여러 시스템이 동시에 소비하지 않게 해야 합니다.
+ */using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -43,3 +48,4 @@ public static class SceneLoader
     /// <summary>남은 스폰 데이터를 강제로 지운다 (씬 재시작 등)</summary>
     public static void ClearPendingSpawn() => _pending = default;
 }
+

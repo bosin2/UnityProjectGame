@@ -1,4 +1,9 @@
-using System.Collections;
+/*
+ * PlayerHealth.cs
+ * 역할: 플레이어 HP, 피격 무적, 넉백, 회복, 사망 연출, 게임오버 후 메인 메뉴 복귀를 담당합니다.
+ * 연결: PlayerHPbar, MonsterAI/Stalker/Ranged 공격, TimerManager, InventoryManager, AudioManager와 연결됩니다.
+ * 주의: 사망 시 Time.timeScale을 0으로 멈춘 뒤 UnscaledTime 기반 연출을 사용하므로 일반 WaitForSeconds와 섞을 때 주의해야 합니다.
+ */using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -290,3 +295,6 @@ public class PlayerHealth : MonoBehaviour
             : new Vector2(0f, Mathf.Sign(dir.y));
     }
 }
+
+
+

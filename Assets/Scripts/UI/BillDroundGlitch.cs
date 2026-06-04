@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * BillDroundGlitch.cs
+ * 역할: 특정 UI나 배경에 글리치/노이즈 느낌의 시각 효과를 적용하는 연출용 스크립트입니다.
+ * 연결: 타이틀, 이벤트 화면, 엔딩 연출 등에서 시각적 긴장감을 주는 용도로 배치됩니다.
+ * 주의: 매 프레임 UI 값을 변경하는 연출은 과하면 가독성을 떨어뜨릴 수 있으므로 강도와 활성화 시간을 조절해야 합니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -72,3 +77,4 @@ public class BillDroundGlitch : MonoBehaviour
             Destroy(activeTexture);
     }
 }
+

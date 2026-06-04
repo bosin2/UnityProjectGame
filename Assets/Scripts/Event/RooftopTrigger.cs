@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * RooftopTrigger.cs
+ * 역할: 플레이어가 옥상 컷씬 시작 구역에 들어오면 RooftopManager에게 컷씬 시작을 요청합니다.
+ * 연결: Rooftop 씬의 RooftopManager 참조를 Inspector에서 받아 StartCutscene을 호출합니다.
+ * 주의: 트리거가 여러 번 실행되어도 RooftopManager 내부에서 중복 시작을 막아야 합니다.
+ */using UnityEngine;
 
 /// <summary>
 /// 옥상 절반 지점에 깔아두는 트리거.

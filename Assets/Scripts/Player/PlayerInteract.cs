@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * PlayerInteract.cs
+ * 역할: Q키 상호작용, 대사 타이핑/스킵, phase 진행, 선택지 Yes/No 처리를 담당하는 플레이어 대화 컨트롤러입니다.
+ * 연결: Interactable의 DialoguePhase 데이터를 읽고 GameManager에 플래그와 phase 진행도를 저장합니다.
+ * 주의: 대화 중 Time.timeScale을 0으로 만들기 때문에 타이핑은 WaitForSecondsRealtime을 사용해야 정상 진행됩니다.
+ */using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
@@ -271,3 +276,6 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 }
+
+
+

@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * InventoryManager.cs
+ * 역할: 인벤토리 데이터, 카테고리 UI, 아이템 사용, 장비 효과, 핫바 등록을 통합 관리합니다.
+ * 연결: ItemGiver, DoorTrigger, HotbarManager, PlayerHealth, PlayerMovement와 직접 연결됩니다.
+ * 주의: InventoryManager는 씬마다 새로 생기는 소프트 싱글톤이므로 씬 전환 뒤 캐시된 참조를 다시 찾는 코드가 필요합니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
@@ -41,7 +46,7 @@ public class InventoryManager : MonoBehaviour
     public ItemData   defaultArmor;
     public ItemData   defaultShoes;
 
-    [Header("UI 팝업 참조 (Inspector에서 연결)")]
+    [Header("UI 팝업 참조 (인스펙터에서 연결)")]
     [SerializeField] private ItemPopup       itemPopup;
     [SerializeField] private SlotSelectPopup slotSelectPopup;
     [SerializeField] private HotbarManager   hotbarManager;
@@ -377,3 +382,6 @@ public class InventoryManager : MonoBehaviour
         if (!open) Time.timeScale = 1f;
     }
 }
+
+
+

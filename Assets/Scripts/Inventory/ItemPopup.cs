@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * ItemPopup.cs
+ * 역할: 아이템 사용, 핫바 등록, 장비 착용/해제 같은 선택 팝업을 표시합니다.
+ * 연결: InventoryManager.OnClickItem에서 아이템 타입에 따라 사용 팝업 또는 장비 팝업을 띄웁니다.
+ * 주의: IsOpen 값은 인벤토리 E키 토글을 막는 데 쓰이므로 팝업을 닫을 때 반드시 상태를 되돌려야 합니다.
+ */using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -109,3 +114,6 @@ public class ItemPopup : MonoBehaviour
 
     public bool IsOpen => popupPanel != null && popupPanel.activeSelf;
 }
+
+
+

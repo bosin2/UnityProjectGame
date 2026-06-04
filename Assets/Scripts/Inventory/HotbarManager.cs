@@ -1,4 +1,9 @@
-using TMPro;
+/*
+ * HotbarManager.cs
+ * 역할: 소비 아이템을 빠른 슬롯에 등록하고 단축키/선택 UI로 사용할 수 있게 관리합니다.
+ * 연결: InventoryManager의 슬롯 선택 팝업, PlayerHealth 회복/속도 버프, UICanvas 표시 흐름과 연결됩니다.
+ * 주의: 인벤토리 열림, 대화, 컷씬 중에는 핫바 입력과 표시가 잠겨야 다른 UI와 충돌하지 않습니다.
+ */using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +17,14 @@ public class HotbarManager : MonoBehaviour
     // 소프트 참조 (강제 싱글톤 아님)
     public static HotbarManager Instance { get; private set; }
 
-    [Header("UI 요소")]
+    [Header("UI")]
     public RectTransform   highlight;
     public RectTransform[] slots;
     public Image[]         slotIcons;
     public TextMeshProUGUI[] slotCountTexts;
     public Button[]        invenHotbarButtons;
 
-    [Header("팝업 참조 (Inspector에서 연결 또는 자동 탐색)")]
+    [Header("팝업 참조 (인스펙터 연결 또는 자동 탐색)")]
     [SerializeField] private ItemPopup       itemPopup;
     [SerializeField] private InventoryManager inventoryManager;
 
@@ -197,3 +202,6 @@ public class HotbarManager : MonoBehaviour
     public void Show() => gameObject.SetActive(true);
     public void Hide() => gameObject.SetActive(false);
 }
+
+
+

@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * ItemData.cs
+ * 역할: 인벤토리에 들어가는 아이템의 이름, 설명, 타입, 회복량, 속도 보너스, 열쇠 ID를 정의하는 ScriptableObject 데이터입니다.
+ * 연결: InventoryManager, ItemGiver, DoorTrigger가 같은 ItemData 자산을 참조해 아이템 지급/소비/문 해금을 처리합니다.
+ * 주의: Key 타입의 keyId는 GameManager 플래그로도 사용되므로 씬 조건 문자열과 맞춰야 합니다.
+ */using UnityEngine;
 
 // 아이템 하나의 기본 정보와 효과 수치를 담는 ScriptableObject.
 // 인벤토리, 핫바, ItemGiver 등에서 참조한다.

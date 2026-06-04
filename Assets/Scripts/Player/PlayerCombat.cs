@@ -1,4 +1,9 @@
-using System.Collections;
+/*
+ * PlayerCombat.cs
+ * 역할: 플레이어의 근접 공격, 총 공격, 무기 전환, 공격 애니메이션/히트박스 타이밍을 관리합니다.
+ * 연결: PlayerMovement의 LastDir, PlayerHealth의 피격/사망 상태, GameManager의 무기 소지 플래그, PlayerBullet과 연결됩니다.
+ * 주의: 씬 전환 시 진행 중인 공격 Invoke와 히트박스를 반드시 초기화해야 중복 데미지나 멈춘 공격 상태를 막을 수 있습니다.
+ */using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
@@ -18,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject hitEffectPrefab;
     public float bulletSpeed = 12f;
 
-    [Header("근접 히트박스 (4방향 Collider2D)")]
+    [Header("근접 공격 판정 범위 (4방향 collider)")]
     public Collider2D hitboxUp;
     public Collider2D hitboxDown;
     public Collider2D hitboxLeft;
@@ -184,3 +189,4 @@ public class PlayerCombat : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
+

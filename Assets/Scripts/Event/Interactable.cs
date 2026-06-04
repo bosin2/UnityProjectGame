@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * Interactable.cs
+ * 역할: 대화 가능한 오브젝트의 대사 단계, 선행 플래그, 완료 이벤트, 선택지를 저장하는 데이터 컴포넌트입니다.
+ * 연결: PlayerInteract가 이 데이터를 읽고 GameManager에 phase 진행도를 저장합니다.
+ * 주의: interactableId가 비어 있으면 씬 재진입 시 phase가 유지되지 않고, 중복되면 서로의 진행도가 섞입니다.
+ */using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]

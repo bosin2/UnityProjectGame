@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * ItemGiver.cs
+ * 역할: 상호작용 완료 이벤트에서 플레이어 인벤토리에 지정 아이템을 지급합니다.
+ * 연결: Interactable.onComplete에 연결되어 InventoryManager.AddItem을 호출하고, 열쇠면 GameManager 플래그도 설정합니다.
+ * 주의: 열쇠 지급 플래그는 문 해금 플래그와 의미가 다를 수 있으므로 둘을 같은 문자열로 쓰면 소비 동작이 달라질 수 있습니다.
+ */using UnityEngine;
 
 /// <summary>
 /// Interactable.onComplete 등에 연결해 플레이어 인벤토리에 아이템을 지급하는 컴포넌트.
@@ -50,3 +55,4 @@ public class ItemGiver : MonoBehaviour
         // UI 갱신은 AddItem() 내부에서 자동 처리
     }
 }
+

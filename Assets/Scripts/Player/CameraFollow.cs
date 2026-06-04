@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * CameraFollow.cs
+ * 역할: 카메라가 플레이어를 따라가도록 위치를 보간하거나 고정하는 플레이어 추적 카메라 스크립트입니다.
+ * 연결: CorridorIntroManager가 인트로 카메라 팬 동안 일시적으로 비활성화하고 끝나면 다시 켭니다.
+ * 주의: 씬 전환 직후 플레이어 스폰 위치가 적용된 다음 카메라가 따라붙어야 화면 튐이 줄어듭니다.
+ */using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -95,3 +100,4 @@ public class CameraFollow : MonoBehaviour
         }
     }
 }
+

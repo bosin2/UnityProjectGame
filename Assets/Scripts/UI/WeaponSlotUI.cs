@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * WeaponSlotUI.cs
+ * 역할: 플레이어가 현재 사용할 수 있는 무기 슬롯 UI를 표시하거나 숨기는 전역 UI 컨트롤러입니다.
+ * 연결: GameFlowManager, RooftopManager, CorridorIntroManager, PlayerCombat 쪽에서 게임 흐름에 따라 Show/Hide를 호출합니다.
+ * 주의: 씬 전환 후에도 UI 상태가 이어질 수 있으므로 Instance 참조와 활성화 상태를 함께 확인해야 합니다.
+ */using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -61,3 +66,6 @@ public class WeaponSlotUI : MonoBehaviour
     public void Show() => gameObject.SetActive(true);
     public void Hide() => gameObject.SetActive(false);
 }
+
+
+

@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * MonsterHitbox.cs
+ * 역할: 플레이어 근접 공격 히트박스가 몬스터에게 닿았을 때 부모 MonsterBase에 피해를 전달합니다.
+ * 연결: PlayerCombat의 방향별 근접 Collider와 MonsterBase.TakeMeleeDamage가 만나는 접점입니다.
+ * 주의: 부모 MonsterBase를 찾지 못하면 데미지가 들어가지 않으므로 몬스터 계층 구조 변경 시 확인해야 합니다.
+ */using UnityEngine;
 
 /// <summary>
 /// 몬스터의 피격 감지 히트박스.
@@ -30,3 +35,4 @@ public class MonsterHitbox : MonoBehaviour
             monster.TakeMeleeDamage(combat.meleeDamage);
     }
 }
+

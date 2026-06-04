@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * Fogeffect.cs
+ * 역할: 화면 안개/어둠 효과를 관리하는 UI 또는 렌더링 보조 싱글톤입니다.
+ * 연결: CorridorIntroManager가 복도 인트로 카메라 팬 동안 안개를 끄고 끝나면 다시 켭니다.
+ * 주의: 컷씬 도중 강제로 비활성화된 뒤 복구되지 않으면 시야 효과가 계속 사라질 수 있습니다.
+ */using UnityEngine;
 
 // 파일명(Fogeffect.cs)과 클래스명 일치 — 이전 클래스명 FogOfWarController에서 변경
 public class Fogeffect : MonoBehaviour

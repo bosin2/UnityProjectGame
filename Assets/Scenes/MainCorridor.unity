@@ -514,7 +514,7 @@ MonoBehaviour:
     - "\uC6B0\uC9C4\uC774\uAC00 420 \uC5F4\uC1E0\uB3C4 \uC8FC\uC5C8\uC73C\uB2C8 420\uBD80\uD130
       \uAC00\uBCF4\uC790. "
     - "420\uC5D0 \uBB34\uC5B8\uAC00\uAC00 \uC788\uC744\uC9C0\uB3C4 \uBAB0\uB77C."
-    requiredFlag: GunNPCDead
+    requiredFlag: gunNPCDead
     hintMessage: 
     onComplete:
       m_PersistentCalls:
@@ -39186,3 +39186,4 @@ SceneRoots:
   - {fileID: 283611910}
   - {fileID: 1926720168}
   - {fileID: 608566342}
+

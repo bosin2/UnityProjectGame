@@ -1,4 +1,9 @@
-using UnityEngine;
+/*
+ * PlayerMovement.cs
+ * 역할: 플레이어 이동 입력, 발소리, 이동 애니메이션, 씬 전환 후 스폰 위치/방향 적용을 담당합니다.
+ * 연결: SceneLoader의 SpawnData, PlayerCombat 공격 상태, PlayerHealth 피격/사망 상태, InventoryManager 열림 상태와 연결됩니다.
+ * 주의: 플레이어는 DontDestroyOnLoad로 유지되므로 중복 생성 방지 플래그와 씬 로드 이벤트 해제가 중요합니다.
+ */using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -184,3 +189,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+
