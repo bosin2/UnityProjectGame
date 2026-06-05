@@ -85,6 +85,11 @@ public class RooftopManager : MonoBehaviour
     // 엔딩 시퀀스에서 페이드아웃 중 활성화되고, 이륙 직전 비활성화된다.
     [Header("헬기")]
     public GameObject helicopterObject;
+    [SerializeField] private string      helicopterSfxName = "helicopter1";
+    [SerializeField] private AudioClip   helicopterSfxClip;
+    [SerializeField] private AudioSource helicopterSfxSource;
+    [SerializeField] private bool        loopHelicopterSfx = true;
+    [SerializeField] private float       helicopterSfxVolumeScale = 1f;
 
     // ── 엔딩 대사 ───────────────────────────────────────────────────────
     // 헬기 도착 후 재생되는 굿/배드 엔딩 전용 대사.
@@ -170,6 +175,8 @@ public class RooftopManager : MonoBehaviour
 
         // 교수님은 ProfessorEnter() 실행 전까지 숨김
         professorObject?.SetActive(false);
+
+        SetupHelicopterAudioSource();
 
         // mainCamera가 Inspector에서 연결되지 않은 경우 자동 탐색
         if (mainCamera == null) mainCamera = Camera.main;
@@ -364,7 +371,7 @@ public class RooftopManager : MonoBehaviour
         // ── 1. 페이드아웃 → 암전 중에 헬기를 조용히 활성화 ──
         yield return StartCoroutine(FadeTo(1f));
         helicopterObject?.SetActive(true);
-        AudioManager.Instance?.PlaySFX("helicopter1");
+        PlayHelicopterSound();
         yield return new WaitForSeconds(0.3f);
 
         // ── 2. 페이드인 → 헬기가 옥상에 있는 장면 공개 ──
@@ -399,6 +406,7 @@ public class RooftopManager : MonoBehaviour
         yield return StartCoroutine(FadeTo(1f));
         yield return new WaitForSeconds(0.3f);
         helicopterObject?.SetActive(false);
+        StopHelicopterSound();
         yield return new WaitForSeconds(0.5f);
 
         // ── 7. 독백 (검정 화면 위에 타이핑으로 표시) ──
@@ -500,6 +508,51 @@ public class RooftopManager : MonoBehaviour
         yield return StartCoroutine(FadeTo(1f));           // 페이드아웃: 메인 메뉴 전환 준비
 
         creditsPanel.SetActive(false);
+    }
+
+    void SetupHelicopterAudioSource()
+    {
+        if (helicopterSfxSource == null && helicopterObject != null)
+            helicopterSfxSource = helicopterObject.GetComponent<AudioSource>();
+
+        if (helicopterSfxSource == null && helicopterObject != null && helicopterSfxClip != null)
+            helicopterSfxSource = helicopterObject.AddComponent<AudioSource>();
+
+        if (helicopterSfxSource == null) return;
+
+        helicopterSfxSource.playOnAwake = false;
+        helicopterSfxSource.loop = loopHelicopterSfx;
+        helicopterSfxSource.spatialBlend = 0f;
+        helicopterSfxSource.volume = helicopterSfxVolumeScale;
+        if (helicopterSfxClip != null)
+            helicopterSfxSource.clip = helicopterSfxClip;
+    }
+
+    void PlayHelicopterSound()
+    {
+        SetupHelicopterAudioSource();
+
+        if (helicopterSfxSource != null && helicopterSfxSource.clip != null)
+        {
+            helicopterSfxSource.loop = loopHelicopterSfx;
+            helicopterSfxSource.volume = helicopterSfxVolumeScale;
+            helicopterSfxSource.Play();
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(helicopterSfxName, helicopterSfxVolumeScale);
+            return;
+        }
+
+        Debug.LogWarning("[RooftopManager] 헬기 SFX를 재생할 AudioManager 또는 AudioClip이 없습니다.", this);
+    }
+
+    void StopHelicopterSound()
+    {
+        if (helicopterSfxSource != null && helicopterSfxSource.isPlaying)
+            helicopterSfxSource.Stop();
     }
 
 

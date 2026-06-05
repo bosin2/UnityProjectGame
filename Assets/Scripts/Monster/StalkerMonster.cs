@@ -168,12 +168,7 @@ public class StalkerMonster : MonsterBase
         // 플레이어가 arriveDistance + 0.3f 이내에 있으면 접촉 데미지
         float dist = Vector2.Distance(transform.position, playerTransform.position);
         if (dist <= arriveDistance + 0.3f && contactCooldown <= 0f && playerHealth != null)
-        {
-            Vector2 knockDir = (playerTransform.position - transform.position).normalized;
-            playerHealth.TakeHit(knockDir);
-            playerHealth.TakeDamage(contactDamage);
-            contactCooldown = contactDamageInterval;
-        }
+            DealContactDamage(playerHealth, playerTransform.position - transform.position);
 
         // 경로 재계산 타이머
         pathTimer -= Time.deltaTime;
@@ -398,6 +393,27 @@ public class StalkerMonster : MonsterBase
         }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (isDead || contactCooldown > 0f) return;
+        if (!collision.gameObject.CompareTag("Player")) return;
+
+        PlayerHealth ph = collision.gameObject.GetComponent<PlayerHealth>();
+        if (ph == null) return;
+
+        Vector2 knockDir = collision.transform.position - transform.position;
+        DealContactDamage(ph, knockDir);
+    }
+
+    void DealContactDamage(PlayerHealth ph, Vector2 knockDir)
+    {
+        if (ph == null || contactCooldown > 0f) return;
+
+        ph.TakeHit(knockDir.normalized);
+        ph.TakeDamage(contactDamage);
+        contactCooldown = contactDamageInterval;
+    }
+
     void OnDrawGizmosSelected()
     {
         if (currentPath == null) return;
@@ -447,7 +463,6 @@ public class StalkerMonster : MonsterBase
     }
 
 }
-
 
 
 

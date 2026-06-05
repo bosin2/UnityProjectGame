@@ -2364,6 +2364,11 @@ MonoBehaviour:
   professorAnimator: {fileID: 2129984689374419568}
   professorWalkSpeed: 3.5
   helicopterObject: {fileID: 2143110025}
+  helicopterSfxName: helicopter1
+  helicopterSfxClip: {fileID: 8300000, guid: 200a22ebc1464434d8f52d36007601ef, type: 3}
+  helicopterSfxSource: {fileID: 0}
+  loopHelicopterSfx: 1
+  helicopterSfxVolumeScale: 2
   endingDialogueGood:
   - "\uAE40\uC11D\uADDC: \uBA3C\uC800 \uD0C0\uC11C \uAC00\uAC8C\uB098 "
   - "\uAE40\uC11D\uADDC: ...\uB098\uB294 \uC0DD\uC874\uC790\uB97C \uCC3E\uC544\uBD10\uC57C\uACA0\uC5B4"
