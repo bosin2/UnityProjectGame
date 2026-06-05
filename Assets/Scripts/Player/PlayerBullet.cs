@@ -48,9 +48,12 @@ public class PlayerBullet : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("PlayerAttack")) return;
 
         // 1) 몬스터 타격
+        // 몬스터의 감지/상호작용용 Trigger 영역은 본체 명중으로 보지 않는다.
         MonsterBase monster = other.GetComponentInParent<MonsterBase>();
         if (monster != null)
         {
+            if (other.isTrigger) return;
+
             monster.TakeDamage(damage);
             SpawnHitEffect();
             Destroy(gameObject);
