@@ -253,12 +253,16 @@ public class RangedMonster : MonsterBase
 
         AudioManager.Instance?.PlaySFX("explosion"); // 폭발 효과음
 
-        // 반경 안에 있는 플레이어에게 데미지 (단일 플레이어 → OverlapCircle로 충분)
-        Collider2D hit = Physics2D.OverlapCircle(targetPos, impactRadius, playerLayer);
-        if (hit != null)
+        // 반경 안에 있는 플레이어에게 데미지.
+        // 몬스터/트리거가 먼저 잡혀 플레이어 판정이 누락되지 않도록 전체 후보를 검사한다.
+        Collider2D[] hits = Physics2D.OverlapCircleAll(targetPos, impactRadius, playerLayer);
+        foreach (Collider2D hit in hits)
         {
             PlayerHealth ph = hit.GetComponentInParent<PlayerHealth>();
-            ph?.TakeDamage(damage);
+            if (ph == null) continue;
+
+            ph.TakeDamage(damage);
+            break;
         }
 
         anim.SetBool("IsAttacking", false);
@@ -290,4 +294,3 @@ public class RangedMonster : MonsterBase
         Gizmos.DrawWireSphere(transform.position, fleeRange);
     }
 }
-

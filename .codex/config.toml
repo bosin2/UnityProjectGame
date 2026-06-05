@@ -9,3 +9,12 @@ approval_mode = "approve"
 
 [mcp_servers.UnityMCP.tools.execute_code]
 approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.manage_build]
+approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.manage_scene]
+approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.manage_editor]
+approval_mode = "approve"

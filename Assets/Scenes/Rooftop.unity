@@ -2362,7 +2362,7 @@ MonoBehaviour:
   professorObject: {fileID: 2129984689374419567}
   professorTargetPos: {fileID: 176918172}
   professorAnimator: {fileID: 2129984689374419568}
-  professorWalkSpeed: 3.5
+  professorWalkSpeed: 3.8
   helicopterObject: {fileID: 2143110025}
   helicopterSfxName: helicopter1
   helicopterSfxClip: {fileID: 8300000, guid: 200a22ebc1464434d8f52d36007601ef, type: 3}

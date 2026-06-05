@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
 
     // 현재 재생 중인 BGM의 볼륨 스케일 (ApplyVolumes에서 반영)
     private float currentBgmScale = 1f;
+    private bool initialized = false;
 
     [Header("음량 설정")]
     [Range(0f, 1f)] public float masterVolume = 1f;
@@ -43,16 +44,39 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        InitializeAudioManager();
+    }
+
+    private void OnEnable()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        InitializeAudioManager();
+    }
+
+    private void InitializeAudioManager()
+    {
+        if (initialized) return;
         InitializeDictionaries();
         ApplyVolumes();
+        initialized = true;
     }
 
     private void InitializeDictionaries()
     {
+        bgmDict.Clear();
+        sfxDict.Clear();
+
         foreach (Sound s in bgmClips)
-            bgmDict[s.name] = s.clip;
+            if (s != null && !string.IsNullOrEmpty(s.name) && s.clip != null)
+                bgmDict[s.name] = s.clip;
         foreach (Sound s in sfxClips)
-            sfxDict[s.name] = s.clip;
+            if (s != null && !string.IsNullOrEmpty(s.name) && s.clip != null)
+                sfxDict[s.name] = s.clip;
     }
 
     // === BGM 제어 ===
