@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 59554197}
   - component: {fileID: 59554199}
   - component: {fileID: 59554198}
+  - component: {fileID: 59554200}
   m_Layer: 0
   m_Name: Printer
   m_TagString: Untagged
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: pax
   phases:
   - dialogueLines:
     - "\uD504\uB9B0\uD130\uAE30\uB2E4."
@@ -177,14 +178,24 @@ MonoBehaviour:
     setFlag: 
     hasChoice: 1
     choiceQuestion: "\uD655\uC778 \uD574 \uBCFC\uAE4C?"
-    yesLines:
-    - "\uBD89\uC740 \uAE00\uC528\uB85C \uB3C4\uB9DD\uCCD0 \uB77C\uACE0 \uC801\uD600\uC788\uB2E4."
-    - ...
+    yesLines: []
     noLines:
     - "\uAD73\uC774 \uD655\uC778 \uD560 \uD544\uC694\uB294 \uC5C6\uC744 \uAC83 \uAC19\uB2E4."
     onChoiceYes:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 59554200}
+          m_TargetAssemblyTypeName: DialogueEvent, Assembly-CSharp
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onChoiceNo:
       m_PersistentCalls:
         m_Calls: []
@@ -256,6 +267,45 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.415354, y: 6.8475304}
   m_EdgeRadius: 0
+--- !u!114 &59554200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59554196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2cbdf5f6aa75141a3af9a8e4b73fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupSprite: {fileID: -4797617136797171886, guid: bc3cffbec1ce5b14dac1caeb26e3e508, type: 3}
+  popupTitle: ' '
+  closeHint: Space / Esc
+  afterPopupLines:
+  - ...
+  showOnlyOnce: 1
+  pauseWhileOpen: 1
+  closeWithSpace: 1
+  closeWithEscape: 1
+  doneFlag: 
+  openSfx: {fileID: 0}
+  closeSfx: {fileID: 0}
+  sfxVolume: 1
+  popupPanel: {fileID: 0}
+  popupImage: {fileID: 0}
+  titleText: {fileID: 0}
+  hintText: {fileID: 0}
+  closeButton: {fileID: 0}
+  onPopupOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  onPopupClosed:
+    m_PersistentCalls:
+      m_Calls: []
+  onEventFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &73792891
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +486,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &104882037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 104882038}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &104882038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104882037}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: -31.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 406782587}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &111195304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,7 +2765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: book
   phases:
   - dialogueLines:
     - "\uCC45\uC7A5\uC774\uB2E4. \uBCFC \uD544\uC694\uB294 \uC5C6\uC744\uAC83 \uAC19\uB2E4."
@@ -2786,6 +2867,53 @@ Transform:
   - {fileID: 1956876046}
   - {fileID: 1711738484}
   - {fileID: 59554197}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &406782585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 406782587}
+  - component: {fileID: 406782586}
+  m_Layer: 0
+  m_Name: DebugSpowner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &406782586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406782585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8675975dc0d26c548acf0680fe8d6f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 2085350012289364096, guid: b381ee44e0f25664ba55d4553873df07, type: 3}
+  spawnPoint: {fileID: 104882038}
+--- !u!4 &406782587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406782585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.806034, y: 10.067463, z: 0.038568288}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 104882038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &457448836
@@ -3028,7 +3156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: ice
   phases:
   - dialogueLines:
     - "\uB0C9\uC7A5\uACE0\uB2E4."
@@ -3315,7 +3443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: coffee
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC774 \uBA39\uB2E4 \uB0A8\uAE30\uC2E0 \uCEE4\uD53C\uAC00
@@ -3898,7 +4026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b7772a96498d14abc597d0b19b29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableId: 
+  interactableId: hanger
   phases:
   - dialogueLines:
     - "\uAD50\uC218\uB2D8\uC758 \uD589\uAC70\uB2E4."
@@ -4450,4 +4578,5 @@ SceneRoots:
   - {fileID: 457448837}
   - {fileID: 387662113}
   - {fileID: 2015112099}
+  - {fileID: 406782587}
   - {fileID: 1863120762}
