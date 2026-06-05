@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmName: corridor
-  volumeScale: 0.5
+  volumeScale: 0.25
   playOnStart: 1
 --- !u!4 &60319128
 Transform:

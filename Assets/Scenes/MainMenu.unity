@@ -795,7 +795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmName: mainmenu
-  volumeScale: 1
+  volumeScale: 0.8
   playOnStart: 1
 --- !u!1 &744953246
 GameObject:
