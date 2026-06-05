@@ -52,13 +52,28 @@ public class RangedMonster : MonsterBase
     // isAttacking: 도망 시 TeleportAway 코루틴 진행 중 or DoAttack 진행 중
     // → 두 코루틴이 동시에 시작되지 않도록 막는 공유 플래그
     private bool         isAttacking = false;
+    private bool         hasStarted = false;
+    private Coroutine    attackLoopRoutine;
 
     protected override void Start()
     {
         base.Start();
+        hasStarted = true;
         FindPlayerInScene();
-        // 공격 루프를 Start에서 한 번 시작 – 몬스터 생존 동안 계속 반복
-        StartCoroutine(AttackLoop());
+        StartAttackLoop();
+    }
+
+    void OnEnable()
+    {
+        if (hasStarted && !isDead)
+            StartAttackLoop();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        StopAttackLoop();
+        isAttacking = false;
     }
 
     void Update()
@@ -166,6 +181,21 @@ public class RangedMonster : MonsterBase
             if (isDead) yield break;
             if (playerTransform == null) continue; // 플레이어를 찾지 못한 경우 이번 공격 skip
             yield return StartCoroutine(DoAttack());
+        }
+    }
+
+    void StartAttackLoop()
+    {
+        if (attackLoopRoutine != null) return;
+        attackLoopRoutine = StartCoroutine(AttackLoop());
+    }
+
+    void StopAttackLoop()
+    {
+        if (attackLoopRoutine != null)
+        {
+            StopCoroutine(attackLoopRoutine);
+            attackLoopRoutine = null;
         }
     }
 
