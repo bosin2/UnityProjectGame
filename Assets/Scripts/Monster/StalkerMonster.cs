@@ -40,6 +40,7 @@ public class StalkerMonster : MonsterBase
     [SerializeField] private string activeBgm = "stoker"; // 몬스터가 살아있는 동안 재생할 BGM
     [SerializeField] private string revertBgm = "corridor"; // 사망/비활성화 후 복귀할 BGM
     private bool bgmStarted = false; // BGM을 시작했는지 추적 (중복 복귀 방지)
+    private bool hasStarted = false; // 인트로 pause 후 재활성화 시 BGM 재시작 구분
 
     // ── 내부 상태 ──────────────────────────────────────────────────────
     private float        contactCooldown = 0f;     // 접촉 데미지 쿨다운 타이머
@@ -120,14 +121,26 @@ public class StalkerMonster : MonsterBase
     protected override void Start()
     {
         base.Start();
+        hasStarted = true;
         FindPlayerInScene();
 
         // 몬스터가 살아 있을 때 공포 BGM 재생
-        if (!isDead && !string.IsNullOrEmpty(activeBgm))
-        {
-            AudioManager.Instance?.PlayBGM(activeBgm);
-            bgmStarted = true;
-        }
+        StartBGM();
+    }
+
+    void OnEnable()
+    {
+        if (hasStarted)
+            StartBGM();
+    }
+
+    void StartBGM()
+    {
+        if (isDead || bgmStarted || string.IsNullOrEmpty(activeBgm)) return;
+        if (AudioManager.Instance == null) return;
+
+        AudioManager.Instance.PlayBGM(activeBgm);
+        bgmStarted = true;
     }
 
     void SetupLineRenderer()
@@ -463,6 +476,4 @@ public class StalkerMonster : MonsterBase
     }
 
 }
-
-
 

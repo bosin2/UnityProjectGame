@@ -18,3 +18,6 @@ approval_mode = "approve"
 
 [mcp_servers.UnityMCP.tools.manage_editor]
 approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.find_gameobjects]
+approval_mode = "approve"

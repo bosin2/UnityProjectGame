@@ -18,6 +18,6 @@ MonoBehaviour:
   type: 3
   healAmount: 0
   defenseAmount: 0
-  speedAmount: 10
+  speedAmount: 5
   speedDuration: 0
   keyId: 
