@@ -415,7 +415,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173898296}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 501645ce85c95d4439b1813158165239, type: 3}
   m_Name: 
@@ -423,7 +423,7 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -62, y: 8}
   spawnDirection: {x: 0, y: -1}
-  requiredKey: {fileID: 11400000, guid: a31386bb2e1878245a68a56e72daed0b, type: 2}
+  requiredKey: {fileID: 0}
   consumeKey: 1
   noKeyMessage: "\uC7A0\uACA8\uC788\uB2E4."
   unlockFlag: RightOpen

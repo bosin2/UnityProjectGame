@@ -1653,6 +1653,7 @@ GameObject:
   - component: {fileID: 710281797}
   - component: {fileID: 710281798}
   - component: {fileID: 710281796}
+  - component: {fileID: 710281799}
   m_Layer: 0
   m_Name: quiz
   m_TagString: Untagged
@@ -1820,6 +1821,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 914363454bbed404ba65581f22e71ff7, type: 2}
   count: 1
+--- !u!114 &710281799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710281794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf16b080179d44bf846b57edd66ac699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemGiver: {fileID: 710281798}
+  rewardFlag: RooftopKeyGet
+  failedFlag: G418QuizFailed
+  characterDelay: 0.035
+  fontAsset: {fileID: 11400000, guid: c8468891e3ea6ec499c1565e09157352, type: 2}
 --- !u!1 &732685363
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,13 @@ public class PlayerInteract : MonoBehaviour
         // Q키: 범위 안 Interactable과 대화 시작
         if (!isDialogueActive && currentTarget != null && Input.GetKeyDown(KeyCode.Q))
         {
+            NotebookQuizController notebookQuiz = currentTarget.GetComponent<NotebookQuizController>();
+            if (notebookQuiz != null)
+            {
+                notebookQuiz.OpenQuiz();
+                return;
+            }
+
             int idx = currentTarget.currentPhaseIndex;
             if (idx >= currentTarget.phases.Length)
                 idx = currentTarget.phases.Length - 1;
