@@ -21,3 +21,9 @@ approval_mode = "approve"
 
 [mcp_servers.UnityMCP.tools.find_gameobjects]
 approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.create_script]
+approval_mode = "approve"
+
+[mcp_servers.UnityMCP.tools.refresh_unity]
+approval_mode = "approve"
