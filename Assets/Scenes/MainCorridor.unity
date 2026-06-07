@@ -423,7 +423,7 @@ MonoBehaviour:
   targetSceneName: RightCorrider
   spawnPosition: {x: -62, y: 8}
   spawnDirection: {x: 0, y: -1}
-  requiredKey: {fileID: 0}
+  requiredKey: {fileID: 11400000, guid: a31386bb2e1878245a68a56e72daed0b, type: 2}
   consumeKey: 1
   noKeyMessage: "\uC7A0\uACA8\uC788\uB2E4."
   unlockFlag: RightOpen

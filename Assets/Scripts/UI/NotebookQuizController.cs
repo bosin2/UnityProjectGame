@@ -49,8 +49,13 @@ public class NotebookQuizController : MonoBehaviour
     private bool waitingForAnswer;
     private bool pendingAdvanceAfterTyping;
     private bool pendingAnswerAfterTyping;
+    private bool waitingForInitialInput;
+    private bool waitingForWhoChoice;
+    private bool pendingWhoIntro;
     private bool pendingRetryIntro;
+    private bool isRetryAttempt;
     private bool finished;
+    private int openedFrame;
     private string fullTypingMessage = "";
     private Coroutine typingRoutine;
 
@@ -70,23 +75,21 @@ public class NotebookQuizController : MonoBehaviour
         currentInput = "";
         waitingForAdvance = false;
         waitingForAnswer = false;
+        waitingForInitialInput = true;
+        waitingForWhoChoice = false;
+        pendingWhoIntro = false;
         pendingRetryIntro = false;
+        isRetryAttempt = isRetry;
         finished = false;
         isOpen = true;
+        openedFrame = Time.frameCount;
 
         root.SetActive(true);
+        dialogueText.text = "";
+        SetInputLine("");
         Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-        if (isRetry)
-        {
-            pendingRetryIntro = true;
-            TypeMessage("(알 수 없음)\n다시 왔네? 죽은 친구 생일이라도 기억났어?", true);
-            return;
-        }
-
-        ShowCurrentPerson();
     }
 
     public void CloseQuiz()
@@ -101,6 +104,9 @@ public class NotebookQuizController : MonoBehaviour
         isTyping = false;
         waitingForAdvance = false;
         waitingForAnswer = false;
+        waitingForInitialInput = false;
+        waitingForWhoChoice = false;
+        pendingWhoIntro = false;
         pendingRetryIntro = false;
         currentInput = "";
 
@@ -133,6 +139,11 @@ public class NotebookQuizController : MonoBehaviour
             return;
         }
 
+        if (Time.frameCount == openedFrame)
+        {
+            return;
+        }
+
         if (isTyping)
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
@@ -140,6 +151,32 @@ public class NotebookQuizController : MonoBehaviour
                 CompleteTyping();
             }
 
+            return;
+        }
+
+        if (waitingForInitialInput)
+        {
+            if (HasAnyStartInput())
+            {
+                waitingForInitialInput = false;
+
+                if (isRetryAttempt)
+                {
+                    pendingRetryIntro = true;
+                    TypeMessage("(알 수 없음)\n다시 왔네? 죽은 친구 생일이라도 기억났어?", true);
+                    return;
+                }
+
+                waitingForWhoChoice = true;
+                TypeMessage("(알 수 없음)\n안녕?\n\n1. 누구세요?\n\n(키보드 숫자키를 눌러 선택하세요)", false, true);
+            }
+
+            return;
+        }
+
+        if (waitingForWhoChoice)
+        {
+            ReadWhoChoiceInput();
             return;
         }
 
@@ -155,6 +192,13 @@ public class NotebookQuizController : MonoBehaviour
 
             if (finished)
             {
+                return;
+            }
+
+            if (pendingWhoIntro)
+            {
+                pendingWhoIntro = false;
+                ShowCurrentPerson();
                 return;
             }
 
@@ -193,7 +237,22 @@ public class NotebookQuizController : MonoBehaviour
             return;
         }
 
-        TypeMessage($"(알 수 없음)\n{person.Name}{GetTopicParticle(person.Name)} 왜 죽였어? 생일은 알아?\n\n1. 0302\n2. 0521\n3. 0828\n\n번호를 입력해.", false, true);
+        TypeMessage($"(알 수 없음)\n{person.Name}{GetTopicParticle(person.Name)} 왜 죽였어? 생일은 알아?\n\n1. 0302\n2. 0521\n3. 0828\n\n번호를 입력해.\n\n(키보드 숫자키를 눌러 선택하세요)", false, true);
+    }
+
+    private void ReadWhoChoiceInput()
+    {
+        if (!Input.GetKeyDown(KeyCode.Alpha1) && !Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            return;
+        }
+
+        currentInput = "1";
+        SetInputLine("> 1");
+        waitingForWhoChoice = false;
+        waitingForAnswer = false;
+        pendingWhoIntro = true;
+        TypeMessage("(알 수 없음)\n당장 알 필요 없어.", true);
     }
 
     private void ReadAnswerInput()
@@ -223,6 +282,14 @@ public class NotebookQuizController : MonoBehaviour
         GameManager.Instance?.SetFlag(failedFlag);
         finished = true;
         TypeMessage("너는 네가 죽인 사람들의 생일도 모르는거야? 사람이라고도 생각안했군. 어디 혼자 잘 탈출해봐.\n\n(대화가 종료되었습니다)");
+    }
+
+    private bool HasAnyStartInput()
+    {
+        return Input.anyKeyDown
+            || Input.GetMouseButtonDown(0)
+            || Input.GetMouseButtonDown(1)
+            || Input.GetMouseButtonDown(2);
     }
 
     private void GrantReward()
